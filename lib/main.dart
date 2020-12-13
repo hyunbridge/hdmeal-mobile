@@ -13,8 +13,17 @@ final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 void main() {
   runApp(MaterialApp(
     theme: ThemeData(
+      brightness: Brightness.light,
       primaryColor: Colors.white,
       primarySwatch: Colors.grey,
+    ),
+    darkTheme: ThemeData(
+      brightness: Brightness.dark,
+      primaryColor: Colors.black,
+      primarySwatch: Colors.grey,
+      accentColor: Colors.grey[500],
+      toggleableActiveColor: Colors.grey[500],
+      // 다크 테마에서는 primarySwatch가 먹지 않음
     ),
     home: HomePage(),
     navigatorObservers: [routeObserver],
@@ -210,7 +219,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).primaryColor,
       body: FutureBuilder(
           future: fetchData(http.Client()),
           builder: (context, snapshot) {
@@ -289,7 +298,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
         title: Text(
           "설정",
@@ -377,12 +386,16 @@ class _SettingsPageState extends State<SettingsPage> {
           ListTile(
             title: Text('웹 앱 열기'),
             subtitle: Text("app.hdml.kr"),
-            onTap: () async{launch("https://app.hdml.kr/");},
+            onTap: () async {
+              launch("https://app.hdml.kr/");
+            },
           ),
           ListTile(
             title: Text('개발자에게 문의하기'),
             subtitle: Text("hekn2y4j@duck.com"),
-            onTap: () async{launch("mailto:hekn2y4j@duck.com");},
+            onTap: () async {
+              launch("mailto:hekn2y4j@duck.com");
+            },
           ),
           Divider(),
           ListTile(
