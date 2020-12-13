@@ -14,11 +14,13 @@ final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 void main() {
   runApp(MaterialApp(
     theme: ThemeData(
+      fontFamily: "SpoqaHanSansNeo",
       brightness: Brightness.light,
       primaryColor: Colors.white,
       primarySwatch: Colors.grey,
     ),
     darkTheme: ThemeData(
+      fontFamily: "SpoqaHanSansNeo",
       brightness: Brightness.dark,
       primaryColor: Colors.black,
       primarySwatch: Colors.grey,
@@ -140,7 +142,12 @@ class _HomePageState extends State<HomePage> with RouteAware {
                 stretch: true,
                 flexibleSpace: new FlexibleSpaceBar(
                     titlePadding: EdgeInsets.only(left: 16.0, bottom: 16),
-                    title: Text(_title)),
+                    title: Text(
+                      _title,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    )),
                 actions: <Widget>[
                   IconButton(
                     icon: const Icon(Icons.settings),
