@@ -77,7 +77,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
       var _now = DateTime.now();
       var _parsedDate = DateTime.parse(date);
       if (_now.day - _parsedDate.day == 0) {
-        _todayIndex = _pages.length + 1;
+        _todayIndex = _pages.length;
       }
       var _title =
           "${_parsedDate.month}월 ${_parsedDate.day}일(${_weekday[_parsedDate.weekday]})";
