@@ -226,13 +226,11 @@ class _HomePageState extends State<HomePage> with RouteAware {
   }
 
   Widget build(BuildContext context) {
-    FlutterStatusbarcolor.setStatusBarColor(Theme.of(context).primaryColor);
+    FlutterStatusbarcolor.setStatusBarColor(Colors.transparent);
     FlutterStatusbarcolor.setNavigationBarColor(Theme.of(context).primaryColor);
     if (Theme.of(context).brightness == Brightness.light) {
-      FlutterStatusbarcolor.setStatusBarWhiteForeground(false);
       FlutterStatusbarcolor.setNavigationBarWhiteForeground(false);
     } else {
-      FlutterStatusbarcolor.setStatusBarWhiteForeground(true);
       FlutterStatusbarcolor.setNavigationBarWhiteForeground(true);
     }
     return Scaffold(
