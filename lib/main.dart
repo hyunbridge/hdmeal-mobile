@@ -54,7 +54,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
         builder: (BuildContext context) {
           // return object of type Dialog
           return AlertDialog(
-            title: new Text("서버에 연결할 수 없움"),
+            title: new Text("서버에 연결할 수 없음"),
             content: new Text("장치의 인터넷 연결 상태를 확인해 주세요."),
             actions: <Widget>[
               new FlatButton(
