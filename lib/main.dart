@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:package_info/package_info.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
+import 'package:flutter/services.dart';
 
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 void main() {
@@ -52,7 +53,6 @@ class _HomePageState extends State<HomePage> with RouteAware {
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          // return object of type Dialog
           return AlertDialog(
             title: new Text("서버에 연결할 수 없음"),
             content: new Text("장치의 인터넷 연결 상태를 확인해 주세요."),
@@ -60,7 +60,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
               new FlatButton(
                 child: new Text("앱 종료"),
                 onPressed: () {
-                  Navigator.pop(context);
+                  SystemNavigator.pop();
                   exit(0);
                 },
               ),
