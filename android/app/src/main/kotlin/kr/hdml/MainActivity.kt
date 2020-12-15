@@ -1,4 +1,4 @@
-package kr.hdmeal
+package kr.hdml
 
 import io.flutter.embedding.android.FlutterActivity
 
