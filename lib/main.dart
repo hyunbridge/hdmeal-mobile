@@ -10,6 +10,7 @@ import 'package:package_info/package_info.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
 
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 void main() {
@@ -41,35 +42,60 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> with RouteAware {
   SharedPreferences _prefs;
-  var _grade;
-  var _class;
+  int _grade;
+  int _class;
+  Map _previouslyFetchedData;
+  bool _isCacheSnackBarShown = false;
 
   Future fetchData(http.Client client) async {
-    try {
-      final response =
-          await client.get('https://static.api.hdml.kr/data.v2.json');
-      return json.decode(response.body);
-    } on SocketException {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: new Text("서버에 연결할 수 없음"),
-            content: new Text("장치의 인터넷 연결 상태를 확인해 주세요."),
-            actions: <Widget>[
-              new FlatButton(
-                child: new Text("앱 종료"),
-                onPressed: () {
-                  SystemNavigator.pop();
-                  exit(0);
-                },
-              ),
-            ],
+    if (_previouslyFetchedData == null) {
+      Directory _cacheDir = await getTemporaryDirectory();
+      try {
+        final response =
+            await client.get('https://static.api.hdml.kr/data.v2.json');
+        File _cache = new File("${_cacheDir.path}/cache.json");
+        _cache.writeAsString(response.body);
+        _previouslyFetchedData = json.decode(response.body);
+        return _previouslyFetchedData;
+      } catch (_) {
+        if (await File("${_cacheDir.path}/cache.json").exists()) {
+          if (!_isCacheSnackBarShown) {
+            _isCacheSnackBarShown = true;
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: const Text('서버에 연결할 수 없어 기기에 저장된 캐시를 이용합니다.'),
+              duration: const Duration(seconds: 3),
+            ));
+          }
+          String _cacheFile =
+              File("${_cacheDir.path}/cache.json").readAsStringSync();
+          _previouslyFetchedData = json.decode(_cacheFile);
+          return _previouslyFetchedData;
+        } else {
+          showDialog(
+            barrierDismissible: false,
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: new Text("서버에 연결할 수 없음"),
+                content: new Text("장치의 인터넷 연결 상태를 확인해 주세요."),
+                actions: <Widget>[
+                  new FlatButton(
+                    child: new Text("앱 종료"),
+                    onPressed: () {
+                      SystemNavigator.pop();
+                      exit(0);
+                    },
+                  ),
+                ],
+              );
+            },
           );
-        },
-      );
+        }
+      }
+      return null;
+    } else {
+      return _previouslyFetchedData;
     }
-    return null;
   }
 
   pullFromSharedPrefs() async {
@@ -82,28 +108,28 @@ class _HomePageState extends State<HomePage> with RouteAware {
 
   makePages(data) {
     List<Widget> _pages = [];
-    var _todayIndex;
+    int _todayIndex;
     try {
       data.forEach((date, data) {
         // 날짜 처리
-        const _weekday = ["", "월", "화", "수", "목", "금", "토", "일"];
-        var _now = DateTime.now();
-        var _parsedDate = DateTime.parse(date);
+        const List _weekday = ["", "월", "화", "수", "목", "금", "토", "일"];
+        DateTime _now = DateTime.now();
+        DateTime _parsedDate = DateTime.parse(date);
         if (_now.day - _parsedDate.day == 0) {
           _todayIndex = _pages.length;
         }
-        var _title =
+        String _title =
             "${_parsedDate.month}월 ${_parsedDate.day}일(${_weekday[_parsedDate.weekday]})";
         // 식단 리스트 작성
-        var _menuList = [];
-        var _menu = data["Meal"][0] ?? ["식단정보가 없습니다."];
+        List _menuList = [];
+        List _menu = data["Meal"][0] ?? ["식단정보가 없습니다."];
         _menu.forEach((element) => _menuList.add(ListTile(
               title: Text(element),
               visualDensity: VisualDensity(vertical: -4),
             )));
         // 시간표 리스트 작성
-        var _timetableList = [];
-        var _timetable = data["Timetable"]["$_grade"]["$_class"];
+        List _timetableList = [];
+        List _timetable = data["Timetable"]["$_grade"]["$_class"];
         if (_timetable.length == 0) _timetable = ["시간표 정보가 없습니다."];
         _timetable.forEach((element) {
           if (element.contains("⭐")) {
@@ -124,8 +150,8 @@ class _HomePageState extends State<HomePage> with RouteAware {
           }
         });
         // 학사일정 리스트 작성
-        var _scheduleList = [];
-        var _schedule = data["Schedule"] ?? ["학사일정이 없습니다."];
+        List _scheduleList = [];
+        List _schedule = data["Schedule"] ?? ["학사일정이 없습니다."];
         _schedule.forEach((element) => _scheduleList.add(ListTile(
               title: Text(element),
               visualDensity: VisualDensity(vertical: -4),
@@ -204,9 +230,11 @@ class _HomePageState extends State<HomePage> with RouteAware {
           children: _pages,
           controller: PageController(initialPage: _todayIndex));
     } catch (e) {
+      print(e);
       Future.delayed(
           Duration.zero,
           () => showDialog(
+                barrierDismissible: false,
                 context: context,
                 builder: (BuildContext context) {
                   return AlertDialog(
@@ -308,9 +336,9 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   SharedPreferences _prefs;
-  var _gradeSelection;
-  var _classSelection;
-  var _appVersion;
+  int _gradeSelection;
+  int _classSelection;
+  String _appVersion;
 
   getAppVersion() async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
