@@ -83,123 +83,149 @@ class _HomePageState extends State<HomePage> with RouteAware {
   makePages(data) {
     List<Widget> _pages = [];
     var _todayIndex;
-    data.forEach((date, data) {
-      // 날짜 처리
-      const _weekday = ["", "월", "화", "수", "목", "금", "토", "일"];
-      var _now = DateTime.now();
-      var _parsedDate = DateTime.parse(date);
-      if (_now.day - _parsedDate.day == 0) {
-        _todayIndex = _pages.length;
-      }
-      var _title =
-          "${_parsedDate.month}월 ${_parsedDate.day}일(${_weekday[_parsedDate.weekday]})";
-      // 식단 리스트 작성
-      var _menuList = [];
-      var _menu = data["Meal"][0] ?? ["식단정보가 없습니다."];
-      _menu.forEach((element) => _menuList.add(ListTile(
-            title: Text(element),
-            visualDensity: VisualDensity(vertical: -4),
-          )));
-      // 시간표 리스트 작성
-      var _timetableList = [];
-      var _timetable = data["Timetable"]["$_grade"]["$_class"];
-      if (_timetable.length == 0) _timetable = ["시간표 정보가 없습니다."];
-      _timetable.forEach((element) {
-        if (element.contains("⭐")) {
-          _timetableList.add(ListTile(
-            title: Text(
-              element.replaceAll("⭐", ""),
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            visualDensity: VisualDensity(vertical: -4),
-          ));
-        } else {
-          _timetableList.add(ListTile(
-            title: Text(element),
-            visualDensity: VisualDensity(vertical: -4),
-          ));
+    try {
+      data.forEach((date, data) {
+        // 날짜 처리
+        const _weekday = ["", "월", "화", "수", "목", "금", "토", "일"];
+        var _now = DateTime.now();
+        var _parsedDate = DateTime.parse(date);
+        if (_now.day - _parsedDate.day == 0) {
+          _todayIndex = _pages.length;
         }
-      });
-      // 학사일정 리스트 작성
-      var _scheduleList = [];
-      var _schedule = data["Schedule"] ?? ["학사일정이 없습니다."];
-      _schedule.forEach((element) => _scheduleList.add(ListTile(
-            title: Text(element),
-            visualDensity: VisualDensity(vertical: -4),
-          )));
-      _pages.add(
-        CustomScrollView(
-          physics: const BouncingScrollPhysics(
-              parent: AlwaysScrollableScrollPhysics()),
-          slivers: <Widget>[
-            SliverAppBar(
-                expandedHeight: 150.0,
-                floating: false,
-                pinned: true,
-                snap: false,
-                stretch: true,
-                flexibleSpace: new FlexibleSpaceBar(
-                    titlePadding: EdgeInsets.only(left: 16.0, bottom: 16),
-                    title: Text(
-                      _title,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    )),
-                actions: <Widget>[
-                  IconButton(
-                    icon: const Icon(Icons.settings),
-                    onPressed: () {
-                      Navigator.of(context).push<void>(_createSettingsRoute());
-                    },
-                  ),
-                ]),
-            SliverList(
-              delegate: SliverChildListDelegate(
-                [
-                  ListTile(
-                    title: Text(
-                      "급식",
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  ..._menuList,
-                  Divider(),
-                  ListTile(
-                    title: Text(
-                      "$_grade학년 $_class반 시간표",
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  ..._timetableList,
-                  Divider(),
-                  ListTile(
-                    title: Text(
-                      "학사일정",
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  ..._scheduleList
-                ],
+        var _title =
+            "${_parsedDate.month}월 ${_parsedDate.day}일(${_weekday[_parsedDate.weekday]})";
+        // 식단 리스트 작성
+        var _menuList = [];
+        var _menu = data["Meal"][0] ?? ["식단정보가 없습니다."];
+        _menu.forEach((element) => _menuList.add(ListTile(
+              title: Text(element),
+              visualDensity: VisualDensity(vertical: -4),
+            )));
+        // 시간표 리스트 작성
+        var _timetableList = [];
+        var _timetable = data["Timetable"]["$_grade"]["$_class"];
+        if (_timetable.length == 0) _timetable = ["시간표 정보가 없습니다."];
+        _timetable.forEach((element) {
+          if (element.contains("⭐")) {
+            _timetableList.add(ListTile(
+              title: Text(
+                element.replaceAll("⭐", ""),
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-          ],
-        ),
-      );
-    });
-    return PageView(
-        children: _pages, controller: PageController(initialPage: _todayIndex));
+              visualDensity: VisualDensity(vertical: -4),
+            ));
+          } else {
+            _timetableList.add(ListTile(
+              title: Text(element),
+              visualDensity: VisualDensity(vertical: -4),
+            ));
+          }
+        });
+        // 학사일정 리스트 작성
+        var _scheduleList = [];
+        var _schedule = data["Schedule"] ?? ["학사일정이 없습니다."];
+        _schedule.forEach((element) => _scheduleList.add(ListTile(
+              title: Text(element),
+              visualDensity: VisualDensity(vertical: -4),
+            )));
+        _pages.add(
+          CustomScrollView(
+            physics: const BouncingScrollPhysics(
+                parent: AlwaysScrollableScrollPhysics()),
+            slivers: <Widget>[
+              SliverAppBar(
+                  expandedHeight: 150.0,
+                  floating: false,
+                  pinned: true,
+                  snap: false,
+                  stretch: true,
+                  flexibleSpace: new FlexibleSpaceBar(
+                      titlePadding: EdgeInsets.only(left: 16.0, bottom: 16),
+                      title: Text(
+                        _title,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      )),
+                  actions: <Widget>[
+                    IconButton(
+                      icon: const Icon(Icons.settings),
+                      onPressed: () {
+                        Navigator.of(context)
+                            .push<void>(_createSettingsRoute());
+                      },
+                    ),
+                  ]),
+              SliverList(
+                delegate: SliverChildListDelegate(
+                  [
+                    ListTile(
+                      title: Text(
+                        "급식",
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    ..._menuList,
+                    Divider(),
+                    ListTile(
+                      title: Text(
+                        "$_grade학년 $_class반 시간표",
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    ..._timetableList,
+                    Divider(),
+                    ListTile(
+                      title: Text(
+                        "학사일정",
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    ..._scheduleList
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      });
+      return PageView(
+          children: _pages,
+          controller: PageController(initialPage: _todayIndex));
+    } catch (e) {
+      Future.delayed(
+          Duration.zero,
+          () => showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: new Text("오류 발생"),
+                    content: new Text("데이터를 처리하는 중 오류가 발생했습니다."),
+                    actions: <Widget>[
+                      new FlatButton(
+                        child: new Text("앱 종료"),
+                        onPressed: () {
+                          SystemNavigator.pop();
+                          exit(0);
+                        },
+                      ),
+                    ],
+                  );
+                },
+              ));
+      return SizedBox.shrink();
+    }
   }
 
   @override
