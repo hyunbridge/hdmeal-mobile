@@ -53,7 +53,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
       Directory _cacheDir = await getTemporaryDirectory();
       try {
         final response =
-            await client.get('https://static.api.hdml.kr/data.v3.json');
+            await client.get('https://app.api.hdml.kr/api/v3/app/');
         File _cache = new File("${_cacheDir.path}/cache.json");
         _cache.writeAsString(response.body);
         _previouslyFetchedData = json.decode(response.body);
