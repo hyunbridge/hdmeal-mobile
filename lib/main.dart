@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
   SharedPreferences _prefs;
   int _grade;
   int _class;
-  bool _allergyInfoPref = false;
+  bool _allergyInfoPref = true;
   Map _previouslyFetchedData;
   bool _isCacheSnackBarShown = false;
 
@@ -104,7 +104,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
     setState(() {
       _grade = _prefs.getInt("Grade") ?? 1;
       _class = _prefs.getInt("Class") ?? 1;
-      _allergyInfoPref = _prefs.getBool("AllergyInfo") ?? false;
+      _allergyInfoPref = _prefs.getBool("AllergyInfo") ?? true;
     });
   }
 
@@ -390,7 +390,7 @@ class _SettingsPageState extends State<SettingsPage> {
   SharedPreferences _prefs;
   int _gradeSelection;
   int _classSelection;
-  bool _allergyInfoSelection = false;
+  bool _allergyInfoSelection = true;
   String _appVersion;
 
   getAppVersion() async {
@@ -409,7 +409,7 @@ class _SettingsPageState extends State<SettingsPage> {
     setState(() {
       _gradeSelection = _prefs.getInt("Grade") ?? 1;
       _classSelection = _prefs.getInt("Class") ?? 1;
-      _allergyInfoSelection = _prefs.getBool("AllergyInfo") ?? false;
+      _allergyInfoSelection = _prefs.getBool("AllergyInfo") ?? true;
     });
   }
 
