@@ -44,6 +44,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
   SharedPreferences _prefs;
   int _grade;
   int _class;
+  bool _allergyInfoPref = false;
   Map _previouslyFetchedData;
   bool _isCacheSnackBarShown = false;
 
@@ -52,7 +53,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
       Directory _cacheDir = await getTemporaryDirectory();
       try {
         final response =
-            await client.get('https://static.api.hdml.kr/data.v2.json');
+            await client.get('https://static.api.hdml.kr/data.v3.json');
         File _cache = new File("${_cacheDir.path}/cache.json");
         _cache.writeAsString(response.body);
         _previouslyFetchedData = json.decode(response.body);
@@ -103,16 +104,38 @@ class _HomePageState extends State<HomePage> with RouteAware {
     setState(() {
       _grade = _prefs.getInt("Grade") ?? 1;
       _class = _prefs.getInt("Class") ?? 1;
+      _allergyInfoPref = _prefs.getBool("AllergyInfo") ?? false;
     });
   }
 
   makePages(data) {
     List<Widget> _pages = [];
     int _todayIndex;
+    const List _weekday = ["", "월", "화", "수", "목", "금", "토", "일"];
+    const List _allergyString = [
+      "",
+      "난류",
+      "우유",
+      "메밀",
+      "땅콩",
+      "대두",
+      "밀",
+      "고등어",
+      "게",
+      "새우",
+      "돼지고기",
+      "복숭아",
+      "토마토",
+      "아황산류",
+      "호두",
+      "닭고기",
+      "쇠고기",
+      "오징어",
+      "조개류"
+    ];
     try {
       data.forEach((date, data) {
         // 날짜 처리
-        const List _weekday = ["", "월", "화", "수", "목", "금", "토", "일"];
         DateTime _now = DateTime.now();
         DateTime _parsedDate = DateTime.parse(date);
         if (_now.day - _parsedDate.day == 0) {
@@ -122,11 +145,40 @@ class _HomePageState extends State<HomePage> with RouteAware {
             "${_parsedDate.month}월 ${_parsedDate.day}일(${_weekday[_parsedDate.weekday]})";
         // 식단 리스트 작성
         List _menuList = [];
-        List _menu = data["Meal"][0] ?? ["식단정보가 없습니다."];
-        _menu.forEach((element) => _menuList.add(ListTile(
-              title: Text(element),
+        List _menu = data["Meal"][0] ??
+            [
+              ["식단정보가 없습니다.", []]
+            ];
+        _menu.forEach((element) {
+          if (_allergyInfoPref) {
+            String _allergyInfo = "";
+            element[1].forEach((element) =>
+            _allergyInfo = "$_allergyInfo, ${_allergyString[element]}");
+            _allergyInfo = _allergyInfo.replaceFirst(", ", "");
+            if (!(_allergyInfo == "")) {
+              _menuList.add(ListTile(
+                title: Text(element[0]),
+                subtitle: Text(
+                  _allergyInfo,
+                  style: TextStyle(
+                    fontSize: 12,
+                  ),
+                ),
+                visualDensity: VisualDensity(vertical: -4),
+              ));
+            } else {
+              _menuList.add(ListTile(
+                title: Text(element[0]),
+                visualDensity: VisualDensity(vertical: -4),
+              ));
+            }
+          } else {
+            _menuList.add(ListTile(
+              title: Text(element[0]),
               visualDensity: VisualDensity(vertical: -4),
-            )));
+            ));
+          }
+        });
         // 시간표 리스트 작성
         List _timetableList = [];
         List _timetable = data["Timetable"]["$_grade"]["$_class"];
@@ -338,6 +390,7 @@ class _SettingsPageState extends State<SettingsPage> {
   SharedPreferences _prefs;
   int _gradeSelection;
   int _classSelection;
+  bool _allergyInfoSelection = false;
   String _appVersion;
 
   getAppVersion() async {
@@ -348,6 +401,7 @@ class _SettingsPageState extends State<SettingsPage> {
   pushToSharedPrefs() async {
     await _prefs.setInt("Grade", _gradeSelection);
     await _prefs.setInt("Class", _classSelection);
+    await _prefs.setBool("AllergyInfo", _allergyInfoSelection);
   }
 
   pullFromSharedPrefs() async {
@@ -355,6 +409,7 @@ class _SettingsPageState extends State<SettingsPage> {
     setState(() {
       _gradeSelection = _prefs.getInt("Grade") ?? 1;
       _classSelection = _prefs.getInt("Class") ?? 1;
+      _allergyInfoSelection = _prefs.getBool("AllergyInfo") ?? false;
     });
   }
 
@@ -450,6 +505,16 @@ class _SettingsPageState extends State<SettingsPage> {
                 child: Text('9반'),
               ),
             ],
+          ),
+          SwitchListTile(
+            title: const Text('알러지 정보 표시'),
+            value: _allergyInfoSelection,
+            onChanged: (bool value) {
+              setState(() {
+                _allergyInfoSelection = value;
+                pushToSharedPrefs();
+              });
+            },
           ),
           Divider(),
           ListTile(
