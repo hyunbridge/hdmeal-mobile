@@ -6,28 +6,29 @@
 // ╚═╝  ╚═╝╚═════╝ ╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝
 // Copyright 2020, Hyungyo Seo
 
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:hdmeal/screens/home.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
-  runApp(MaterialApp(
-    theme: ThemeData(
-      fontFamily: "SpoqaHanSansNeo",
-      brightness: Brightness.light,
-      primaryColor: Colors.white,
-      primarySwatch: Colors.grey,
-    ),
-    darkTheme: ThemeData(
-      fontFamily: "SpoqaHanSansNeo",
-      brightness: Brightness.dark,
-      primaryColor: Colors.black,
-      primarySwatch: Colors.grey,
-      accentColor: Colors.grey[500],
-      toggleableActiveColor: Colors.grey[500],
-      // 다크 테마에서는 primarySwatch가 먹지 않음
-    ),
-    home: HomePage(),
-    navigatorObservers: [routeObserver],
-  ));
+import 'package:hdmeal/models/preferences.dart';
+
+class SharedPrefs {
+  SharedPreferences _prefs;
+
+  void push(Prefs prefs) async {
+    _prefs = await SharedPreferences.getInstance();
+    await _prefs.setInt("Grade", prefs.grade);
+    await _prefs.setInt("Class", prefs.class_);
+    await _prefs.setBool("AllergyInfo", prefs.allergyInfo);
+  }
+
+  Future<Prefs> pull() async {
+    _prefs = await SharedPreferences.getInstance();
+    int _grade = _prefs.getInt("Grade") ?? 1;
+    int _class = _prefs.getInt("Class") ?? 1;
+    bool _allergyInfo = _prefs.getBool("AllergyInfo") ?? true;
+    return Prefs(
+      _grade,
+      _class,
+      _allergyInfo,
+    );
+  }
 }

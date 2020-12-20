@@ -6,28 +6,30 @@
 // ╚═╝  ╚═╝╚═════╝ ╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝
 // Copyright 2020, Hyungyo Seo
 
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:hdmeal/screens/home.dart';
+import 'dart:async';
+import 'dart:convert';
 
-void main() {
-  runApp(MaterialApp(
-    theme: ThemeData(
-      fontFamily: "SpoqaHanSansNeo",
-      brightness: Brightness.light,
-      primaryColor: Colors.white,
-      primarySwatch: Colors.grey,
-    ),
-    darkTheme: ThemeData(
-      fontFamily: "SpoqaHanSansNeo",
-      brightness: Brightness.dark,
-      primaryColor: Colors.black,
-      primarySwatch: Colors.grey,
-      accentColor: Colors.grey[500],
-      toggleableActiveColor: Colors.grey[500],
-      // 다크 테마에서는 primarySwatch가 먹지 않음
-    ),
-    home: HomePage(),
-    navigatorObservers: [routeObserver],
-  ));
+import 'package:http/http.dart';
+
+import 'package:hdmeal/utils/cache.dart';
+
+class FetchData {
+  bool cacheUsed = false;
+
+  Future<Map> fetch() async {
+      try {
+        final response =
+        await Client().get('https://app.api.hdml.kr/api/v3/app/');
+        Cache().write(response.body);
+        return json.decode(response.body);
+      } catch (_) {
+        String _cache = await Cache().read();
+        cacheUsed = true;
+        if (_cache != null) {
+          return json.decode(_cache);
+        } else {
+          return null;
+        }
+      }
+  }
 }

@@ -6,28 +6,29 @@
 // ╚═╝  ╚═╝╚═════╝ ╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝
 // Copyright 2020, Hyungyo Seo
 
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:hdmeal/screens/home.dart';
+import 'dart:io';
 
-void main() {
-  runApp(MaterialApp(
-    theme: ThemeData(
-      fontFamily: "SpoqaHanSansNeo",
-      brightness: Brightness.light,
-      primaryColor: Colors.white,
-      primarySwatch: Colors.grey,
-    ),
-    darkTheme: ThemeData(
-      fontFamily: "SpoqaHanSansNeo",
-      brightness: Brightness.dark,
-      primaryColor: Colors.black,
-      primarySwatch: Colors.grey,
-      accentColor: Colors.grey[500],
-      toggleableActiveColor: Colors.grey[500],
-      // 다크 테마에서는 primarySwatch가 먹지 않음
-    ),
-    home: HomePage(),
-    navigatorObservers: [routeObserver],
-  ));
+import 'package:path_provider/path_provider.dart';
+
+class Cache {
+  Future<String> read() async {
+    Directory _cacheDir = await getTemporaryDirectory();
+    try {
+      return File("${_cacheDir.path}/cache.json").readAsStringSync();
+    } on FileSystemException {
+      return null;
+    }
+  }
+
+  void write(String data) async {
+    Directory _cacheDir = await getTemporaryDirectory();
+    File _cache = new File("${_cacheDir.path}/cache.json");
+    _cache.writeAsString(data);
+  }
+
+  void clear(String data) async {
+    Directory _cacheDir = await getTemporaryDirectory();
+    File _cache = new File("${_cacheDir.path}/cache.json");
+    _cache.writeAsString(data);
+  }
 }
