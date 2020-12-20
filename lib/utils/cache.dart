@@ -20,15 +20,25 @@ class Cache {
     }
   }
 
+  Future<DateTime> getUpdatedTime() async {
+    Directory _cacheDir = await getTemporaryDirectory();
+    try {
+      FileStat stat = FileStat.statSync("${_cacheDir.path}/cache.json");
+      return stat.modified;
+    } on FileSystemException {
+      return null;
+    }
+  }
+
   void write(String data) async {
     Directory _cacheDir = await getTemporaryDirectory();
     File _cache = new File("${_cacheDir.path}/cache.json");
     _cache.writeAsString(data);
   }
 
-  void clear(String data) async {
+  void clear() async {
     Directory _cacheDir = await getTemporaryDirectory();
     File _cache = new File("${_cacheDir.path}/cache.json");
-    _cache.writeAsString(data);
+    await _cache.delete();
   }
 }

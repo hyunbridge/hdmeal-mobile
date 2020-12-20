@@ -13,6 +13,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:async/async.dart';
 
 import 'package:hdmeal/models/preferences.dart';
+import 'package:hdmeal/utils/cache.dart';
 import 'package:hdmeal/utils/shared_preferences.dart';
 
 Route createSettingsRoute() {
@@ -186,6 +187,17 @@ class _SettingsPageState extends State<_SettingsPage> {
                   ListTile(
                     title: Text('저작권'),
                     subtitle: Text("Copyright (c) 2020 Hyungyo Seo."),
+                  ),
+                  Divider(),
+                  ListTile(
+                    title: Text('캐시 비우기'),
+                    onTap: () async {
+                      Cache().clear();
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text('캐시를 비웠습니다.'),
+                        duration: const Duration(seconds: 3),
+                      ));
+                    },
                   ),
                 ],
               );

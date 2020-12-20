@@ -15,8 +15,10 @@ import 'package:async/async.dart';
 
 import 'package:hdmeal/models/preferences.dart';
 import 'package:hdmeal/screens/settings.dart';
+import 'package:hdmeal/utils/cache.dart';
 import 'package:hdmeal/utils/shared_preferences.dart';
 import 'package:hdmeal/utils/fetch.dart';
+import 'package:hdmeal/extensions/date_only_compare.dart';
 
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 
@@ -59,7 +61,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
           );
         } else if (_fetch.cacheUsed) {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: const Text('서버에 연결할 수 없어 기기에 저장된 캐시를 이용합니다.'),
+            content: Text('${_fetch.reason} 기기에 저장된 캐시를 이용합니다.'),
             duration: const Duration(seconds: 3),
           ));
         }
@@ -98,7 +100,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
         bool isToday = false;
         DateTime _now = DateTime.now();
         DateTime _parsedDate = DateTime.parse(date);
-        if (_now.day - _parsedDate.day == 0) {
+        if (_now.isSameDate(_parsedDate)) {
           _todayIndex = _pages.length;
           isToday = true;
         }
@@ -271,26 +273,27 @@ class _HomePageState extends State<HomePage> with RouteAware {
       return PageView(children: _pages, controller: _controller);
     } catch (e) {
       print(e);
-      Future.delayed(
-          Duration.zero,
-          () => showDialog(
-                barrierDismissible: false,
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    title: new Text("오류 발생"),
-                    content: new Text("데이터를 처리하는 중 오류가 발생했습니다."),
-                    actions: <Widget>[
-                      new FlatButton(
-                        child: new Text("앱 종료"),
-                        onPressed: () {
-                          SystemNavigator.pop();
-                        },
-                      ),
-                    ],
-                  );
-                },
-              ));
+      Future.delayed(Duration.zero, (){
+        Cache().clear();
+        showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: new Text("오류 발생"),
+              content: new Text("데이터를 처리하는 중 오류가 발생했습니다."),
+              actions: <Widget>[
+                new FlatButton(
+                  child: new Text("앱 종료"),
+                  onPressed: () {
+                    SystemNavigator.pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      });
       return SizedBox.shrink();
     }
   }
