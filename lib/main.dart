@@ -27,7 +27,11 @@ void main() {
       toggleableActiveColor: Colors.grey[500],
       // 다크 테마에서는 primarySwatch가 먹지 않음
     ),
-    home: HomePage(),
+    home: Navigator(
+      onGenerateRoute: (settings) {
+        return createHomeRoute();
+      },
+    ),
     navigatorObservers: [routeObserver],
   ));
 }

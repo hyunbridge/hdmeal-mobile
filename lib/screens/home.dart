@@ -8,6 +8,7 @@
 
 import 'dart:async';
 
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:flutter/services.dart';
@@ -22,12 +23,27 @@ import 'package:hdmeal/extensions/date_only_compare.dart';
 
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 
-class HomePage extends StatefulWidget {
+Route createHomeRoute() {
+  return PageRouteBuilder<void>(
+    pageBuilder: (context, animation, secondaryAnimation) => _HomePage(),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      return SharedAxisTransition(
+        fillColor: Theme.of(context).primaryColor,
+        transitionType: SharedAxisTransitionType.scaled,
+        animation: animation,
+        secondaryAnimation: secondaryAnimation,
+        child: child,
+      );
+    },
+  );
+}
+
+class _HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> with RouteAware {
+class _HomePageState extends State<_HomePage> with RouteAware {
   Prefs _prefs;
 
   final AsyncMemoizer _fetchDataMemoizer = AsyncMemoizer();
@@ -172,6 +188,51 @@ class _HomePageState extends State<HomePage> with RouteAware {
               title: Text(element),
               visualDensity: VisualDensity(vertical: -4),
             )));
+        // 섹션 내부 작성
+        List<Widget> _widgets = [];
+        Map _sections = {
+          "Meal": [
+            ListTile(
+              title: Text(
+                "급식",
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            ..._menuList,
+          ],
+          "Timetable": [
+            ListTile(
+              title: Text(
+                "${_prefs.grade}학년 ${_prefs.class_}반 시간표",
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            ..._timetableList,
+          ],
+          "Schedule": [
+            ListTile(
+              title: Text(
+                "학사일정",
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            ..._scheduleList
+          ]
+        };
+        _prefs.sectionOrder.forEach((element) {
+          _sections[element].forEach((element) => _widgets.add(element));
+          _widgets.add(Divider());
+        });
+        _widgets.removeLast();
         _pages.add(
           CustomScrollView(
             physics: const BouncingScrollPhysics(
@@ -219,40 +280,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
                   ]),
               SliverList(
                 delegate: SliverChildListDelegate(
-                  [
-                    ListTile(
-                      title: Text(
-                        "급식",
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    ..._menuList,
-                    Divider(),
-                    ListTile(
-                      title: Text(
-                        "${_prefs.grade}학년 ${_prefs.class_}반 시간표",
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    ..._timetableList,
-                    Divider(),
-                    ListTile(
-                      title: Text(
-                        "학사일정",
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    ..._scheduleList
-                  ],
+                  _widgets,
                 ),
               ),
             ],
@@ -273,7 +301,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
       return PageView(children: _pages, controller: _controller);
     } catch (e) {
       print(e);
-      Future.delayed(Duration.zero, (){
+      Future.delayed(Duration.zero, () {
         Cache().clear();
         showDialog(
           barrierDismissible: false,

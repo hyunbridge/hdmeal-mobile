@@ -12,6 +12,7 @@ import 'package:package_info/package_info.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:async/async.dart';
 
+import 'package:hdmeal/screens/settings/changeorder.dart';
 import 'package:hdmeal/models/preferences.dart';
 import 'package:hdmeal/utils/cache.dart';
 import 'package:hdmeal/utils/shared_preferences.dart';
@@ -21,7 +22,7 @@ Route createSettingsRoute() {
     pageBuilder: (context, animation, secondaryAnimation) => _SettingsPage(),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       return SharedAxisTransition(
-        fillColor: Colors.transparent,
+        fillColor: Theme.of(context).primaryColor,
         transitionType: SharedAxisTransitionType.scaled,
         animation: animation,
         secondaryAnimation: secondaryAnimation,
@@ -153,6 +154,12 @@ class _SettingsPageState extends State<_SettingsPage> {
                         child: Text('9반'),
                       ),
                     ],
+                  ),
+                  ListTile(
+                    title: Text('화면 순서 변경'),
+                    onTap: () async {
+                      Navigator.push(context, createChangeOrderRoute());
+                    },
                   ),
                   SwitchListTile(
                     title: const Text('알러지 정보 표시'),
