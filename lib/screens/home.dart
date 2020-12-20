@@ -7,7 +7,6 @@
 // Copyright 2020, Hyungyo Seo
 
 import 'dart:async';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
@@ -29,13 +28,14 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> with RouteAware {
   Prefs _prefs;
 
-  final AsyncMemoizer _asyncMemoizer = AsyncMemoizer();
+  final AsyncMemoizer _fetchDataMemoizer = AsyncMemoizer();
+  final AsyncMemoizer _timeErrorSnackBarMemoizer = AsyncMemoizer();
 
   void asyncMethod() async {
     _prefs = await SharedPrefs().pull();
   }
 
-  Future fetchData() => _asyncMemoizer.runOnce(() async {
+  Future fetchData() => _fetchDataMemoizer.runOnce(() async {
         FetchData _fetch = new FetchData();
         Map _data = await _fetch.fetch();
         if (_data == null) {
@@ -45,13 +45,12 @@ class _HomePageState extends State<HomePage> with RouteAware {
             builder: (BuildContext context) {
               return AlertDialog(
                 title: new Text("서버에 연결할 수 없음"),
-                content: new Text("장치의 인터넷 연결 상태를 확인해 주세요."),
+                content: new Text("기기의 인터넷 연결 상태를 확인해 주세요."),
                 actions: <Widget>[
                   new FlatButton(
                     child: new Text("앱 종료"),
                     onPressed: () {
                       SystemNavigator.pop();
-                      exit(0);
                     },
                   ),
                 ],
@@ -258,6 +257,16 @@ class _HomePageState extends State<HomePage> with RouteAware {
           ),
         );
       });
+      if (_todayIndex == null) {
+        _todayIndex = 3;
+        _timeErrorSnackBarMemoizer.runOnce(() => Future.delayed(
+            Duration.zero,
+            () => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: const Text("기기의 시계가 어긋나 있습니다."),
+                  duration: const Duration(seconds: 10),
+                  backgroundColor: Colors.redAccent,
+                ))));
+      }
       _controller = PageController(initialPage: _todayIndex);
       return PageView(children: _pages, controller: _controller);
     } catch (e) {
@@ -276,7 +285,6 @@ class _HomePageState extends State<HomePage> with RouteAware {
                         child: new Text("앱 종료"),
                         onPressed: () {
                           SystemNavigator.pop();
-                          exit(0);
                         },
                       ),
                     ],
