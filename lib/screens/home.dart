@@ -70,6 +70,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
   makePages(data) {
     List<Widget> _pages = [];
     int _todayIndex;
+    PageController _controller;
     const List _weekday = ["", "월", "화", "수", "목", "금", "토", "일"];
     const List _allergyString = [
       "",
@@ -95,10 +96,12 @@ class _HomePageState extends State<HomePage> with RouteAware {
     try {
       data.forEach((date, data) {
         // 날짜 처리
+        bool isToday = false;
         DateTime _now = DateTime.now();
         DateTime _parsedDate = DateTime.parse(date);
         if (_now.day - _parsedDate.day == 0) {
           _todayIndex = _pages.length;
+          isToday = true;
         }
         String _title =
             "${_parsedDate.month}월 ${_parsedDate.day}일(${_weekday[_parsedDate.weekday]})";
@@ -188,6 +191,24 @@ class _HomePageState extends State<HomePage> with RouteAware {
                         ),
                       )),
                   actions: <Widget>[
+                    Builder(
+                      builder: (BuildContext context) {
+                        if (!isToday) {
+                          return IconButton(
+                            icon: const Icon(Icons.calendar_today),
+                            onPressed: () {
+                              _controller.animateToPage(
+                                _todayIndex,
+                                duration: Duration(milliseconds: 300),
+                                curve: Curves.easeOut,
+                              );
+                            },
+                          );
+                        } else {
+                          return SizedBox.shrink();
+                        }
+                      },
+                    ),
                     IconButton(
                       icon: const Icon(Icons.settings),
                       onPressed: () {
@@ -237,9 +258,8 @@ class _HomePageState extends State<HomePage> with RouteAware {
           ),
         );
       });
-      return PageView(
-          children: _pages,
-          controller: PageController(initialPage: _todayIndex));
+      _controller = PageController(initialPage: _todayIndex);
+      return PageView(children: _pages, controller: _controller);
     } catch (e) {
       print(e);
       Future.delayed(
