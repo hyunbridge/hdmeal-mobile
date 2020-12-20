@@ -6,7 +6,6 @@
 // ╚═╝  ╚═╝╚═════╝ ╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝
 // Copyright 2020, Hyungyo Seo
 
-import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info/package_info.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -17,27 +16,12 @@ import 'package:hdmeal/models/preferences.dart';
 import 'package:hdmeal/utils/cache.dart';
 import 'package:hdmeal/utils/shared_preferences.dart';
 
-Route createSettingsRoute() {
-  return PageRouteBuilder<void>(
-    pageBuilder: (context, animation, secondaryAnimation) => _SettingsPage(),
-    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      return SharedAxisTransition(
-        fillColor: Theme.of(context).primaryColor,
-        transitionType: SharedAxisTransitionType.scaled,
-        animation: animation,
-        secondaryAnimation: secondaryAnimation,
-        child: child,
-      );
-    },
-  );
-}
-
-class _SettingsPage extends StatefulWidget {
+class SettingsPage extends StatefulWidget {
   @override
   _SettingsPageState createState() => _SettingsPageState();
 }
 
-class _SettingsPageState extends State<_SettingsPage> {
+class _SettingsPageState extends State<SettingsPage> {
   String _appVersion;
   Prefs _prefs;
 
@@ -158,7 +142,9 @@ class _SettingsPageState extends State<_SettingsPage> {
                   ListTile(
                     title: Text('화면 순서 변경'),
                     onTap: () async {
-                      Navigator.push(context, createChangeOrderRoute());
+                      Navigator.of(context).push<void>(MaterialPageRoute(
+                          builder: (_) => ChangeOrderPage()
+                      ));
                     },
                   ),
                   SwitchListTile(

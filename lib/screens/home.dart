@@ -8,7 +8,6 @@
 
 import 'dart:async';
 
-import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:flutter/services.dart';
@@ -23,27 +22,12 @@ import 'package:hdmeal/extensions/date_only_compare.dart';
 
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 
-Route createHomeRoute() {
-  return PageRouteBuilder<void>(
-    pageBuilder: (context, animation, secondaryAnimation) => _HomePage(),
-    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      return SharedAxisTransition(
-        fillColor: Theme.of(context).primaryColor,
-        transitionType: SharedAxisTransitionType.scaled,
-        animation: animation,
-        secondaryAnimation: secondaryAnimation,
-        child: child,
-      );
-    },
-  );
-}
-
-class _HomePage extends StatefulWidget {
+class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<_HomePage> with RouteAware {
+class _HomePageState extends State<HomePage> with RouteAware {
   Prefs _prefs;
 
   final AsyncMemoizer _fetchDataMemoizer = AsyncMemoizer();
@@ -274,7 +258,9 @@ class _HomePageState extends State<_HomePage> with RouteAware {
                     IconButton(
                       icon: const Icon(Icons.settings),
                       onPressed: () {
-                        Navigator.of(context).push<void>(createSettingsRoute());
+                        Navigator.of(context).push<void>(MaterialPageRoute(
+                          builder: (_) => SettingsPage()
+                        ));
                       },
                     ),
                   ]),

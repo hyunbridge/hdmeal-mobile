@@ -6,34 +6,18 @@
 // ╚═╝  ╚═╝╚═════╝ ╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝
 // Copyright 2020, Hyungyo Seo
 
-import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:async/async.dart';
 
 import 'package:hdmeal/models/preferences.dart';
 import 'package:hdmeal/utils/shared_preferences.dart';
 
-Route createChangeOrderRoute()  {
-  return PageRouteBuilder<void>(
-    pageBuilder: (context, animation, secondaryAnimation) => _ChangeOrderPage(),
-    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      return SharedAxisTransition(
-        fillColor: Theme.of(context).primaryColor,
-        transitionType: SharedAxisTransitionType.scaled,
-        animation: animation,
-        secondaryAnimation: secondaryAnimation,
-        child: child,
-      );
-    },
-  );
-}
-
-class _ChangeOrderPage extends StatefulWidget {
+class ChangeOrderPage extends StatefulWidget {
   @override
   _ChangeOrderPageState createState() => _ChangeOrderPageState();
 }
 
-class _ChangeOrderPageState extends State<_ChangeOrderPage> {
+class _ChangeOrderPageState extends State<ChangeOrderPage> {
   Prefs _prefs;
 
   Map _sectionsKO = {
