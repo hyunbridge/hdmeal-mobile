@@ -187,11 +187,16 @@ class _HomePageState extends State<HomePage> with RouteAware {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              trailing: IconButton(
-                  icon: Icon(Icons.share),
-                  onPressed: () {
-                    Share.share("<${_parsedDate.month}월 ${_parsedDate.day}일(${_weekday[_parsedDate.weekday]})>\n${_menuStringList.join(",\n")}");
-                  }),
+              trailing: Transform.translate(
+                offset: Offset(16, 0),
+                child: IconButton(
+                    icon: const Icon(Icons.share),
+                    color: Theme.of(context).textTheme.bodyText1.color,
+                    onPressed: () {
+                      Share.share(
+                          "<${_parsedDate.month}월 ${_parsedDate.day}일(${_weekday[_parsedDate.weekday]})>\n${_menuStringList.join(",\n")}");
+                    }),
+              ),
             ),
             ..._menuList,
           ],
