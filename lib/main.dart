@@ -39,6 +39,7 @@ void main() {
         builders: {
           TargetPlatform.android: SharedAxisPageTransitionsBuilder(
             transitionType: SharedAxisTransitionType.scaled,
+            fillColor:  Colors.black,
           )
         },
       ),
