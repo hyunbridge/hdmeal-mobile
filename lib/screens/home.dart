@@ -145,7 +145,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
         // 시간표 리스트 작성
         List _timetableList = [];
         List _timetable =
-            data["Timetable"]["${_prefs.grade}"]["${_prefs.class_}"];
+            data["Timetable"]["${_prefs.userGrade}"]["${_prefs.userClass}"];
         if (_timetable.length == 0) _timetable = ["시간표 정보가 없습니다."];
         _timetable.forEach((element) {
           if (element.contains("⭐")) {
@@ -190,7 +190,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
           "Timetable": [
             ListTile(
               title: Text(
-                "${_prefs.grade}학년 ${_prefs.class_}반 시간표",
+                "${_prefs.userGrade}학년 ${_prefs.userClass}반 시간표",
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,

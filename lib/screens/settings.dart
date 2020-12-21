@@ -64,13 +64,13 @@ class _SettingsPageState extends State<SettingsPage> {
                   PopupMenuButton<int>(
                     onSelected: (int value) {
                       setState(() {
-                        _prefs.grade = value;
+                        _prefs.userGrade = value;
                         SharedPrefs().push(_prefs);
                       });
                     },
                     child: ListTile(
                       title: Text('학년'),
-                      subtitle: Text("${_prefs.grade}학년"),
+                      subtitle: Text("${_prefs.userGrade}학년"),
                     ),
                     itemBuilder: (BuildContext context) =>
                         <PopupMenuEntry<int>>[
@@ -91,13 +91,13 @@ class _SettingsPageState extends State<SettingsPage> {
                   PopupMenuButton<int>(
                     onSelected: (int value) {
                       setState(() {
-                        _prefs.class_ = value;
+                        _prefs.userClass = value;
                         SharedPrefs().push(_prefs);
                       });
                     },
                     child: ListTile(
                       title: Text('반'),
-                      subtitle: Text("${_prefs.class_}반"),
+                      subtitle: Text("${_prefs.userClass}반"),
                     ),
                     itemBuilder: (BuildContext context) =>
                         <PopupMenuEntry<int>>[
@@ -186,8 +186,23 @@ class _SettingsPageState extends State<SettingsPage> {
                     title: Text('캐시 비우기'),
                     onTap: () async {
                       Cache().clear();
+                      ScaffoldMessenger.of(context).hideCurrentSnackBar();
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                         content: Text('캐시를 비웠습니다.'),
+                        duration: const Duration(seconds: 3),
+                      ));
+                    },
+                  ),
+                  ListTile(
+                    title: Text('설정 초기화'),
+                    onTap: () async {
+                      setState(() {
+                        _prefs = new Prefs.defaultValue();
+                        SharedPrefs().push(_prefs);
+                      });
+                      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text('설정을 초기화했습니다.'),
                         duration: const Duration(seconds: 3),
                       ));
                     },

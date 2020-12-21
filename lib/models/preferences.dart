@@ -7,15 +7,21 @@
 // Copyright 2020, Hyungyo Seo
 
 class Prefs {
-  int grade;
-  int class_;
+  int userGrade;
+  int userClass;
   bool allergyInfo;
   List<String> sectionOrder;
 
   Prefs(
-    this.grade,
-    this.class_,
+    this.userGrade,
+    this.userClass,
     this.allergyInfo,
     this.sectionOrder,
   );
+  Prefs.defaultValue() {
+    userGrade = 1;
+    userClass = 1;
+    allergyInfo = true;
+    sectionOrder = ["Meal", "Timetable", "Schedule"];
+  }
 }
