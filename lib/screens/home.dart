@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:flutter/services.dart';
 import 'package:async/async.dart';
+import 'package:share/share.dart';
 
 import 'package:hdmeal/models/preferences.dart';
 import 'package:hdmeal/screens/settings.dart';
@@ -108,11 +109,13 @@ class _HomePageState extends State<HomePage> with RouteAware {
             "${_parsedDate.month}월 ${_parsedDate.day}일(${_weekday[_parsedDate.weekday]})";
         // 식단 리스트 작성
         List _menuList = [];
+        List _menuStringList = [];
         List _menu = data["Meal"][0] ??
             [
               ["식단정보가 없습니다.", []]
             ];
         _menu.forEach((element) {
+          _menuStringList.add(element[0]);
           if (_prefs.allergyInfo) {
             String _allergyInfo = "";
             element[1].forEach((element) =>
@@ -184,6 +187,11 @@ class _HomePageState extends State<HomePage> with RouteAware {
                   fontWeight: FontWeight.bold,
                 ),
               ),
+              trailing: IconButton(
+                  icon: Icon(Icons.share),
+                  onPressed: () {
+                    Share.share("<${_parsedDate.month}월 ${_parsedDate.day}일(${_weekday[_parsedDate.weekday]})>\n${_menuStringList.join(",\n")}");
+                  }),
             ),
             ..._menuList,
           ],
@@ -258,9 +266,8 @@ class _HomePageState extends State<HomePage> with RouteAware {
                     IconButton(
                       icon: const Icon(Icons.settings),
                       onPressed: () {
-                        Navigator.of(context).push<void>(MaterialPageRoute(
-                          builder: (_) => SettingsPage()
-                        ));
+                        Navigator.of(context).push<void>(
+                            MaterialPageRoute(builder: (_) => SettingsPage()));
                       },
                     ),
                   ]),
