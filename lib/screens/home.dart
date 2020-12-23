@@ -20,6 +20,7 @@ import 'package:hdmeal/utils/cache.dart';
 import 'package:hdmeal/utils/shared_preferences.dart';
 import 'package:hdmeal/utils/fetch.dart';
 import 'package:hdmeal/extensions/date_only_compare.dart';
+import 'package:hdmeal/widgets/change_grade_class.dart';
 
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 
@@ -209,6 +210,23 @@ class _HomePageState extends State<HomePage> with RouteAware {
                   fontWeight: FontWeight.bold,
                 ),
               ),
+              onTap: () async {
+                ChangeGradeClass _changeGradeClass =
+                    new ChangeGradeClass.dialog(
+                        currentGrade: _prefs.userGrade,
+                        currentClass: _prefs.userClass);
+                await showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return _changeGradeClass;
+                  },
+                );
+                setState(() {
+                  _prefs.userGrade = _changeGradeClass.selectedGrade;
+                  _prefs.userClass = _changeGradeClass.selectedClass;
+                  SharedPrefs().push(_prefs);
+                });
+              },
             ),
             ..._timetableList,
           ],

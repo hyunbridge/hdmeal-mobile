@@ -15,6 +15,7 @@ import 'package:hdmeal/screens/settings/changeorder.dart';
 import 'package:hdmeal/models/preferences.dart';
 import 'package:hdmeal/utils/cache.dart';
 import 'package:hdmeal/utils/shared_preferences.dart';
+import 'package:hdmeal/widgets/change_grade_class.dart';
 
 class SettingsPage extends StatefulWidget {
   @override
@@ -61,83 +62,27 @@ class _SettingsPageState extends State<SettingsPage> {
             if (snapshot.hasData && snapshot.data) {
               return ListView(
                 children: [
-                  PopupMenuButton<int>(
-                    onSelected: (int value) {
+                  ListTile(
+                    title: Text('학년/반 변경'),
+                    subtitle:
+                        Text('${_prefs.userGrade}학년 ${_prefs.userClass}반'),
+                    onTap: () async {
+                      ChangeGradeClass _changeGradeClass =
+                          new ChangeGradeClass.dialog(
+                              currentGrade: _prefs.userGrade,
+                              currentClass: _prefs.userClass);
+                      await showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return _changeGradeClass;
+                        },
+                      );
                       setState(() {
-                        _prefs.userGrade = value;
+                        _prefs.userGrade = _changeGradeClass.selectedGrade;
+                        _prefs.userClass = _changeGradeClass.selectedClass;
                         SharedPrefs().push(_prefs);
                       });
                     },
-                    child: ListTile(
-                      title: Text('학년'),
-                      subtitle: Text("${_prefs.userGrade}학년"),
-                    ),
-                    itemBuilder: (BuildContext context) =>
-                        <PopupMenuEntry<int>>[
-                      const PopupMenuItem<int>(
-                        value: 1,
-                        child: Text('1학년'),
-                      ),
-                      const PopupMenuItem<int>(
-                        value: 2,
-                        child: Text('2학년'),
-                      ),
-                      const PopupMenuItem<int>(
-                        value: 3,
-                        child: Text('3학년'),
-                      ),
-                    ],
-                  ),
-                  PopupMenuButton<int>(
-                    onSelected: (int value) {
-                      setState(() {
-                        _prefs.userClass = value;
-                        SharedPrefs().push(_prefs);
-                      });
-                    },
-                    child: ListTile(
-                      title: Text('반'),
-                      subtitle: Text("${_prefs.userClass}반"),
-                    ),
-                    itemBuilder: (BuildContext context) =>
-                        <PopupMenuEntry<int>>[
-                      const PopupMenuItem<int>(
-                        value: 1,
-                        child: Text('1반'),
-                      ),
-                      const PopupMenuItem<int>(
-                        value: 2,
-                        child: Text('2반'),
-                      ),
-                      const PopupMenuItem<int>(
-                        value: 3,
-                        child: Text('3반'),
-                      ),
-                      const PopupMenuItem<int>(
-                        value: 4,
-                        child: Text('4반'),
-                      ),
-                      const PopupMenuItem<int>(
-                        value: 5,
-                        child: Text('5반'),
-                      ),
-                      const PopupMenuItem<int>(
-                        value: 6,
-                        child: Text('6반'),
-                      ),
-                      const PopupMenuItem<int>(
-                        value: 7,
-                        child: Text('7반'),
-                      ),
-                      const PopupMenuItem<int>(
-                        value: 8,
-                        child: Text('8반'),
-                      ),
-                      const PopupMenuItem<int>(
-                        value: 9,
-                        child: Text('9반'),
-                      ),
-                    ],
                   ),
                   ListTile(
                     title: Text('화면 순서 변경'),
