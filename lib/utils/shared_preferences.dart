@@ -28,7 +28,7 @@ class SharedPrefs {
       File _prefsFile = new File("${_prefsDir.path}/preferences.json");
       String _prefsString = _prefsFile.readAsStringSync();
       return new Prefs.fromJson(json.decode(_prefsString));
-    } catch(_) {
+    } catch (_) {
       return defaultValues;
     }
   }
