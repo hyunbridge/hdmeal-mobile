@@ -42,40 +42,56 @@ class _ChangeGradeClassState extends State<ChangeGradeClass> {
         _themeData.textTheme.headline5.copyWith(color: Colors.black);
     return AlertDialog(
       title: Text("학년/반 변경"),
-      content:
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
-        NumberPicker.integer(
-          initialValue: widget.selectedGrade,
-          minValue: 1,
-          maxValue: 3,
-          onChanged: (newValue) =>
-              setState(() => widget.selectedGrade = newValue),
-          textStyle: _textStyle,
-          selectedTextStyle: _selectedTextStyle,
-          listViewWidth: 20,
-          itemExtent: 40,
-        ),
-        Text(
-          '학년',
-          style: _selectedTextStyle,
-        ),
-        SizedBox(width: 20),
-        NumberPicker.integer(
-          initialValue: widget.selectedClass,
-          minValue: 1,
-          maxValue: 9,
-          onChanged: (newValue) =>
-              setState(() => widget.selectedClass = newValue),
-          textStyle: _textStyle,
-          selectedTextStyle: _selectedTextStyle,
-          listViewWidth: 20,
-          itemExtent: 40,
-        ),
-        Text(
-          '반',
-          style: _selectedTextStyle,
-        ),
-      ]),
+      content: Transform.translate(
+        offset: const Offset(-15, 0),
+        child:
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
+          Stack(
+            children: [
+              Transform.translate(
+                offset: const Offset(50, 45),
+                child: Text(
+                  '학년',
+                  style: _selectedTextStyle,
+                ),
+              ),
+              NumberPicker.integer(
+                initialValue: widget.selectedGrade,
+                minValue: 1,
+                maxValue: 3,
+                onChanged: (newValue) =>
+                    setState(() => widget.selectedGrade = newValue),
+                textStyle: _textStyle,
+                selectedTextStyle: _selectedTextStyle,
+                listViewWidth: 80,
+                itemExtent: 40,
+              ),
+            ],
+          ),
+          Stack(
+            children: [
+              Transform.translate(
+                offset: const Offset(50, 45),
+                child: Text(
+                  '반',
+                  style: _selectedTextStyle,
+                ),
+              ),
+              NumberPicker.integer(
+                initialValue: widget.selectedClass,
+                minValue: 1,
+                maxValue: 9,
+                onChanged: (newValue) =>
+                    setState(() => widget.selectedClass = newValue),
+                textStyle: _textStyle,
+                selectedTextStyle: _selectedTextStyle,
+                listViewWidth: 80,
+                itemExtent: 40,
+              ),
+            ],
+          ),
+        ]),
+      ),
       actions: <Widget>[
         FlatButton(
           child: Text("닫기"),
