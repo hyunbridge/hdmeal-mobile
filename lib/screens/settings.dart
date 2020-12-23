@@ -11,7 +11,6 @@ import 'package:package_info/package_info.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:async/async.dart';
 
-import 'package:hdmeal/screens/settings/changeorder.dart';
 import 'package:hdmeal/models/preferences.dart';
 import 'package:hdmeal/utils/cache.dart';
 import 'package:hdmeal/utils/shared_preferences.dart';
@@ -87,8 +86,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   ListTile(
                     title: Text('화면 순서 변경'),
                     onTap: () async {
-                      Navigator.of(context).push<void>(
-                          MaterialPageRoute(builder: (_) => ChangeOrderPage()));
+                      Navigator.pushNamed(context, '/settings/changeOrder');
                     },
                   ),
                   SwitchListTile(

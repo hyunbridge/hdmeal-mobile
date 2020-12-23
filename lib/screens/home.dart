@@ -14,8 +14,9 @@ import 'package:flutter/services.dart';
 import 'package:async/async.dart';
 import 'package:share/share.dart';
 
+import 'package:firebase_analytics/firebase_analytics.dart';
+
 import 'package:hdmeal/models/preferences.dart';
-import 'package:hdmeal/screens/settings.dart';
 import 'package:hdmeal/utils/cache.dart';
 import 'package:hdmeal/utils/shared_preferences.dart';
 import 'package:hdmeal/utils/fetch.dart';
@@ -23,6 +24,7 @@ import 'package:hdmeal/extensions/date_only_compare.dart';
 import 'package:hdmeal/widgets/change_grade_class.dart';
 
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
+final FirebaseAnalytics analytics = FirebaseAnalytics();
 
 class HomePage extends StatefulWidget {
   @override
@@ -37,6 +39,11 @@ class _HomePageState extends State<HomePage> with RouteAware {
 
   void asyncMethod() async {
     _prefs = await SharedPrefs().pull();
+    _prefs.toJson().forEach((key, value) {
+      if (key != "userGrade" && key != "userClass") {
+        analytics.setUserProperty(name: key, value: '$value');
+      }
+    });
   }
 
   Future fetchData() => _fetchDataMemoizer.runOnce(() async {
@@ -289,8 +296,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
                     IconButton(
                       icon: const Icon(Icons.settings),
                       onPressed: () {
-                        Navigator.of(context).push<void>(
-                            MaterialPageRoute(builder: (_) => SettingsPage()));
+                        Navigator.pushNamed(context, '/settings');
                       },
                     ),
                   ]),

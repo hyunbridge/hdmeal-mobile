@@ -10,9 +10,21 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:hdmeal/screens/home.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
-void main() {
+import 'package:hdmeal/screens/home.dart';
+import 'package:hdmeal/screens/settings.dart';
+import 'package:hdmeal/screens/settings/changeorder.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  FirebaseAnalytics analytics = FirebaseAnalytics();
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+
   runApp(MaterialApp(
     theme: ThemeData(
       fontFamily: "SpoqaHanSansNeo",
@@ -39,12 +51,20 @@ void main() {
         builders: {
           TargetPlatform.android: SharedAxisPageTransitionsBuilder(
             transitionType: SharedAxisTransitionType.scaled,
-            fillColor:  Colors.black,
+            fillColor: Colors.black,
           )
         },
       ),
     ),
-    home: HomePage(),
-    navigatorObservers: [routeObserver],
+    initialRoute: '/',
+    routes: {
+      '/': (context) => HomePage(),
+      '/settings': (context) => SettingsPage(),
+      '/settings/changeOrder': (context) => ChangeOrderPage(),
+    },
+    navigatorObservers: [
+      routeObserver,
+      FirebaseAnalyticsObserver(analytics: analytics),
+    ],
   ));
 }
