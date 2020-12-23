@@ -123,6 +123,12 @@ class _SettingsPageState extends State<SettingsPage> {
                     title: Text('저작권'),
                     subtitle: Text("Copyright (c) 2020 Hyungyo Seo."),
                   ),
+                  ListTile(
+                    title: Text('개인정보 처리방침'),
+                    onTap: () async {
+                      launch("https://hdmeal.page.link/FlutterAppPrivacyPolicy");
+                    },
+                  ),
                   Divider(),
                   ListTile(
                     title: Text('캐시 비우기'),
