@@ -7,8 +7,6 @@
 // Copyright 2020, Hyungyo Seo
 
 import 'package:flutter/material.dart';
-import 'package:package_info/package_info.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:async/async.dart';
 
 import 'package:hdmeal/models/preferences.dart';
@@ -22,15 +20,12 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  String _appVersion;
   Prefs _prefs;
 
   final AsyncMemoizer _asyncMemoizer = AsyncMemoizer();
 
   Future asyncMethod() => _asyncMemoizer.runOnce(() async {
         _prefs = await SharedPrefs().pull();
-        PackageInfo packageInfo = await PackageInfo.fromPlatform();
-        _appVersion = packageInfo.version;
         return true;
       });
 
@@ -44,9 +39,7 @@ class _SettingsPageState extends State<SettingsPage> {
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
-        title: Text(
-          "설정",
-        ),
+        title: Text("설정"),
       ),
       body: FutureBuilder(
           future: asyncMethod(),
@@ -97,36 +90,6 @@ class _SettingsPageState extends State<SettingsPage> {
                         _prefs.allergyInfo = value;
                         SharedPrefs().push(_prefs);
                       });
-                    },
-                  ),
-                  Divider(),
-                  ListTile(
-                    title: Text('웹 앱 열기'),
-                    subtitle: Text("app.hdml.kr"),
-                    onTap: () async {
-                      launch("https://app.hdml.kr/");
-                    },
-                  ),
-                  ListTile(
-                    title: Text('개발자에게 문의하기'),
-                    subtitle: Text("hekn2y4j@duck.com"),
-                    onTap: () async {
-                      launch("mailto:hekn2y4j@duck.com");
-                    },
-                  ),
-                  Divider(),
-                  ListTile(
-                    title: Text('앱 버전'),
-                    subtitle: Text("$_appVersion"),
-                  ),
-                  ListTile(
-                    title: Text('저작권'),
-                    subtitle: Text("Copyright (c) 2020 Hyungyo Seo."),
-                  ),
-                  ListTile(
-                    title: Text('개인정보 처리방침'),
-                    onTap: () async {
-                      launch("https://hdmeal.page.link/FlutterAppPrivacyPolicy");
                     },
                   ),
                   Divider(),
@@ -207,6 +170,13 @@ class _SettingsPageState extends State<SettingsPage> {
                           );
                         },
                       );
+                    },
+                  ),
+                  Divider(),
+                  ListTile(
+                    title: Text('앱 정보'),
+                    onTap: () async {
+                      Navigator.pushNamed(context, '/settings/appInfo');
                     },
                   ),
                 ],

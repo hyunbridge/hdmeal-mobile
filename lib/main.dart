@@ -18,6 +18,8 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:hdmeal/screens/home.dart';
 import 'package:hdmeal/screens/settings.dart';
 import 'package:hdmeal/screens/settings/changeorder.dart';
+import 'package:hdmeal/screens/settings/appinfo.dart';
+import 'package:hdmeal/screens/settings/appinfo/osslicences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -61,6 +63,8 @@ void main() async {
       '/': (context) => HomePage(),
       '/settings': (context) => SettingsPage(),
       '/settings/changeOrder': (context) => ChangeOrderPage(),
+      '/settings/appInfo': (context) => AppInfoPage(),
+      '/settings/appInfo/OSSLicences': (context) => OSSLicencesPage(),
     },
     navigatorObservers: [
       routeObserver,
