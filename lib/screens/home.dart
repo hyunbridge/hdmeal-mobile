@@ -159,22 +159,10 @@ class _HomePageState extends State<HomePage> with RouteAware {
             data["Timetable"]["${_prefs.userGrade}"]["${_prefs.userClass}"];
         if (_timetable.length == 0) _timetable = ["시간표 정보가 없습니다."];
         _timetable.forEach((element) {
-          if (element.contains("⭐")) {
-            _timetableList.add(ListTile(
-              title: Text(
-                element.replaceAll("⭐", ""),
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              visualDensity: VisualDensity(vertical: -4),
-            ));
-          } else {
-            _timetableList.add(ListTile(
-              title: Text(element),
-              visualDensity: VisualDensity(vertical: -4),
-            ));
-          }
+          _timetableList.add(ListTile(
+            title: Text(element),
+            visualDensity: VisualDensity(vertical: -4),
+          ));
         });
         // 학사일정 리스트 작성
         List _scheduleList = [];
@@ -267,7 +255,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
                   snap: false,
                   stretch: true,
                   flexibleSpace: new FlexibleSpaceBar(
-                      titlePadding: EdgeInsets.only(left: 16.0, bottom: 16),
+                      titlePadding: EdgeInsets.only(left: 16.0, bottom: 13),
                       title: Text(
                         _title,
                         style: TextStyle(
