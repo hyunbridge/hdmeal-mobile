@@ -7,12 +7,14 @@
 // Copyright 2020, Hyungyo Seo
 
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:flutter/services.dart';
 import 'package:async/async.dart';
 import 'package:share/share.dart';
+import 'package:shimmer/shimmer.dart';
 
 import 'package:firebase_analytics/firebase_analytics.dart';
 
@@ -364,6 +366,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
   }
 
   Widget build(BuildContext context) {
+    final Random _random = new Random();
     FlutterStatusbarcolor.setStatusBarColor(Colors.transparent);
     FlutterStatusbarcolor.setNavigationBarColor(Theme.of(context).primaryColor);
     if (Theme.of(context).brightness == Brightness.light) {
@@ -390,7 +393,57 @@ class _HomePageState extends State<HomePage> with RouteAware {
               }
               return makePages(snapshot.data);
             } else {
-              return Center(child: CircularProgressIndicator());
+              return CustomScrollView(
+                physics: const BouncingScrollPhysics(
+                    parent: AlwaysScrollableScrollPhysics()),
+                slivers: <Widget>[
+                  SliverAppBar(
+                      expandedHeight: 150.0,
+                      floating: false,
+                      pinned: true,
+                      snap: false,
+                      stretch: true,
+                      flexibleSpace: new FlexibleSpaceBar(
+                          titlePadding:
+                          EdgeInsets.only(left: 16.0, bottom: 13),
+                          title: Shimmer.fromColors(
+                              child: Container(
+                                width: 140,
+                                height: 30,
+                                color: Colors.white,
+                              ),
+                              baseColor: Colors.grey[300],
+                              highlightColor: Colors.grey[100])),
+                      actions: <Widget>[
+                        IconButton(
+                          icon: const Icon(Icons.settings),
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/settings');
+                          },
+                        ),
+                      ]),
+                  SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                          (BuildContext context, int index) {
+                        return Shimmer.fromColors(
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Container(
+                                margin: const EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 8),
+                                height: 35,
+                                width: _random.nextDouble() * 250 + 150,
+                                color: Colors.white,
+                              ),
+                            ),
+                            baseColor: Colors.grey[300],
+                            highlightColor: Colors.grey[100]);
+                      },
+                      childCount: _random.nextInt(5) + 10,
+                    ),
+                  ),
+                ],
+              );
             }
           }),
     );
