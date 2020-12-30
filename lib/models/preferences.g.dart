@@ -12,6 +12,9 @@ Prefs _$PrefsFromJson(Map<String, dynamic> json) {
     json['userClass'] as int,
     json['allergyInfo'] as bool,
     (json['sectionOrder'] as List).map((e) => e as String).toList(),
+    json['receiveNotifications'] as bool,
+    json['notificationsHour'] as int,
+    json['notificationsMinute'] as int,
   );
 }
 
@@ -20,4 +23,7 @@ Map<String, dynamic> _$PrefsToJson(Prefs instance) => <String, dynamic>{
       'userClass': instance.userClass,
       'allergyInfo': instance.allergyInfo,
       'sectionOrder': instance.sectionOrder,
+      'receiveNotifications': instance.receiveNotifications,
+      'notificationsHour': instance.notificationsHour,
+      'notificationsMinute': instance.notificationsMinute,
     };

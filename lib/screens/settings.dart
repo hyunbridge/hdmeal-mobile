@@ -82,6 +82,12 @@ class _SettingsPageState extends State<SettingsPage> {
                       Navigator.pushNamed(context, '/settings/changeOrder');
                     },
                   ),
+                  ListTile(
+                    title: Text('알림 설정'),
+                    onTap: () async {
+                      Navigator.pushNamed(context, '/settings/notifications');
+                    },
+                  ),
                   SwitchListTile(
                     title: const Text('알러지 정보 표시'),
                     value: _prefs.allergyInfo,

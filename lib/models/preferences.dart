@@ -16,18 +16,27 @@ class Prefs {
   int userClass;
   bool allergyInfo;
   List<String> sectionOrder;
+  bool receiveNotifications;
+  int notificationsHour;
+  int notificationsMinute;
 
   Prefs(
     this.userGrade,
     this.userClass,
     this.allergyInfo,
     this.sectionOrder,
+    this.receiveNotifications,
+    this.notificationsHour,
+    this.notificationsMinute,
   );
   Prefs.defaultValue() {
     userGrade = 1;
     userClass = 1;
     allergyInfo = true;
     sectionOrder = ["Meal", "Timetable", "Schedule"];
+    receiveNotifications = false;
+    notificationsHour = 7;
+    notificationsMinute = 30;
   }
 
   factory Prefs.fromJson(Map<String, dynamic> json) => _$PrefsFromJson(json);

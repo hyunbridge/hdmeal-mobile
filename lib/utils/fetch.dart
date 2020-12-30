@@ -21,7 +21,8 @@ class FetchData {
 
   Future<Map> fetch() async {
     try {
-      ConnectivityResult connectivityResult = await (Connectivity().checkConnectivity());
+      ConnectivityResult connectivityResult =
+          await (Connectivity().checkConnectivity());
       if (connectivityResult == ConnectivityResult.mobile) {
         DateTime _now = DateTime.now();
         DateTime _cacheUpdatedTime = await Cache().getUpdatedTime();
@@ -50,6 +51,15 @@ class FetchData {
       } else {
         return null;
       }
+    }
+  }
+
+  Future<Map> fetchFromCache() async {
+    String _cache = await Cache().read();
+    if (_cache != null) {
+      return json.decode(_cache);
+    } else {
+      return null;
     }
   }
 }

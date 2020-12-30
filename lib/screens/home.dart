@@ -36,6 +36,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> with RouteAware {
   Prefs _prefs;
 
+  final FetchData _fetch = new FetchData();
+
   final AsyncMemoizer _fetchDataMemoizer = AsyncMemoizer();
   final AsyncMemoizer _timeErrorSnackBarMemoizer = AsyncMemoizer();
 
@@ -49,7 +51,6 @@ class _HomePageState extends State<HomePage> with RouteAware {
   }
 
   Future fetchData() => _fetchDataMemoizer.runOnce(() async {
-        FetchData _fetch = new FetchData();
         Map _data = await _fetch.fetch();
         if (_data == null) {
           showDialog(
