@@ -21,19 +21,22 @@ class NotificationSettingsPage extends StatefulWidget {
 }
 
 class _NotificationSettingsState extends State<NotificationSettingsPage> {
-  final MenuNotification _notification = new MenuNotification();
   Prefs _prefs;
+
+  final MenuNotification _notification = new MenuNotification();
 
   final AsyncMemoizer _asyncMemoizer = AsyncMemoizer();
 
   Future asyncMethod() => _asyncMemoizer.runOnce(() async {
         _prefs = await SharedPrefs().pull();
+        await _notification.init();
         return true;
       });
 
   Future<void> _schedule(int hour, int minute) async {
+    await _notification.unsubscribe();
     if (_prefs.receiveNotifications) {
-      await _notification.schedule(hour, minute);
+      await _notification.subscribe(hour, minute);
     }
   }
 
@@ -41,7 +44,6 @@ class _NotificationSettingsState extends State<NotificationSettingsPage> {
   void initState() {
     super.initState();
     asyncMethod();
-    _notification.init();
   }
 
   Widget build(BuildContext context) {
@@ -72,8 +74,10 @@ class _NotificationSettingsState extends State<NotificationSettingsPage> {
                       children: [
                         ListTile(
                           title: Text('매일 알림 받기'),
-                          subtitle: Text(
-                              '매일 지정된 시각에 알림을 받아볼 수 있습니다. 캐시가 오래된 경우 알림이 발송되지 않을 수 있습니다.'),
+                          subtitle: Text('매일 지정된 시각에 알림을 받아볼 수 있습니다.'
+                              ' 오랫동안 앱을 실행하지 않았거나 절전 모드를'
+                              ' 실행하여 백그라운드에서 앱이 실행될 수 없는'
+                              ' 경우 알림이 발송되지 않을 수 있습니다.'),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
@@ -90,7 +94,8 @@ class _NotificationSettingsState extends State<NotificationSettingsPage> {
                                       Prefs.defaultValue().notificationsMinute;
                                   SharedPrefs().push(_prefs);
                                 });
-                                _schedule(_prefs.notificationsHour, _prefs.notificationsMinute);
+                                _schedule(_prefs.notificationsHour,
+                                    _prefs.notificationsMinute);
                               },
                             ),
                             const SizedBox(width: 8),
@@ -179,7 +184,8 @@ class _NotificationSettingsState extends State<NotificationSettingsPage> {
                             _prefs.notificationsMinute = _time.minute;
                             SharedPrefs().push(_prefs);
                           });
-                          _schedule(_prefs.notificationsHour, _prefs.notificationsMinute);
+                          _schedule(_prefs.notificationsHour,
+                              _prefs.notificationsMinute);
                         },
                       ),
                       ListTile(

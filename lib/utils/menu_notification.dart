@@ -57,7 +57,11 @@ class MenuNotification {
     }
   }
 
-  Future<void> schedule(int hour, int minute) async {
+  Future<void> clear() async {
+    await _localNotifications.cancelAll();
+  }
+
+  Future<void> subscribe(int hour, int minute) async {
     tz.initializeTimeZones();
     tz.setLocalLocation(tz.getLocation('Asia/Seoul'));
     final _now = tz.TZDateTime.now(tz.local);
@@ -85,5 +89,12 @@ class MenuNotification {
     } on NoSuchMethodError {
       // pass
     }
+  }
+
+  Future<void> unsubscribe() async {
+    await _localNotifications
+        .resolvePlatformSpecificImplementation<
+        AndroidFlutterLocalNotificationsPlugin>()
+        ?.deleteNotificationChannelGroup(_channelId);
   }
 }

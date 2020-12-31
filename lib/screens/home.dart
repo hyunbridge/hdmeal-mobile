@@ -20,8 +20,9 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 
 import 'package:hdmeal/models/preferences.dart';
 import 'package:hdmeal/utils/cache.dart';
-import 'package:hdmeal/utils/shared_preferences.dart';
 import 'package:hdmeal/utils/fetch.dart';
+import 'package:hdmeal/utils/shared_preferences.dart';
+import 'package:hdmeal/utils/menu_notification.dart';
 import 'package:hdmeal/extensions/date_only_compare.dart';
 import 'package:hdmeal/widgets/change_grade_class.dart';
 
@@ -37,6 +38,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
   Prefs _prefs;
 
   final FetchData _fetch = new FetchData();
+  final MenuNotification _notification = new MenuNotification();
 
   final AsyncMemoizer _fetchDataMemoizer = AsyncMemoizer();
   final AsyncMemoizer _timeErrorSnackBarMemoizer = AsyncMemoizer();
@@ -48,6 +50,8 @@ class _HomePageState extends State<HomePage> with RouteAware {
         analytics.setUserProperty(name: key, value: '$value');
       }
     });
+    await _notification.init();
+    _notification.clear();
   }
 
   Future fetchData() => _fetchDataMemoizer.runOnce(() async {
