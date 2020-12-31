@@ -36,10 +36,10 @@ class _ChangeGradeClassState extends State<ChangeGradeClass> {
   @override
   Widget build(BuildContext context) {
     ThemeData _themeData = Theme.of(context);
-    TextStyle _textStyle =
-        _themeData.textTheme.bodyText2.copyWith(color: Colors.grey);
-    TextStyle _selectedTextStyle =
-        _themeData.textTheme.headline5.copyWith(color: _themeData.textTheme.bodyText1.color);
+    TextStyle _textStyle = _themeData.textTheme.bodyText2
+        .copyWith(fontSize: 24, color: Colors.grey);
+    TextStyle _selectedTextStyle = _themeData.textTheme.headline5
+        .copyWith(fontSize: 24, color: _themeData.textTheme.bodyText1.color);
     return AlertDialog(
       title: Text("학년/반 변경"),
       content: Transform.translate(
