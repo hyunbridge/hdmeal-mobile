@@ -367,13 +367,22 @@ class _HomePageState extends State<HomePage> with RouteAware {
   }
 
   Widget build(BuildContext context) {
+    Color _shimmerBaseColor;
+    Color _shimmerHighlightColor;
     final Random _random = new Random();
     FlutterStatusbarcolor.setStatusBarColor(Colors.transparent);
     FlutterStatusbarcolor.setNavigationBarColor(Theme.of(context).primaryColor);
-    if (Theme.of(context).brightness == Brightness.light) {
-      FlutterStatusbarcolor.setNavigationBarWhiteForeground(false);
-    } else {
-      FlutterStatusbarcolor.setNavigationBarWhiteForeground(true);
+    switch (Theme.of(context).brightness) {
+      case Brightness.light:
+        _shimmerBaseColor = Colors.grey[300];
+        _shimmerHighlightColor = Colors.grey[100];
+        FlutterStatusbarcolor.setNavigationBarWhiteForeground(false);
+        break;
+      case Brightness.dark:
+        _shimmerBaseColor = Colors.grey[900];
+        _shimmerHighlightColor = Colors.grey[600];
+        FlutterStatusbarcolor.setNavigationBarWhiteForeground(true);
+        break;
     }
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
@@ -405,16 +414,15 @@ class _HomePageState extends State<HomePage> with RouteAware {
                       snap: false,
                       stretch: true,
                       flexibleSpace: new FlexibleSpaceBar(
-                          titlePadding:
-                          EdgeInsets.only(left: 16.0, bottom: 13),
+                          titlePadding: EdgeInsets.only(left: 16.0, bottom: 13),
                           title: Shimmer.fromColors(
                               child: Container(
                                 width: 140,
                                 height: 30,
                                 color: Colors.white,
                               ),
-                              baseColor: Colors.grey[300],
-                              highlightColor: Colors.grey[100])),
+                              baseColor: _shimmerBaseColor,
+                              highlightColor: _shimmerHighlightColor)),
                       actions: <Widget>[
                         IconButton(
                           icon: const Icon(Icons.settings),
@@ -425,7 +433,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
                       ]),
                   SliverList(
                     delegate: SliverChildBuilderDelegate(
-                          (BuildContext context, int index) {
+                      (BuildContext context, int index) {
                         return Shimmer.fromColors(
                             child: Align(
                               alignment: Alignment.centerLeft,
@@ -437,8 +445,8 @@ class _HomePageState extends State<HomePage> with RouteAware {
                                 color: Colors.white,
                               ),
                             ),
-                            baseColor: Colors.grey[300],
-                            highlightColor: Colors.grey[100]);
+                            baseColor: _shimmerBaseColor,
+                            highlightColor: _shimmerHighlightColor);
                       },
                       childCount: _random.nextInt(5) + 10,
                     ),
