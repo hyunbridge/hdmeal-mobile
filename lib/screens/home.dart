@@ -37,6 +37,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> with RouteAware {
   Prefs _prefs;
 
+  final Prefs _defaultPrefs = new Prefs.defaultValue();
   final FetchData _fetch = new FetchData();
   final MenuNotification _notification = new MenuNotification();
 
@@ -131,7 +132,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
             ];
         _menu.forEach((element) {
           _menuStringList.add(element[0]);
-          if (_prefs.allergyInfo) {
+          if (_prefs.allergyInfo ?? _defaultPrefs.allergyInfo) {
             String _allergyInfo = "";
             element[1].forEach((element) =>
                 _allergyInfo = "$_allergyInfo, ${_allergyString[element]}");
@@ -162,8 +163,9 @@ class _HomePageState extends State<HomePage> with RouteAware {
         });
         // 시간표 리스트 작성
         List _timetableList = [];
-        List _timetable =
-            data["Timetable"]["${_prefs.userGrade}"]["${_prefs.userClass}"];
+        List _timetable = data["Timetable"]
+                ["${_prefs.userGrade ?? _defaultPrefs.userGrade}"]
+            ["${_prefs.userClass ?? _defaultPrefs.userClass}"];
         if (_timetable.length == 0) _timetable = ["시간표 정보가 없습니다."];
         _timetable.forEach((element) {
           _timetableList.add(ListTile(
@@ -178,8 +180,10 @@ class _HomePageState extends State<HomePage> with RouteAware {
               ["학사일정이 없습니다.", []]
             ];
         _schedule.forEach((element) {
-          if (_prefs.showMyScheduleOnly) {
-            if (element[1].length == 0 || element[1].contains(_prefs.userGrade)) {
+          if (_prefs.showMyScheduleOnly ?? _defaultPrefs.showMyScheduleOnly) {
+            if (element[1].length == 0 ||
+                element[1]
+                    .contains(_prefs.userGrade ?? _defaultPrefs.userGrade)) {
               _scheduleList.add(ListTile(
                 title: Text(element[0]),
                 visualDensity: VisualDensity(vertical: -4),
@@ -226,7 +230,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
           "Timetable": [
             ListTile(
               title: Text(
-                "${_prefs.userGrade}학년 ${_prefs.userClass}반 시간표",
+                "${_prefs.userGrade ?? _defaultPrefs.userGrade}학년 ${_prefs.userClass ?? _defaultPrefs.userClass}반 시간표",
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -235,8 +239,10 @@ class _HomePageState extends State<HomePage> with RouteAware {
               onTap: () async {
                 ChangeGradeClass _changeGradeClass =
                     new ChangeGradeClass.dialog(
-                        currentGrade: _prefs.userGrade,
-                        currentClass: _prefs.userClass);
+                        currentGrade:
+                            _prefs.userGrade ?? _defaultPrefs.userGrade,
+                        currentClass:
+                            _prefs.userClass ?? _defaultPrefs.userClass);
                 await showDialog(
                   context: context,
                   builder: (BuildContext context) {
