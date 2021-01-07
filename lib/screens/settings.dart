@@ -11,6 +11,7 @@ import 'package:async/async.dart';
 
 import 'package:hdmeal/models/preferences.dart';
 import 'package:hdmeal/utils/cache.dart';
+import 'package:hdmeal/utils/menu_notification.dart';
 import 'package:hdmeal/utils/shared_preferences.dart';
 import 'package:hdmeal/widgets/change_grade_class.dart';
 
@@ -21,6 +22,8 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   Prefs _prefs;
+
+  final MenuNotification _notification = new MenuNotification();
 
   final AsyncMemoizer _asyncMemoizer = AsyncMemoizer();
 
@@ -172,6 +175,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                     _prefs = new Prefs.defaultValue();
                                     SharedPrefs().push(_prefs);
                                   });
+                                  _notification.unsubscribe();
                                   ScaffoldMessenger.of(context)
                                       .hideCurrentSnackBar();
                                   ScaffoldMessenger.of(context)
