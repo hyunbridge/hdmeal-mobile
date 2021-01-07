@@ -173,11 +173,31 @@ class _HomePageState extends State<HomePage> with RouteAware {
         });
         // 학사일정 리스트 작성
         List _scheduleList = [];
-        List _schedule = data["Schedule"] ?? ["학사일정이 없습니다."];
-        _schedule.forEach((element) => _scheduleList.add(ListTile(
-              title: Text(element),
+        List _schedule = data["Schedule"] ??
+            [
+              ["학사일정이 없습니다.", []]
+            ];
+        _schedule.forEach((element) {
+          if (_prefs.showMyScheduleOnly) {
+            if (element[1].length == 0 || element[1].contains(_prefs.userGrade)) {
+              _scheduleList.add(ListTile(
+                title: Text(element[0]),
+                visualDensity: VisualDensity(vertical: -4),
+              ));
+            }
+          } else {
+            String _relatedGrade;
+            if (element[1].length == 0) {
+              _relatedGrade = '';
+            } else {
+              _relatedGrade = '(${element[1].join("학년, ")}학년)';
+            }
+            _scheduleList.add(ListTile(
+              title: Text(element[0] + _relatedGrade),
               visualDensity: VisualDensity(vertical: -4),
-            )));
+            ));
+          }
+        });
         // 섹션 내부 작성
         List<Widget> _widgets = [];
         Map _sections = {

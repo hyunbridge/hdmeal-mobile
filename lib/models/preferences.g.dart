@@ -15,6 +15,7 @@ Prefs _$PrefsFromJson(Map<String, dynamic> json) {
     json['receiveNotifications'] as bool,
     json['notificationsHour'] as int,
     json['notificationsMinute'] as int,
+    json['showMyScheduleOnly'] as bool,
   );
 }
 
@@ -26,4 +27,5 @@ Map<String, dynamic> _$PrefsToJson(Prefs instance) => <String, dynamic>{
       'receiveNotifications': instance.receiveNotifications,
       'notificationsHour': instance.notificationsHour,
       'notificationsMinute': instance.notificationsMinute,
+      'showMyScheduleOnly': instance.showMyScheduleOnly,
     };

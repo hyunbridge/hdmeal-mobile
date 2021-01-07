@@ -89,6 +89,16 @@ class _SettingsPageState extends State<SettingsPage> {
                     },
                   ),
                   SwitchListTile(
+                    title: const Text('내 학년의 학사일정만 표시'),
+                    value: _prefs.showMyScheduleOnly,
+                    onChanged: (bool value) {
+                      setState(() {
+                        _prefs.showMyScheduleOnly = value;
+                        SharedPrefs().push(_prefs);
+                      });
+                    },
+                  ),
+                  SwitchListTile(
                     title: const Text('알러지 정보 표시'),
                     value: _prefs.allergyInfo,
                     onChanged: (bool value) {

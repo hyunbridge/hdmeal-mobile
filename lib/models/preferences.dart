@@ -19,6 +19,7 @@ class Prefs {
   bool receiveNotifications;
   int notificationsHour;
   int notificationsMinute;
+  bool showMyScheduleOnly;
 
   Prefs(
     this.userGrade,
@@ -28,6 +29,7 @@ class Prefs {
     this.receiveNotifications,
     this.notificationsHour,
     this.notificationsMinute,
+    this.showMyScheduleOnly,
   );
   Prefs.defaultValue() {
     userGrade = 1;
@@ -37,6 +39,7 @@ class Prefs {
     receiveNotifications = false;
     notificationsHour = 7;
     notificationsMinute = 30;
+    showMyScheduleOnly = true;
   }
 
   factory Prefs.fromJson(Map<String, dynamic> json) => _$PrefsFromJson(json);
