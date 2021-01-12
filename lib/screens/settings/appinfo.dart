@@ -10,8 +10,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:async/async.dart';
+import 'package:flutter_custom_tabs/flutter_custom_tabs.dart' as customTabs;
 import 'package:package_info/package_info.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher.dart' as urlLauncher;
 import 'package:in_app_update/in_app_update.dart';
 
 class AppInfoPage extends StatefulWidget {
@@ -33,6 +34,28 @@ class _AppInfoPageState extends State<AppInfoPage> with RouteAware {
 
   Future<AppUpdateInfo> _checkForUpdate() async {
     return await InAppUpdate.checkForUpdate();
+  }
+
+  void _launch(BuildContext context, String _url) async {
+    try {
+      await customTabs.launch(
+        _url,
+        option: new customTabs.CustomTabsOption(
+          toolbarColor: Theme.of(context).primaryColor,
+          enableDefaultShare: true,
+          enableUrlBarHiding: true,
+          showPageTitle: true,
+          extraCustomTabs: <String>[
+            'com.brave.browser',
+            'com.microsoft.emmx',
+            'com.sec.android.app.sbrowser',
+            'org.mozilla.firefox',
+          ],
+        ),
+      );
+    } catch (_) {
+      urlLauncher.launch(_url);
+    }
   }
 
   double get _horizontalTitlePadding {
@@ -121,7 +144,7 @@ class _AppInfoPageState extends State<AppInfoPage> with RouteAware {
                                 return ListTile(
                                   title: Text("업데이트가 있습니다."),
                                   onTap: () async {
-                                    launch("market://details?id=" +
+                                    urlLauncher.launch("market://details?id=" +
                                         _packageInfo.packageName);
                                   },
                                 );
@@ -144,34 +167,35 @@ class _AppInfoPageState extends State<AppInfoPage> with RouteAware {
                       ListTile(
                         title: Text('웹 앱 열기'),
                         onTap: () async {
-                          launch("https://app.hdml.kr/");
+                          _launch(context, "https://app.hdml.kr/");
                         },
                       ),
                       ListTile(
                         title: Text('소스 코드 보기'),
                         onTap: () async {
-                          launch("https://github.com/hgyoseo/HDMeal-Flutter");
+                          _launch(context,
+                              "https://github.com/hgyoseo/HDMeal-Flutter");
                         },
                       ),
                       ListTile(
                         title: Text('개발자에게 문의하기'),
                         subtitle: Text("hekn2y4j@duck.com"),
                         onTap: () async {
-                          launch("mailto:hekn2y4j@duck.com");
+                          urlLauncher.launch("mailto:hekn2y4j@duck.com");
                         },
                       ),
                       Divider(),
                       ListTile(
                         title: Text('저작권'),
-                        subtitle: Text("Copyright 2020-${_now.year} Hyungyo Seo"),
+                        subtitle:
+                            Text("Copyright 2020-${_now.year} Hyungyo Seo"),
                       ),
                       ListTile(
-                        title: Text('개인정보 처리방침'),
-                        onTap: () async {
-                          launch(
-                              "https://go.hdml.kr/privacy/android");
-                        },
-                      ),
+                          title: Text('개인정보 처리방침'),
+                          onTap: () async {
+                            _launch(
+                                context, "https://go.hdml.kr/privacy/android");
+                          }),
                       ListTile(
                         title: Text('오픈소스 라이선스'),
                         onTap: () async {
