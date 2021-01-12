@@ -4,7 +4,7 @@
 // ██╔══██║██║  ██║██║╚██╔╝██║██╔══╝  ██╔══██║██║
 // ██║  ██║██████╔╝██║ ╚═╝ ██║███████╗██║  ██║███████╗
 // ╚═╝  ╚═╝╚═════╝ ╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝
-// Copyright 2020, Hyungyo Seo
+// Copyright Hyungyo Seo
 
 extension DateOnlyCompare on DateTime {
   bool isSameDate(DateTime other) {
