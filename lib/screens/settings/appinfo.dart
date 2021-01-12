@@ -23,6 +23,7 @@ class _AppInfoPageState extends State<AppInfoPage> with RouteAware {
   PackageInfo _packageInfo;
   ScrollController _scrollController;
 
+  final DateTime _now = DateTime.now();
   final AsyncMemoizer _asyncMemoizer = AsyncMemoizer();
 
   Future asyncMethod() => _asyncMemoizer.runOnce(() async {
@@ -162,13 +163,13 @@ class _AppInfoPageState extends State<AppInfoPage> with RouteAware {
                       Divider(),
                       ListTile(
                         title: Text('저작권'),
-                        subtitle: Text("Copyright (c) 2020 Hyungyo Seo."),
+                        subtitle: Text("Copyright 2020-${_now.year} Hyungyo Seo"),
                       ),
                       ListTile(
                         title: Text('개인정보 처리방침'),
                         onTap: () async {
                           launch(
-                              "https://hdmeal.page.link/FlutterAppPrivacyPolicy");
+                              "https://go.hdml.kr/privacy/android");
                         },
                       ),
                       ListTile(
