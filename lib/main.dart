@@ -18,7 +18,6 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:hdmeal/screens/home.dart';
 import 'package:hdmeal/screens/settings.dart';
 import 'package:hdmeal/screens/settings/changeorder.dart';
-import 'package:hdmeal/screens/settings/delicious_menu_keyword.dart';
 import 'package:hdmeal/screens/settings/notifications.dart';
 import 'package:hdmeal/screens/settings/about.dart';
 import 'package:hdmeal/screens/settings/appinfo/osslicences.dart';
@@ -65,7 +64,6 @@ void main() async {
       '/': (context) => HomePage(),
       '/settings': (context) => SettingsPage(),
       '/settings/changeOrder': (context) => ChangeOrderPage(),
-      '/settings/deliciousMenuKeyword': (context) => DeliciousMenuKeywordPage(),
       '/settings/notifications': (context) => NotificationSettingsPage(),
       '/settings/appInfo': (context) => AboutPage(),
       '/settings/appInfo/OSSLicences': (context) => OSSLicencesPage(),

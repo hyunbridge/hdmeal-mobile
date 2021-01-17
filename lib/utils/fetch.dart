@@ -39,7 +39,7 @@ class FetchData {
         }
       }
       final response =
-          await Client().get('https://app.api.hdml.kr/api/v4/app/');
+          await Client().get('https://api.hdml.kr/api/v4/app/');
       Cache().write(response.body);
       return json.decode(response.body);
     } catch (_) {
