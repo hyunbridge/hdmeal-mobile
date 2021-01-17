@@ -165,9 +165,15 @@ class _AboutPageState extends State<AboutPage> with RouteAware {
                           }),
                       Divider(),
                       ListTile(
+                        title: Text('홈페이지 방문하기'),
+                        onTap: () async {
+                          _launch(context, "https://hdml.kr/");
+                        },
+                      ),
+                      ListTile(
                         title: Text('웹 앱 열기'),
                         onTap: () async {
-                          _launch(context, "https://app.hdml.kr/");
+                          _launch(context, "https://go.hdml.kr/webapp");
                         },
                       ),
                       ListTile(
