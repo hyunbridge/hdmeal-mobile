@@ -15,12 +15,12 @@ import 'package:package_info/package_info.dart';
 import 'package:url_launcher/url_launcher.dart' as urlLauncher;
 import 'package:in_app_update/in_app_update.dart';
 
-class AppInfoPage extends StatefulWidget {
+class AboutPage extends StatefulWidget {
   @override
-  _AppInfoPageState createState() => _AppInfoPageState();
+  _AboutPageState createState() => _AboutPageState();
 }
 
-class _AppInfoPageState extends State<AppInfoPage> with RouteAware {
+class _AboutPageState extends State<AboutPage> with RouteAware {
   PackageInfo _packageInfo;
   ScrollController _scrollController;
 
@@ -174,7 +174,7 @@ class _AppInfoPageState extends State<AppInfoPage> with RouteAware {
                         title: Text('소스 코드 보기'),
                         onTap: () async {
                           _launch(context,
-                              "https://github.com/hgyoseo/HDMeal-Flutter");
+                              "https://go.hdml.kr/github/android");
                         },
                       ),
                       ListTile(
