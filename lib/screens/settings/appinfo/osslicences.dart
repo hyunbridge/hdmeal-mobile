@@ -47,7 +47,7 @@ class _OSSLicencesPageState extends State<OSSLicencesPage> {
                       content: SingleChildScrollView(
                           child: new Text("${content["license"]}")),
                       actions: <Widget>[
-                        new FlatButton(
+                        new TextButton(
                           child: new Text("닫기"),
                           onPressed: () {
                             Navigator.pop(context);

@@ -169,7 +169,7 @@ class _NotificationSettingsState extends State<NotificationSettingsPage> {
                                   ],
                                 ),
                                 actions: <Widget>[
-                                  FlatButton(
+                                  TextButton(
                                     child: Text("닫기"),
                                     onPressed: () {
                                       Navigator.pop(context);

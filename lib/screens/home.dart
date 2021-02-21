@@ -66,7 +66,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
                 title: new Text("서버에 연결할 수 없음"),
                 content: new Text("기기의 인터넷 연결 상태를 확인해 주세요."),
                 actions: <Widget>[
-                  new FlatButton(
+                  new TextButton(
                     child: new Text("앱 종료"),
                     onPressed: () {
                       SystemNavigator.pop();
@@ -354,7 +354,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
               title: new Text("오류 발생"),
               content: new Text("데이터를 처리하는 중 오류가 발생했습니다."),
               actions: <Widget>[
-                new FlatButton(
+                new TextButton(
                   child: new Text("앱 종료"),
                   onPressed: () {
                     SystemNavigator.pop();

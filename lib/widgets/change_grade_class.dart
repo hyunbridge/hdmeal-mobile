@@ -93,7 +93,7 @@ class _ChangeGradeClassState extends State<ChangeGradeClass> {
         ]),
       ),
       actions: <Widget>[
-        FlatButton(
+        TextButton(
           child: Text("닫기"),
           onPressed: () {
             Navigator.pop(context);

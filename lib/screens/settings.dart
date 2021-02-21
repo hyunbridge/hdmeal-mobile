@@ -137,13 +137,13 @@ class _SettingsPageState extends State<SettingsPage> {
                                 "자주 비울 경우 같은 데이터를 반복 요청하게 되므로 네트워크 사용량이 늘어날 수 있습니다.\n"
                                 "캐시를 비우면 다음 실행 시까지 오프라인에서 앱을 이용하실 수 없게 됩니다."),
                             actions: <Widget>[
-                              new FlatButton(
+                              new TextButton(
                                 child: new Text("아니요"),
                                 onPressed: () {
                                   Navigator.pop(context);
                                 },
                               ),
-                              new FlatButton(
+                              new TextButton(
                                 child: new Text("네"),
                                 onPressed: () {
                                   Cache().clear();
@@ -173,13 +173,13 @@ class _SettingsPageState extends State<SettingsPage> {
                             title: new Text("정말 초기화할까요?"),
                             content: new Text("모든 설정이 기본값으로 돌아가며, 복구할 수 없습니다."),
                             actions: <Widget>[
-                              new FlatButton(
+                              new TextButton(
                                 child: new Text("아니요"),
                                 onPressed: () {
                                   Navigator.pop(context);
                                 },
                               ),
-                              new FlatButton(
+                              new TextButton(
                                 child: new Text("네"),
                                 onPressed: () {
                                   setState(() {
