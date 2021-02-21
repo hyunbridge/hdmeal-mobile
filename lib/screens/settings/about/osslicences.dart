@@ -18,6 +18,8 @@ class OSSLicencesPage extends StatefulWidget {
 }
 
 class _OSSLicencesPageState extends State<OSSLicencesPage> {
+  ScrollController _scrollController;
+
   final AsyncMemoizer _asyncMemoizer = AsyncMemoizer();
 
   Future asyncMethod() => _asyncMemoizer.runOnce(() async {
@@ -72,19 +74,38 @@ class _OSSLicencesPageState extends State<OSSLicencesPage> {
         return _ossList;
       });
 
+  double get _horizontalTitlePadding {
+    const kBasePadding = 16.0;
+    const kMultiplier = 2.0;
+
+    if (_scrollController.hasClients) {
+      if (_scrollController.offset < (150 / 2)) {
+        // In case 50%-100% of the expanded height is viewed
+        return kBasePadding;
+      }
+
+      if (_scrollController.offset > (150 - kToolbarHeight)) {
+        // In case 0% of the expanded height is viewed
+        return (150 / 2 - kToolbarHeight) * kMultiplier + kBasePadding;
+      }
+
+      // In case 0%-50% of the expanded height is viewed
+      return (_scrollController.offset - (150 / 2)) * kMultiplier +
+          kBasePadding;
+    }
+
+    return kBasePadding;
+  }
+
   @override
   void initState() {
     super.initState();
+    _scrollController = ScrollController()..addListener(() => setState(() {}));
   }
 
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
-      appBar: AppBar(
-        title: Text(
-          "오픈소스 라이선스",
-        ),
-      ),
       body: FutureBuilder(
           future: asyncMethod(),
           builder: (context, snapshot) {
@@ -100,12 +121,36 @@ class _OSSLicencesPageState extends State<OSSLicencesPage> {
                 return Center(
                     child: Text('데이터를 불러올 수 없음', textAlign: TextAlign.center));
               }
-              return ListView(
-                children: [
-                  SizedBox(height: 8),
-                  ListTile(
-                      title: Text("흥덕고 급식 앱은 다양한 오픈 소스 프로젝트들을 활용하여 만들어졌습니다.")),
-                  ...snapshot.data
+              return CustomScrollView(
+                controller: _scrollController,
+                physics: const BouncingScrollPhysics(
+                    parent: AlwaysScrollableScrollPhysics()),
+                slivers: <Widget>[
+                  SliverAppBar(
+                    expandedHeight: 150,
+                    floating: false,
+                    pinned: true,
+                    snap: false,
+                    stretch: true,
+                    flexibleSpace: new FlexibleSpaceBar(
+                        titlePadding: EdgeInsets.symmetric(
+                            vertical: 14.0,
+                            horizontal: _horizontalTitlePadding),
+                        title: Text(
+                          "오픈소스 라이선스",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        )),
+                  ),
+                  SliverList(
+                    delegate: SliverChildListDelegate([
+                      ListTile(
+                          title:
+                              Text("흥덕고 급식 앱은 다양한 오픈 소스 프로젝트들을 활용하여 만들어졌습니다.")),
+                      ...snapshot.data
+                    ]),
+                  ),
                 ],
               );
             } else {
