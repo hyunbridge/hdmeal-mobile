@@ -206,7 +206,7 @@ class _AboutPageState extends State<AboutPage> with RouteAware {
                         title: Text('오픈소스 라이선스'),
                         onTap: () async {
                           Navigator.pushNamed(
-                              context, '/settings/appInfo/OSSLicences');
+                              context, '/settings/about/OSSLicences');
                         },
                       ),
                     ]),

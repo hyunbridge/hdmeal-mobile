@@ -207,7 +207,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   ListTile(
                     title: Text('앱 정보'),
                     onTap: () async {
-                      Navigator.pushNamed(context, '/settings/appInfo');
+                      Navigator.pushNamed(context, '/settings/about');
                     },
                   ),
                 ],

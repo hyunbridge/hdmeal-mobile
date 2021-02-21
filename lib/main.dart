@@ -20,7 +20,7 @@ import 'package:hdmeal/screens/settings/changeorder.dart';
 import 'package:hdmeal/screens/settings/notifications.dart';
 import 'package:hdmeal/screens/settings/theme.dart';
 import 'package:hdmeal/screens/settings/about.dart';
-import 'package:hdmeal/screens/settings/appinfo/osslicences.dart';
+import 'package:hdmeal/screens/settings/about/osslicences.dart';
 import 'package:hdmeal/utils/theme.dart';
 
 FirebaseAnalytics analytics;
@@ -60,8 +60,8 @@ class App extends StatelessWidget {
         '/settings/changeOrder': (context) => ChangeOrderPage(),
         '/settings/notifications': (context) => NotificationSettingsPage(),
         '/settings/theme': (context) => ThemeSettingsPage(),
-        '/settings/appInfo': (context) => AboutPage(),
-        '/settings/appInfo/OSSLicences': (context) => OSSLicencesPage(),
+        '/settings/about': (context) => AboutPage(),
+        '/settings/about/OSSLicences': (context) => OSSLicencesPage(),
       },
       navigatorObservers: [
         routeObserver,
