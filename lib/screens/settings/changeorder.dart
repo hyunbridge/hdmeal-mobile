@@ -104,9 +104,12 @@ class _ChangeOrderPageState extends State<ChangeOrderPage> {
                     delegate: SliverChildListDelegate([
                       Divider(),
                       ListTile(
-                        title: Text('끌어다 놓아 순서 바꾸기'),
-                        subtitle:
-                            Text('아래 항목들을 길게 누르고 끌어다 놓아 화면 순서를 바꿀 수 있습니다.'),
+                        title: Text('끌어다 놓아 순서 변경'),
+                        subtitle: Transform.translate(
+                          offset: Offset(0, 10),
+                          child:
+                              Text('아래 항목들을 길게 누르고 끌어다 놓아 화면 순서를 바꿀 수 있습니다.'),
+                        ),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,

@@ -112,11 +112,13 @@ class _NotificationSettingsState extends State<NotificationSettingsPage> {
                     delegate: SliverChildListDelegate([
                       Divider(),
                       ListTile(
-                        title: Text('매일 알림 받기'),
-                        subtitle: Text('매일 지정된 시각에 알림을 받아볼 수 있습니다.'
-                            ' 오랫동안 앱을 실행하지 않았거나 절전 모드를'
-                            ' 실행하여 백그라운드에서 앱이 실행될 수 없는'
-                            ' 경우 알림이 발송되지 않을 수 있습니다.'),
+                        title: Text('매일 지정한 시각에 알림 받기'),
+                        subtitle: Transform.translate(
+                          offset: Offset(0, 10),
+                          child: Text('오랫동안 앱을 실행하지 않았거나 절전 모드를'
+                              ' 실행하여 백그라운드에서 앱이 실행될 수 없는'
+                              ' 경우 알림이 발송되지 않을 수 있습니다.'),
+                        ),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
@@ -140,6 +142,7 @@ class _NotificationSettingsState extends State<NotificationSettingsPage> {
                           const SizedBox(width: 8),
                         ],
                       ),
+                      Divider(),
                       SwitchListTile(
                         title: const Text('알림 받기'),
                         value: _prefs.receiveNotifications,
