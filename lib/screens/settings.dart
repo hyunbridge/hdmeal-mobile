@@ -7,12 +7,14 @@
 // Copyright Hyungyo Seo
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:async/async.dart';
 
 import 'package:hdmeal/models/preferences.dart';
 import 'package:hdmeal/utils/cache.dart';
 import 'package:hdmeal/utils/menu_notification.dart';
 import 'package:hdmeal/utils/shared_preferences.dart';
+import 'package:hdmeal/utils/theme.dart';
 import 'package:hdmeal/widgets/change_grade_class.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -66,6 +68,7 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   Widget build(BuildContext context) {
+    final themeNotifier = Provider.of<ThemeNotifier>(context);
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       body: FutureBuilder(
@@ -227,11 +230,10 @@ class _SettingsPageState extends State<SettingsPage> {
                                   ),
                                   new TextButton(
                                     child: new Text("네"),
-                                    onPressed: () {
-                                      setState(() {
-                                        _prefs = _defaultPrefs;
-                                        SharedPrefs().push(_prefs);
-                                      });
+                                    onPressed: () async {
+                                      setState(() => _prefs = _defaultPrefs);
+                                      await SharedPrefs().push(_prefs);
+                                      themeNotifier.handleChangeTheme();
                                       _notification.unsubscribe();
                                       ScaffoldMessenger.of(context)
                                           .hideCurrentSnackBar();
