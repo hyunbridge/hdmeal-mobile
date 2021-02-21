@@ -20,6 +20,8 @@ class Prefs {
   int notificationsHour;
   int notificationsMinute;
   bool showMyScheduleOnly;
+  String theme;
+  bool enableBlackTheme;
 
   Prefs(
     this.userGrade,
@@ -30,6 +32,8 @@ class Prefs {
     this.notificationsHour,
     this.notificationsMinute,
     this.showMyScheduleOnly,
+    this.theme,
+    this.enableBlackTheme,
   );
   Prefs.defaultValue() {
     userGrade = 1;
@@ -40,6 +44,8 @@ class Prefs {
     notificationsHour = 7;
     notificationsMinute = 30;
     showMyScheduleOnly = true;
+    theme = 'System';
+    enableBlackTheme = false;
   }
 
   factory Prefs.fromJson(Map<String, dynamic> json) => _$PrefsFromJson(json);

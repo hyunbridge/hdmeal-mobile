@@ -16,10 +16,10 @@ import 'package:hdmeal/models/preferences.dart';
 class SharedPrefs {
   Prefs defaultValues = new Prefs.defaultValue();
 
-  void push(Prefs prefs) async {
+  Future<void> push(Prefs prefs) async {
     Directory _prefsDir = await getApplicationDocumentsDirectory();
     File _prefsFile = new File("${_prefsDir.path}/preferences.json");
-    _prefsFile.writeAsString(json.encode(prefs.toJson()));
+    await _prefsFile.writeAsString(json.encode(prefs.toJson()));
   }
 
   Future<Prefs> pull() async {

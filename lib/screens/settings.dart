@@ -95,6 +95,12 @@ class _SettingsPageState extends State<SettingsPage> {
                       Navigator.pushNamed(context, '/settings/notifications');
                     },
                   ),
+                  ListTile(
+                    title: Text('테마 설정'),
+                    onTap: () async {
+                      Navigator.pushNamed(context, '/settings/theme');
+                    },
+                  ),
                   SwitchListTile(
                     title: const Text('내 학년의 학사일정만 표시'),
                     value: _prefs.showMyScheduleOnly ??
