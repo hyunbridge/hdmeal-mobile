@@ -29,7 +29,10 @@ class _OSSLicencesPageState extends State<OSSLicencesPage> {
             Divider(),
             ListTile(
                 title: Text("$name (버전 ${content["version"]})",
-                    style: Theme.of(context).textTheme.headline6)),
+                    style: TextStyle(
+                      fontSize: Theme.of(context).textTheme.headline6.fontSize,
+                      fontWeight: FontWeight.bold,
+                    ))),
           ]);
           if (content["authors"].length > 0) {
             String _authors = "${content["authors"]}";
