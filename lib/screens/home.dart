@@ -341,7 +341,12 @@ class _HomePageState extends State<HomePage> with RouteAware {
                 ))));
       }
       _controller = PageController(initialPage: _todayIndex);
-      return PageView(children: _pages, controller: _controller);
+      return PageView(
+        children: _pages,
+        controller: _controller,
+        physics: const BouncingScrollPhysics(
+            parent: AlwaysScrollableScrollPhysics()),
+      );
     } catch (e) {
       print(e);
       Future.delayed(Duration.zero, () {
