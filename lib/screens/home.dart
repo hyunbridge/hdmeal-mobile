@@ -414,7 +414,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
         FlutterStatusbarcolor.setNavigationBarWhiteForeground(false);
         break;
       case Brightness.dark:
-        _shimmerBaseColor = Colors.grey[900];
+        _shimmerBaseColor = Colors.grey[800];
         _shimmerHighlightColor = Colors.grey[600];
         FlutterStatusbarcolor.setNavigationBarWhiteForeground(true);
         break;
