@@ -11,8 +11,7 @@ import 'package:async/async.dart';
 
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 
-import 'package:hdmeal/models/preferences.dart';
-import 'package:hdmeal/utils/shared_preferences.dart';
+import 'package:hdmeal/utils/preferences_manager.dart';
 import 'package:hdmeal/utils/menu_notification.dart';
 
 class NotificationSettingsPage extends StatefulWidget {
@@ -21,22 +20,22 @@ class NotificationSettingsPage extends StatefulWidget {
 }
 
 class _NotificationSettingsState extends State<NotificationSettingsPage> {
-  Prefs _prefs;
   ScrollController _scrollController;
 
-  final MenuNotification _notification = new MenuNotification();
+  final PrefsManager _prefsManager = PrefsManager();
+
+  final MenuNotification _notification = MenuNotification();
 
   final AsyncMemoizer _asyncMemoizer = AsyncMemoizer();
 
   Future asyncMethod() => _asyncMemoizer.runOnce(() async {
-        _prefs = await SharedPrefs().pull();
         await _notification.init();
         return true;
       });
 
   Future<void> _schedule(int hour, int minute) async {
     await _notification.unsubscribe();
-    if (_prefs.receiveNotifications) {
+    if (_prefsManager.get('receiveNotifications')) {
       await _notification.subscribe(hour, minute);
     }
   }
@@ -127,16 +126,12 @@ class _NotificationSettingsState extends State<NotificationSettingsPage> {
                             child: const Text('기본값으로 복원'),
                             onPressed: () {
                               setState(() {
-                                _prefs.receiveNotifications =
-                                    Prefs.defaultValue().receiveNotifications;
-                                _prefs.notificationsHour =
-                                    Prefs.defaultValue().notificationsHour;
-                                _prefs.notificationsMinute =
-                                    Prefs.defaultValue().notificationsMinute;
-                                SharedPrefs().push(_prefs);
+                                _prefsManager.reset('receiveNotifications');
+                                _prefsManager.reset('notificationsHour');
+                                _prefsManager.reset('notificationsMinute');
                               });
-                              _schedule(_prefs.notificationsHour,
-                                  _prefs.notificationsMinute);
+                              _schedule(_prefsManager.get('notificationsHour'),
+                                  _prefsManager.get('notificationsMinute'));
                             },
                           ),
                           const SizedBox(width: 8),
@@ -145,25 +140,23 @@ class _NotificationSettingsState extends State<NotificationSettingsPage> {
                       Divider(),
                       SwitchListTile(
                         title: const Text('알림 받기'),
-                        value: _prefs.receiveNotifications,
+                        value: _prefsManager.get('receiveNotifications'),
                         onChanged: (bool value) {
-                          setState(() {
-                            _prefs.receiveNotifications = value;
-                            SharedPrefs().push(_prefs);
-                          });
+                          setState(() =>
+                              _prefsManager.set('receiveNotifications', value));
                         },
                       ),
                       ListTile(
                         title: Text('알림 받을 시간'),
                         subtitle: Text(
-                            '${_prefs.notificationsHour}시 ${_prefs.notificationsMinute}분'),
+                            '${_prefsManager.get('notificationsHour')}시 ${_prefsManager.get('notificationsMinute')}분'),
                         onTap: () async {
                           DateTime _time = DateTime(
                               1970,
                               1,
                               1,
-                              _prefs.notificationsHour,
-                              _prefs.notificationsMinute);
+                              _prefsManager.get('notificationsHour'),
+                              _prefsManager.get('notificationsMinute'));
                           await showDialog(
                             context: context,
                             builder: (BuildContext context) {
@@ -215,12 +208,12 @@ class _NotificationSettingsState extends State<NotificationSettingsPage> {
                             },
                           );
                           setState(() {
-                            _prefs.notificationsHour = _time.hour;
-                            _prefs.notificationsMinute = _time.minute;
-                            SharedPrefs().push(_prefs);
+                            _prefsManager.set('notificationsHour', _time.hour);
+                            _prefsManager.set(
+                                'notificationsMinute', _time.minute);
                           });
-                          _schedule(_prefs.notificationsHour,
-                              _prefs.notificationsMinute);
+                          _schedule(_prefsManager.get('notificationsHour'),
+                              _prefsManager.get('notificationsMinute'));
                         },
                       ),
                       ListTile(

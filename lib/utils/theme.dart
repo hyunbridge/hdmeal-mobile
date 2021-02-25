@@ -10,8 +10,7 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
-import 'package:hdmeal/models/preferences.dart';
-import 'package:hdmeal/utils/shared_preferences.dart';
+import 'package:hdmeal/utils/preferences_manager.dart';
 
 final lightTheme = ThemeData(
   fontFamily: "SpoqaHanSansNeo",
@@ -75,17 +74,19 @@ class ThemeNotifier with ChangeNotifier {
     notifyListeners();
   }
 
-  void handleChangeTheme() async {
-    this.setTheme(await determineTheme());
+  void handleChangeTheme() {
+    this.setTheme(determineTheme());
   }
 
-  Future<ThemeData> determineTheme() async {
-    final Prefs prefs = await SharedPrefs().pull();
-    switch (prefs.theme) {
+  ThemeData determineTheme() {
+    final _prefsManager = PrefsManager();
+    final String _theme = _prefsManager.get('theme');
+    final bool _enableBlackTheme = _prefsManager.get('enableBlackTheme');
+    switch (_theme) {
       case 'System':
         if (SchedulerBinding.instance.window.platformBrightness ==
             Brightness.dark) {
-          if (prefs.enableBlackTheme == true) {
+          if (_enableBlackTheme == true) {
             return blackTheme;
           } else {
             return darkTheme;
@@ -95,7 +96,7 @@ class ThemeNotifier with ChangeNotifier {
         }
         break;
       case 'Dark':
-        if (prefs.enableBlackTheme == true) {
+        if (_enableBlackTheme == true) {
           return blackTheme;
         } else {
           return darkTheme;

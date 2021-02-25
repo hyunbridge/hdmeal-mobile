@@ -21,6 +21,7 @@ import 'package:hdmeal/screens/settings/notifications.dart';
 import 'package:hdmeal/screens/settings/theme.dart';
 import 'package:hdmeal/screens/settings/about.dart';
 import 'package:hdmeal/screens/settings/about/osslicences.dart';
+import 'package:hdmeal/utils/preferences_manager.dart';
 import 'package:hdmeal/utils/theme.dart';
 
 FirebaseAnalytics analytics;
@@ -31,7 +32,9 @@ void main() async {
   analytics = FirebaseAnalytics();
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
 
-  final ThemeData theme = await ThemeNotifier().determineTheme();
+  await PrefsManager().init();
+
+  final ThemeData theme = ThemeNotifier().determineTheme();
 
   runApp(
     ChangeNotifierProvider<ThemeNotifier>(

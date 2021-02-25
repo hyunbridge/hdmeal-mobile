@@ -18,10 +18,9 @@ import 'package:shimmer/shimmer.dart';
 
 import 'package:firebase_analytics/firebase_analytics.dart';
 
-import 'package:hdmeal/models/preferences.dart';
 import 'package:hdmeal/utils/cache.dart';
 import 'package:hdmeal/utils/fetch.dart';
-import 'package:hdmeal/utils/shared_preferences.dart';
+import 'package:hdmeal/utils/preferences_manager.dart';
 import 'package:hdmeal/utils/menu_notification.dart';
 import 'package:hdmeal/extensions/date_only_compare.dart';
 import 'package:hdmeal/widgets/change_grade_class.dart';
@@ -35,18 +34,16 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with RouteAware {
-  Prefs _prefs;
+  final PrefsManager _prefsManager = PrefsManager();
 
-  final Prefs _defaultPrefs = new Prefs.defaultValue();
-  final FetchData _fetch = new FetchData();
-  final MenuNotification _notification = new MenuNotification();
+  final FetchData _fetch = FetchData();
+  final MenuNotification _notification = MenuNotification();
 
   final AsyncMemoizer _fetchDataMemoizer = AsyncMemoizer();
   final AsyncMemoizer _timeErrorSnackBarMemoizer = AsyncMemoizer();
 
   void asyncMethod() async {
-    _prefs = await SharedPrefs().pull();
-    _prefs.toJson().forEach((key, value) {
+    _prefsManager.serialize().forEach((key, value) {
       if (key != "userGrade" && key != "userClass") {
         analytics.setUserProperty(name: key, value: '$value');
       }
@@ -132,7 +129,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
             ];
         _menu.forEach((element) {
           _menuStringList.add(element[0]);
-          if (_prefs.allergyInfo ?? _defaultPrefs.allergyInfo) {
+          if (_prefsManager.get('allergyInfo')) {
             String _allergyInfo = "";
             element[1].forEach((element) =>
                 _allergyInfo = "$_allergyInfo, ${_allergyString[element]}");
@@ -163,9 +160,8 @@ class _HomePageState extends State<HomePage> with RouteAware {
         });
         // 시간표 리스트 작성
         List _timetableList = [];
-        List _timetable = data["Timetable"]
-                ["${_prefs.userGrade ?? _defaultPrefs.userGrade}"]
-            ["${_prefs.userClass ?? _defaultPrefs.userClass}"];
+        List _timetable = data["Timetable"]["${_prefsManager.get('userGrade')}"]
+            ["${_prefsManager.get('userClass')}"];
         if (_timetable.length == 0) _timetable = ["시간표 정보가 없습니다."];
         _timetable.forEach((element) {
           _timetableList.add(ListTile(
@@ -180,10 +176,9 @@ class _HomePageState extends State<HomePage> with RouteAware {
               ["학사일정이 없습니다.", []]
             ];
         _schedule.forEach((element) {
-          if (_prefs.showMyScheduleOnly ?? _defaultPrefs.showMyScheduleOnly) {
+          if (_prefsManager.get('showMyScheduleOnly')) {
             if (element[1].length == 0 ||
-                element[1]
-                    .contains(_prefs.userGrade ?? _defaultPrefs.userGrade)) {
+                element[1].contains(_prefsManager.get('userGrade'))) {
               _scheduleList.add(ListTile(
                 title: Text(element[0]),
                 visualDensity: VisualDensity(vertical: -4),
@@ -230,7 +225,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
           "Timetable": [
             ListTile(
               title: Text(
-                "${_prefs.userGrade ?? _defaultPrefs.userGrade}학년 ${_prefs.userClass ?? _defaultPrefs.userClass}반 시간표",
+                "${_prefsManager.get('userGrade')}학년 ${_prefsManager.get('userClass')}반 시간표",
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -239,10 +234,8 @@ class _HomePageState extends State<HomePage> with RouteAware {
               onTap: () async {
                 ChangeGradeClass _changeGradeClass =
                     new ChangeGradeClass.dialog(
-                        currentGrade:
-                            _prefs.userGrade ?? _defaultPrefs.userGrade,
-                        currentClass:
-                            _prefs.userClass ?? _defaultPrefs.userClass);
+                        currentGrade: _prefsManager.get('userGrade'),
+                        currentClass: _prefsManager.get('userClass'));
                 await showDialog(
                   context: context,
                   builder: (BuildContext context) {
@@ -250,9 +243,10 @@ class _HomePageState extends State<HomePage> with RouteAware {
                   },
                 );
                 setState(() {
-                  _prefs.userGrade = _changeGradeClass.selectedGrade;
-                  _prefs.userClass = _changeGradeClass.selectedClass;
-                  SharedPrefs().push(_prefs);
+                  _prefsManager.set(
+                      'userGrade', _changeGradeClass.selectedGrade);
+                  _prefsManager.set(
+                      'userClass', _changeGradeClass.selectedClass);
                 });
               },
             ),
@@ -271,7 +265,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
             ..._scheduleList
           ]
         };
-        _prefs.sectionOrder.forEach((element) {
+        _prefsManager.get('sectionOrder').forEach((element) {
           _sections[element].forEach((element) => _widgets.add(element));
           _widgets.add(Divider());
         });
