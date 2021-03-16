@@ -22,6 +22,7 @@ environment:
 
 dependencies:
   animations: ^1.1.2
+  brotli: ^0.4.0
   connectivity: ^2.0.2
   firebase_analytics: ^6.3.0
   firebase_core: ^0.5.3

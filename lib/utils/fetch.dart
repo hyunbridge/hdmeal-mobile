@@ -9,6 +9,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:brotli/brotli.dart';
 import 'package:http/http.dart';
 import 'package:connectivity/connectivity.dart';
 
@@ -38,10 +39,11 @@ class FetchData {
           }
         }
       }
-      final response =
-          await Client().get('https://api.hdml.kr/api/v4/app/');
-      Cache().write(response.body);
-      return json.decode(response.body);
+      final response = await Client().get('https://api.hdml.kr/api/v4/app/br/');
+      final decompressed =
+          brotli.decodeToString(response.bodyBytes, encoding: utf8);
+      Cache().write(decompressed);
+      return json.decode(decompressed);
     } catch (_) {
       String _cache = await Cache().read();
       if (_cache != null) {
