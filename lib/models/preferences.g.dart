@@ -8,28 +8,30 @@ part of 'preferences.dart';
 
 Prefs _$PrefsFromJson(Map<String, dynamic> json) {
   return Prefs(
-    json['userGrade'] as int,
-    json['userClass'] as int,
     json['allergyInfo'] as bool,
-    (json['sectionOrder'] as List).map((e) => e as String).toList(),
-    json['receiveNotifications'] as bool,
+    json['enableBlackTheme'] as bool,
+    json['enableDataSaver'] as bool,
     json['notificationsHour'] as int,
     json['notificationsMinute'] as int,
+    json['receiveNotifications'] as bool,
+    (json['sectionOrder'] as List).map((e) => e as String).toList(),
     json['showMyScheduleOnly'] as bool,
     json['theme'] as String,
-    json['enableBlackTheme'] as bool,
+    json['userClass'] as int,
+    json['userGrade'] as int,
   );
 }
 
 Map<String, dynamic> _$PrefsToJson(Prefs instance) => <String, dynamic>{
-      'userGrade': instance.userGrade,
-      'userClass': instance.userClass,
       'allergyInfo': instance.allergyInfo,
-      'sectionOrder': instance.sectionOrder,
-      'receiveNotifications': instance.receiveNotifications,
+      'enableBlackTheme': instance.enableBlackTheme,
+      'enableDataSaver': instance.enableDataSaver,
       'notificationsHour': instance.notificationsHour,
       'notificationsMinute': instance.notificationsMinute,
+      'receiveNotifications': instance.receiveNotifications,
+      'sectionOrder': instance.sectionOrder,
       'showMyScheduleOnly': instance.showMyScheduleOnly,
       'theme': instance.theme,
-      'enableBlackTheme': instance.enableBlackTheme,
+      'userClass': instance.userClass,
+      'userGrade': instance.userGrade,
     };

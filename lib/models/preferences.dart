@@ -12,40 +12,43 @@ part 'preferences.g.dart';
 
 @JsonSerializable(nullable: false)
 class Prefs {
-  int userGrade;
-  int userClass;
   bool allergyInfo;
-  List<String> sectionOrder;
-  bool receiveNotifications;
+  bool enableBlackTheme;
+  bool enableDataSaver;
   int notificationsHour;
   int notificationsMinute;
+  bool receiveNotifications;
+  List<String> sectionOrder;
   bool showMyScheduleOnly;
   String theme;
-  bool enableBlackTheme;
+  int userClass;
+  int userGrade;
 
   Prefs(
-    this.userGrade,
-    this.userClass,
     this.allergyInfo,
-    this.sectionOrder,
-    this.receiveNotifications,
+    this.enableBlackTheme,
+    this.enableDataSaver,
     this.notificationsHour,
     this.notificationsMinute,
+    this.receiveNotifications,
+    this.sectionOrder,
     this.showMyScheduleOnly,
     this.theme,
-    this.enableBlackTheme,
+    this.userClass,
+    this.userGrade,
   );
   Prefs.defaultValue() {
-    userGrade = 1;
-    userClass = 1;
     allergyInfo = true;
-    sectionOrder = ["Meal", "Timetable", "Schedule"];
-    receiveNotifications = false;
+    enableBlackTheme = false;
+    enableDataSaver = false;
     notificationsHour = 7;
     notificationsMinute = 30;
+    receiveNotifications = false;
+    sectionOrder = ["Meal", "Timetable", "Schedule"];
     showMyScheduleOnly = true;
     theme = 'System';
-    enableBlackTheme = false;
+    userClass = 1;
+    userGrade = 1;
   }
 
   factory Prefs.fromJson(Map<String, dynamic> json) => _$PrefsFromJson(json);

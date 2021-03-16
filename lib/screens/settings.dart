@@ -131,6 +131,43 @@ class _SettingsPageState extends State<SettingsPage> {
                     () => _prefsManager.set('showMyScheduleOnly', value)),
               ),
               SwitchListTile(
+                title: const Text('데이터 세이버 사용'),
+                value: _prefsManager.get('enableDataSaver'),
+                onChanged: (bool value) {
+                  if (value == true) {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: new Text("데이터 세이버를 켤까요?"),
+                          content: new Text(
+                              "데이터 세이버는 모바일 데이터 환경에서 갱신을 자제하여 데이터를 절약합니다.\n"
+                              "그러나 1회 갱신에 5kb 가량의 매우 적은 데이터를 사용하므로 활성화하지 않기를 권장합니다."),
+                          actions: <Widget>[
+                            new TextButton(
+                              child: new Text("아니요"),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                            ),
+                            new TextButton(
+                              child: new Text("네"),
+                              onPressed: () {
+                                Navigator.pop(context);
+                                setState(() => _prefsManager.set(
+                                    'enableDataSaver', value));
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  } else {
+                    setState(() => _prefsManager.set('enableDataSaver', value));
+                  }
+                },
+              ),
+              SwitchListTile(
                 title: const Text('알러지 정보 표시'),
                 value: _prefsManager.get('allergyInfo'),
                 onChanged: (bool value) =>
