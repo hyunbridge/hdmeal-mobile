@@ -10,12 +10,24 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:brotli/brotli.dart';
-import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
 import 'package:connectivity/connectivity.dart';
 
 import 'package:hdmeal/utils/cache.dart';
 import 'package:hdmeal/utils/preferences_manager.dart';
 import 'package:hdmeal/extensions/date_only_compare.dart';
+
+class Client extends http.BaseClient {
+  final http.Client _inner;
+
+  Client(this._inner);
+
+  Future<http.StreamedResponse> send(http.BaseRequest request) {
+    request.headers['user-agent'] =
+        "HDMeal-Mobile (+https://github.com/hyunbridge/hdmeal-mobile)";
+    return _inner.send(request);
+  }
+}
 
 class FetchData {
   bool cacheUsed = false;
@@ -26,7 +38,8 @@ class FetchData {
     try {
       ConnectivityResult connectivityResult =
           await (Connectivity().checkConnectivity());
-      if (connectivityResult == ConnectivityResult.mobile && _prefsManager.get('enableDataSaver') == true) {
+      if (connectivityResult == ConnectivityResult.mobile &&
+          _prefsManager.get('enableDataSaver') == true) {
         DateTime _now = DateTime.now();
         DateTime _cacheUpdatedTime = await Cache().getUpdatedTime();
         if (_now.isSameDate(_cacheUpdatedTime)) {
@@ -41,7 +54,8 @@ class FetchData {
           }
         }
       }
-      final response = await Client().get('https://api.hdml.kr/api/v4/app/br/');
+      final response =
+          await Client(http.Client()).get('https://api.hdml.kr/api/v4/app/br/');
       final decompressed =
           brotli.decodeToString(response.bodyBytes, encoding: utf8);
       Cache().write(decompressed);
