@@ -176,42 +176,13 @@ class _SettingsPageState extends State<SettingsPage> {
               Divider(),
               ListTile(
                 title: Text('캐시 비우기'),
-                onTap: () async {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: new Text("캐시를 비울까요?"),
-                        content: new Text(
-                            "캐시는 앱에서 알아서 관리하기 때문에 다른 문제가 없다면 굳이 비울 필요가 없습니다.\n"
-                            "캐시의 용량은 대개 0.5MB 이내로 비우더라도 용량 확보에 거의 도움이 되지 않으며, "
-                            "자주 비울 경우 같은 데이터를 반복 요청하게 되므로 네트워크 사용량이 늘어날 수 있습니다.\n"
-                            "캐시를 비우면 다음 실행 시까지 오프라인에서 앱을 이용하실 수 없게 됩니다."),
-                        actions: <Widget>[
-                          new TextButton(
-                            child: new Text("아니요"),
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                          ),
-                          new TextButton(
-                            child: new Text("네"),
-                            onPressed: () {
-                              Cache().clear();
-                              ScaffoldMessenger.of(context)
-                                  .hideCurrentSnackBar();
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(
-                                content: Text('캐시를 비웠습니다.'),
-                                duration: const Duration(seconds: 3),
-                              ));
-                              Navigator.pop(context);
-                            },
-                          ),
-                        ],
-                      );
-                    },
-                  );
+                onTap: () {
+                  Cache().clear();
+                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text('캐시를 비웠습니다.'),
+                    duration: const Duration(seconds: 3),
+                  ));
                 },
               ),
               ListTile(
