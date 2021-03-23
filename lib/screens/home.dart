@@ -9,12 +9,14 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:flutter/material.dart';
-import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
-import 'package:flutter/services.dart';
 import 'package:async/async.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_custom_tabs/flutter_custom_tabs.dart' as customTabs;
+import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:share/share.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:url_launcher/url_launcher.dart' as urlLauncher;
 
 import 'package:firebase_analytics/firebase_analytics.dart';
 
@@ -50,6 +52,28 @@ class _HomePageState extends State<HomePage> with RouteAware {
     });
     await _notification.init();
     _notification.clear();
+  }
+
+  void _launch(BuildContext context, String _url) async {
+    try {
+      await customTabs.launch(
+        _url,
+        option: new customTabs.CustomTabsOption(
+          toolbarColor: Theme.of(context).primaryColor,
+          enableDefaultShare: true,
+          enableUrlBarHiding: true,
+          showPageTitle: true,
+          extraCustomTabs: <String>[
+            'com.brave.browser',
+            'com.microsoft.emmx',
+            'com.sec.android.app.sbrowser',
+            'org.mozilla.firefox',
+          ],
+        ),
+      );
+    } catch (_) {
+      urlLauncher.launch(_url);
+    }
   }
 
   Future fetchData() => _fetchDataMemoizer.runOnce(() async {
@@ -112,8 +136,8 @@ class _HomePageState extends State<HomePage> with RouteAware {
       data.forEach((date, data) {
         // 날짜 처리
         bool isToday = false;
-        DateTime _now = DateTime.now();
-        DateTime _parsedDate = DateTime.parse(date);
+        final DateTime _now = DateTime.now();
+        final DateTime _parsedDate = DateTime.parse(date);
         if (_now.isSameDate(_parsedDate)) {
           _todayIndex = _pages.length;
           isToday = true;
@@ -121,45 +145,61 @@ class _HomePageState extends State<HomePage> with RouteAware {
         String _title =
             "${_parsedDate.month}월 ${_parsedDate.day}일(${_weekday[_parsedDate.weekday]})";
         // 식단 리스트 작성
-        List _menuList = [];
-        List _menuStringList = [];
-        List _menu = data["Meal"][0] ??
-            [
-              ["식단정보가 없습니다.", []]
-            ];
-        _menu.forEach((element) {
-          _menuStringList.add(element[0]);
-          if (_prefsManager.get('allergyInfo')) {
-            String _allergyInfo = "";
-            element[1].forEach((element) =>
-                _allergyInfo = "$_allergyInfo, ${_allergyString[element]}");
-            _allergyInfo = _allergyInfo.replaceFirst(", ", "");
-            if (!(_allergyInfo == "")) {
-              _menuList.add(ListTile(
-                title: Text(element[0]),
-                subtitle: Text(
-                  _allergyInfo,
-                  style: TextStyle(
-                    fontSize: 12,
+        final List _menuList = [];
+        final List _menuStringList = [];
+        final List _menu = data["Meal"][0];
+        if (data["Meal"][0] == null) {
+          _menuList.add(ListTile(
+            title: Text("식단정보가 없습니다."),
+            visualDensity: VisualDensity(vertical: -4),
+          ));
+        } else {
+          _menu.forEach((element) {
+            _menuStringList.add(element[0]);
+            if (_prefsManager.get('allergyInfo')) {
+              String _allergyInfo = "";
+              element[1].forEach((element) =>
+                  _allergyInfo = "$_allergyInfo, ${_allergyString[element]}");
+              _allergyInfo = _allergyInfo.replaceFirst(", ", "");
+              if (!(_allergyInfo == "")) {
+                _menuList.add(ListTile(
+                  title: Text(element[0]),
+                  subtitle: Text(
+                    _allergyInfo,
+                    style: TextStyle(
+                      fontSize: 12,
+                    ),
                   ),
-                ),
-                visualDensity: VisualDensity(vertical: -4),
-              ));
+                  visualDensity: VisualDensity(vertical: -4),
+                  onTap: () async {
+                    _launch(context,
+                        "https://www.google.com/search?q=${Uri.encodeComponent(element[0])}&tbm=isch");
+                  },
+                ));
+              } else {
+                _menuList.add(ListTile(
+                  title: Text(element[0]),
+                  visualDensity: VisualDensity(vertical: -4),
+                  onTap: () async {
+                    _launch(context,
+                        "https://www.google.com/search?q=${Uri.encodeComponent(element[0])}&tbm=isch");
+                  },
+                ));
+              }
             } else {
               _menuList.add(ListTile(
                 title: Text(element[0]),
                 visualDensity: VisualDensity(vertical: -4),
+                onTap: () async {
+                  _launch(context,
+                      "https://www.google.com/search?q=${Uri.encodeComponent(element[0])}&tbm=isch");
+                },
               ));
             }
-          } else {
-            _menuList.add(ListTile(
-              title: Text(element[0]),
-              visualDensity: VisualDensity(vertical: -4),
-            ));
-          }
-        });
+          });
+        }
         // 시간표 리스트 작성
-        List _timetableList = [];
+        final List _timetableList = [];
         List _timetable = data["Timetable"]["${_prefsManager.get('userGrade')}"]
             ["${_prefsManager.get('userClass')}"];
         if (_timetable.length == 0) _timetable = ["시간표 정보가 없습니다."];
@@ -170,8 +210,8 @@ class _HomePageState extends State<HomePage> with RouteAware {
           ));
         });
         // 학사일정 리스트 작성
-        List _scheduleList = [];
-        List _schedule = data["Schedule"] ??
+        final List _scheduleList = [];
+        final List _schedule = data["Schedule"] ??
             [
               ["학사일정이 없습니다.", []]
             ];
