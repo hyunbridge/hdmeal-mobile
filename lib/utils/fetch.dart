@@ -54,8 +54,8 @@ class FetchData {
           }
         }
       }
-      final response =
-          await Client(http.Client()).get('https://api.hdml.kr/api/v4/app/br/');
+      final response = await Client(http.Client())
+          .get(Uri.parse("https://api.hdml.kr/api/v4/app/br/"));
       final decompressed =
           brotli.decodeToString(response.bodyBytes, encoding: utf8);
       Cache().write(decompressed);

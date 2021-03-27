@@ -12,7 +12,7 @@ import 'dart:math';
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_custom_tabs/flutter_custom_tabs.dart' as customTabs;
+import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:share/share.dart';
 import 'package:shimmer/shimmer.dart';
@@ -50,21 +50,13 @@ class _HomePageState extends State<HomePage> with RouteAware {
     });
   }
 
-  void _launch(BuildContext context, String _url) async {
+  void _launch(BuildContext context, String _url) {
     try {
-      await customTabs.launch(
-        _url,
-        option: new customTabs.CustomTabsOption(
+      FlutterWebBrowser.openWebPage(
+        url: _url,
+        customTabsOptions: CustomTabsOptions(
           toolbarColor: Theme.of(context).primaryColor,
-          enableDefaultShare: true,
-          enableUrlBarHiding: true,
-          showPageTitle: true,
-          extraCustomTabs: <String>[
-            'com.brave.browser',
-            'com.microsoft.emmx',
-            'com.sec.android.app.sbrowser',
-            'org.mozilla.firefox',
-          ],
+          navigationBarColor: Theme.of(context).primaryColor,
         ),
       );
     } catch (_) {

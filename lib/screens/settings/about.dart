@@ -10,7 +10,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:async/async.dart';
-import 'package:flutter_custom_tabs/flutter_custom_tabs.dart' as customTabs;
+import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'package:package_info/package_info.dart';
 import 'package:url_launcher/url_launcher.dart' as urlLauncher;
 import 'package:in_app_update/in_app_update.dart';
@@ -36,21 +36,13 @@ class _AboutPageState extends State<AboutPage> with RouteAware {
     return await InAppUpdate.checkForUpdate();
   }
 
-  void _launch(BuildContext context, String _url) async {
+  void _launch(BuildContext context, String _url) {
     try {
-      await customTabs.launch(
-        _url,
-        option: new customTabs.CustomTabsOption(
+      FlutterWebBrowser.openWebPage(
+        url: _url,
+        customTabsOptions: CustomTabsOptions(
           toolbarColor: Theme.of(context).primaryColor,
-          enableDefaultShare: true,
-          enableUrlBarHiding: true,
-          showPageTitle: true,
-          extraCustomTabs: <String>[
-            'com.brave.browser',
-            'com.microsoft.emmx',
-            'com.sec.android.app.sbrowser',
-            'org.mozilla.firefox',
-          ],
+          navigationBarColor: Theme.of(context).primaryColor,
         ),
       );
     } catch (_) {
@@ -140,7 +132,8 @@ class _AboutPageState extends State<AboutPage> with RouteAware {
                             }
 
                             if (snapshot.hasData) {
-                              if (snapshot.data.updateAvailable) {
+                              if (snapshot.data.updateAvailability ==
+                                  UpdateAvailability.updateAvailable) {
                                 return ListTile(
                                   title: Text("업데이트가 있습니다."),
                                   onTap: () async {
@@ -179,8 +172,7 @@ class _AboutPageState extends State<AboutPage> with RouteAware {
                       ListTile(
                         title: Text('소스 코드 보기'),
                         onTap: () async {
-                          _launch(context,
-                              "https://go.hdml.kr/github/android");
+                          _launch(context, "https://go.hdml.kr/github/android");
                         },
                       ),
                       ListTile(

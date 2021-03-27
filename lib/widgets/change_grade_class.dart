@@ -55,16 +55,16 @@ class _ChangeGradeClassState extends State<ChangeGradeClass> {
                   style: _selectedTextStyle,
                 ),
               ),
-              NumberPicker.integer(
-                initialValue: widget.selectedGrade,
+              NumberPicker(
+                value: widget.selectedGrade,
                 minValue: 1,
                 maxValue: 3,
                 onChanged: (newValue) =>
                     setState(() => widget.selectedGrade = newValue),
                 textStyle: _textStyle,
                 selectedTextStyle: _selectedTextStyle,
-                listViewWidth: 80,
-                itemExtent: 40,
+                itemWidth: 80,
+                itemHeight: 40,
               ),
             ],
           ),
@@ -77,16 +77,16 @@ class _ChangeGradeClassState extends State<ChangeGradeClass> {
                   style: _selectedTextStyle,
                 ),
               ),
-              NumberPicker.integer(
-                initialValue: widget.selectedClass,
+              NumberPicker(
+                value: widget.selectedClass,
                 minValue: 1,
                 maxValue: 9,
                 onChanged: (newValue) =>
                     setState(() => widget.selectedClass = newValue),
                 textStyle: _textStyle,
                 selectedTextStyle: _selectedTextStyle,
-                listViewWidth: 80,
-                itemExtent: 40,
+                itemWidth: 80,
+                itemHeight: 40,
               ),
             ],
           ),
