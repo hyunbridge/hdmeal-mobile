@@ -10,15 +10,17 @@ import 'package:flutter/material.dart';
 
 import 'package:numberpicker/numberpicker.dart';
 
+typedef void OnChangedCallback(int selectedGrade, int selectedClass);
+
 class ChangeGradeClass extends StatefulWidget {
   final int currentGrade;
   final int currentClass;
-  int selectedGrade;
-  int selectedClass;
+  final OnChangedCallback onChanged;
 
-  ChangeGradeClass.dialog({
+  ChangeGradeClass({
     @required this.currentGrade,
     @required this.currentClass,
+    @required this.onChanged,
   });
 
   @override
@@ -26,11 +28,14 @@ class ChangeGradeClass extends StatefulWidget {
 }
 
 class _ChangeGradeClassState extends State<ChangeGradeClass> {
+  int selectedGrade;
+  int selectedClass;
+
   @override
   void initState() {
     super.initState();
-    widget.selectedGrade = widget.currentGrade;
-    widget.selectedClass = widget.currentClass;
+    selectedGrade = widget.currentGrade;
+    selectedClass = widget.currentClass;
   }
 
   @override
@@ -56,11 +61,13 @@ class _ChangeGradeClassState extends State<ChangeGradeClass> {
                 ),
               ),
               NumberPicker(
-                value: widget.selectedGrade,
+                value: selectedGrade,
                 minValue: 1,
                 maxValue: 3,
-                onChanged: (newValue) =>
-                    setState(() => widget.selectedGrade = newValue),
+                onChanged: (newValue) {
+                  setState(() => selectedGrade = newValue);
+                  widget.onChanged(selectedGrade, selectedClass);
+                },
                 textStyle: _textStyle,
                 selectedTextStyle: _selectedTextStyle,
                 itemWidth: 80,
@@ -78,11 +85,13 @@ class _ChangeGradeClassState extends State<ChangeGradeClass> {
                 ),
               ),
               NumberPicker(
-                value: widget.selectedClass,
+                value: selectedClass,
                 minValue: 1,
                 maxValue: 9,
-                onChanged: (newValue) =>
-                    setState(() => widget.selectedClass = newValue),
+                onChanged: (newValue) {
+                  setState(() => selectedClass = newValue);
+                  widget.onChanged(selectedGrade, selectedClass);
+                },
                 textStyle: _textStyle,
                 selectedTextStyle: _selectedTextStyle,
                 itemWidth: 80,

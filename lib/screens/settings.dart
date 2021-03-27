@@ -85,22 +85,20 @@ class _SettingsPageState extends State<SettingsPage> {
                 subtitle: Text(
                     '${_prefsManager.get('userGrade')}학년 ${_prefsManager.get('userClass')}반'),
                 onTap: () async {
-                  ChangeGradeClass _changeGradeClass =
-                      new ChangeGradeClass.dialog(
-                          currentGrade: _prefsManager.get('userGrade'),
-                          currentClass: _prefsManager.get('userClass'));
                   await showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      return _changeGradeClass;
+                      return ChangeGradeClass(
+                        currentGrade: _prefsManager.get('userGrade'),
+                        currentClass: _prefsManager.get('userClass'),
+                        onChanged: (selectedGrade, selectedClass) =>
+                            setState(() {
+                          _prefsManager.set('userGrade', selectedGrade);
+                          _prefsManager.set('userClass', selectedClass);
+                        }),
+                      );
                     },
                   );
-                  setState(() {
-                    _prefsManager.set(
-                        'userGrade', _changeGradeClass.selectedGrade);
-                    _prefsManager.set(
-                        'userClass', _changeGradeClass.selectedClass);
-                  });
                 },
               ),
               ListTile(
