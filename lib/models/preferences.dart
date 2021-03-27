@@ -15,9 +15,6 @@ class Prefs {
   bool allergyInfo;
   bool enableBlackTheme;
   bool enableDataSaver;
-  int notificationsHour;
-  int notificationsMinute;
-  bool receiveNotifications;
   List<String> sectionOrder;
   bool showMyScheduleOnly;
   String theme;
@@ -28,9 +25,6 @@ class Prefs {
     this.allergyInfo,
     this.enableBlackTheme,
     this.enableDataSaver,
-    this.notificationsHour,
-    this.notificationsMinute,
-    this.receiveNotifications,
     this.sectionOrder,
     this.showMyScheduleOnly,
     this.theme,
@@ -41,9 +35,6 @@ class Prefs {
     allergyInfo = true;
     enableBlackTheme = false;
     enableDataSaver = false;
-    notificationsHour = 7;
-    notificationsMinute = 30;
-    receiveNotifications = false;
     sectionOrder = ["Meal", "Timetable", "Schedule"];
     showMyScheduleOnly = true;
     theme = 'System';

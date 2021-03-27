@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:hdmeal/utils/cache.dart';
-import 'package:hdmeal/utils/menu_notification.dart';
 import 'package:hdmeal/utils/preferences_manager.dart';
 import 'package:hdmeal/utils/theme.dart';
 import 'package:hdmeal/widgets/change_grade_class.dart';
@@ -24,8 +23,6 @@ class _SettingsPageState extends State<SettingsPage> {
   ScrollController _scrollController;
 
   final PrefsManager _prefsManager = PrefsManager();
-
-  final MenuNotification _notification = MenuNotification();
 
   double get _horizontalTitlePadding {
     const kBasePadding = 16.0;
@@ -110,12 +107,6 @@ class _SettingsPageState extends State<SettingsPage> {
                 title: Text('화면 순서 변경'),
                 onTap: () async {
                   Navigator.pushNamed(context, '/settings/changeOrder');
-                },
-              ),
-              ListTile(
-                title: Text('알림 설정'),
-                onTap: () async {
-                  Navigator.pushNamed(context, '/settings/notifications');
                 },
               ),
               ListTile(
@@ -206,7 +197,6 @@ class _SettingsPageState extends State<SettingsPage> {
                             onPressed: () async {
                               setState(() => _prefsManager.resetAll());
                               themeNotifier.handleChangeTheme();
-                              _notification.unsubscribe();
                               ScaffoldMessenger.of(context)
                                   .hideCurrentSnackBar();
                               ScaffoldMessenger.of(context)

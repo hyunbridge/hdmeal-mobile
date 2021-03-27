@@ -30,7 +30,6 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_custom_tabs: ^0.6.0
-  flutter_local_notifications: ^3.0.2
   flutter_statusbarcolor: ^0.2.3
   flutter_time_picker_spinner: ^1.0.6+1
   http: 0.12.2
