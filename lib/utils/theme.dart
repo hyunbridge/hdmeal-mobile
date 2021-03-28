@@ -21,7 +21,22 @@ final lightTheme = ThemeData(
     builders: {
       TargetPlatform.android: SharedAxisPageTransitionsBuilder(
         transitionType: SharedAxisTransitionType.scaled,
-      )
+      ),
+      TargetPlatform.fuchsia: SharedAxisPageTransitionsBuilder(
+        transitionType: SharedAxisTransitionType.scaled,
+      ),
+      TargetPlatform.iOS: SharedAxisPageTransitionsBuilder(
+        transitionType: SharedAxisTransitionType.scaled,
+      ),
+      TargetPlatform.linux: SharedAxisPageTransitionsBuilder(
+        transitionType: SharedAxisTransitionType.scaled,
+      ),
+      TargetPlatform.macOS: SharedAxisPageTransitionsBuilder(
+        transitionType: SharedAxisTransitionType.scaled,
+      ),
+      TargetPlatform.windows: SharedAxisPageTransitionsBuilder(
+        transitionType: SharedAxisTransitionType.scaled,
+      ),
     },
   ),
 );
@@ -39,7 +54,27 @@ final darkTheme = ThemeData(
       TargetPlatform.android: SharedAxisPageTransitionsBuilder(
         transitionType: SharedAxisTransitionType.scaled,
         fillColor: Colors.grey[900],
-      )
+      ),
+      TargetPlatform.fuchsia: SharedAxisPageTransitionsBuilder(
+        transitionType: SharedAxisTransitionType.scaled,
+        fillColor: Colors.grey[900],
+      ),
+      TargetPlatform.iOS: SharedAxisPageTransitionsBuilder(
+        transitionType: SharedAxisTransitionType.scaled,
+        fillColor: Colors.grey[900],
+      ),
+      TargetPlatform.linux: SharedAxisPageTransitionsBuilder(
+        transitionType: SharedAxisTransitionType.scaled,
+        fillColor: Colors.grey[900],
+      ),
+      TargetPlatform.macOS: SharedAxisPageTransitionsBuilder(
+        transitionType: SharedAxisTransitionType.scaled,
+        fillColor: Colors.grey[900],
+      ),
+      TargetPlatform.windows: SharedAxisPageTransitionsBuilder(
+        transitionType: SharedAxisTransitionType.scaled,
+        fillColor: Colors.grey[900],
+      ),
     },
   ),
 );
@@ -57,7 +92,27 @@ final blackTheme = ThemeData(
       TargetPlatform.android: SharedAxisPageTransitionsBuilder(
         transitionType: SharedAxisTransitionType.scaled,
         fillColor: Colors.black,
-      )
+      ),
+      TargetPlatform.fuchsia: SharedAxisPageTransitionsBuilder(
+        transitionType: SharedAxisTransitionType.scaled,
+        fillColor: Colors.black,
+      ),
+      TargetPlatform.iOS: SharedAxisPageTransitionsBuilder(
+        transitionType: SharedAxisTransitionType.scaled,
+        fillColor: Colors.black,
+      ),
+      TargetPlatform.linux: SharedAxisPageTransitionsBuilder(
+        transitionType: SharedAxisTransitionType.scaled,
+        fillColor: Colors.black,
+      ),
+      TargetPlatform.macOS: SharedAxisPageTransitionsBuilder(
+        transitionType: SharedAxisTransitionType.scaled,
+        fillColor: Colors.black,
+      ),
+      TargetPlatform.windows: SharedAxisPageTransitionsBuilder(
+        transitionType: SharedAxisTransitionType.scaled,
+        fillColor: Colors.black,
+      ),
     },
   ),
 );
