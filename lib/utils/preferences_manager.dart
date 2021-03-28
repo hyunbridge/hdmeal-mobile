@@ -7,9 +7,11 @@
 // Copyright Hyungyo Seo
 
 import 'dart:convert';
-import 'dart:io';
+import 'dart:io' as Native;
 
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:path_provider/path_provider.dart';
+import 'package:universal_html/html.dart' as Web;
 
 import 'package:hdmeal/models/preferences.dart';
 
@@ -25,29 +27,52 @@ class PrefsManager {
   PrefsManager._internal();
 
   Future<Map<String, dynamic>> _read() async {
-    Directory _prefsDir = await getApplicationDocumentsDirectory();
-    try {
-      File _prefsFile = new File("${_prefsDir.path}/preferences.json");
-      String _prefsString = _prefsFile.readAsStringSync();
-      return json.decode(_prefsString);
-    } catch (_) {
-      return null;
+    if (kIsWeb) {
+      final Web.Storage _localStorage = Web.window.localStorage;
+      try {
+        String _prefsString = _localStorage["preferences"];
+        return json.decode(_prefsString);
+      } catch (_) {
+        return null;
+      }
+    } else {
+      Native.Directory _prefsDir = await getApplicationDocumentsDirectory();
+      try {
+        Native.File _prefsFile =
+            new Native.File("${_prefsDir.path}/preferences.json");
+        String _prefsString = _prefsFile.readAsStringSync();
+        return json.decode(_prefsString);
+      } catch (_) {
+        return null;
+      }
     }
   }
 
   Future<void> _write() async {
-    Directory _prefsDir = await getApplicationDocumentsDirectory();
-    File _prefsFile = new File("${_prefsDir.path}/preferences.json");
-    await _prefsFile.writeAsString(json.encode(_prefs.toJson()));
+    if (kIsWeb) {
+      final Web.Storage _localStorage = Web.window.localStorage;
+      _localStorage["preferences"] = json.encode(_prefs.toJson());
+    } else {
+      Native.Directory _prefsDir = await getApplicationDocumentsDirectory();
+      Native.File _prefsFile =
+          new Native.File("${_prefsDir.path}/preferences.json");
+      await _prefsFile.writeAsString(json.encode(_prefs.toJson()));
+    }
   }
 
   Future<void> _delete() async {
-    Directory _prefsDir = await getApplicationDocumentsDirectory();
-    try {
-      File _prefsFile = new File("${_prefsDir.path}/preferences.json");
-      await _prefsFile.delete();
-    } catch (_) {
-      //pass
+    if (kIsWeb) {
+      final Web.Storage _localStorage = Web.window.localStorage;
+      _localStorage.remove("preferences");
+    } else {
+      Native.Directory _prefsDir = await getApplicationDocumentsDirectory();
+      try {
+        Native.File _prefsFile =
+            new Native.File("${_prefsDir.path}/preferences.json");
+        await _prefsFile.delete();
+      } catch (_) {
+        //pass
+      }
     }
   }
 

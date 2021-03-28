@@ -41,6 +41,7 @@ dependencies:
   provider: ^5.0.0
   share: ^2.0.1
   shimmer: ^1.1.2
+  universal_html: ^2.0.7
   url_launcher: ^6.0.3
 
 

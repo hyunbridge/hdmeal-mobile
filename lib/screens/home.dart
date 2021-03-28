@@ -10,6 +10,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:async/async.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_web_browser/flutter_web_browser.dart';
@@ -239,13 +240,16 @@ class _HomePageState extends State<HomePage> with RouteAware {
               ),
               trailing: Transform.translate(
                 offset: Offset(16, 0),
-                child: IconButton(
-                    icon: const Icon(Icons.share),
-                    color: Theme.of(context).textTheme.bodyText1.color,
-                    onPressed: () {
-                      Share.share(
-                          "<${_parsedDate.month}월 ${_parsedDate.day}일(${_weekday[_parsedDate.weekday]})>\n${_menuStringList.join(",\n")}");
-                    }),
+                child: Visibility(
+                  child: IconButton(
+                      icon: const Icon(Icons.share),
+                      color: Theme.of(context).textTheme.bodyText1.color,
+                      onPressed: () {
+                        Share.share(
+                            "<${_parsedDate.month}월 ${_parsedDate.day}일(${_weekday[_parsedDate.weekday]})>\n${_menuStringList.join(",\n")}");
+                      }),
+                  visible: !kIsWeb,
+                ),
               ),
             ),
             ..._menuList,
@@ -424,19 +428,22 @@ class _HomePageState extends State<HomePage> with RouteAware {
     Color _shimmerBaseColor;
     Color _shimmerHighlightColor;
     final Random _random = new Random();
-    FlutterStatusbarcolor.setStatusBarColor(Colors.transparent);
-    FlutterStatusbarcolor.setNavigationBarColor(Theme.of(context).primaryColor);
-    switch (Theme.of(context).brightness) {
-      case Brightness.light:
-        _shimmerBaseColor = Colors.grey[300];
-        _shimmerHighlightColor = Colors.grey[100];
-        FlutterStatusbarcolor.setNavigationBarWhiteForeground(false);
-        break;
-      case Brightness.dark:
-        _shimmerBaseColor = Colors.grey[800];
-        _shimmerHighlightColor = Colors.grey[600];
-        FlutterStatusbarcolor.setNavigationBarWhiteForeground(true);
-        break;
+    if (!kIsWeb) {
+      FlutterStatusbarcolor.setStatusBarColor(Colors.transparent);
+      FlutterStatusbarcolor.setNavigationBarColor(
+          Theme.of(context).primaryColor);
+      switch (Theme.of(context).brightness) {
+        case Brightness.light:
+          _shimmerBaseColor = Colors.grey[300];
+          _shimmerHighlightColor = Colors.grey[100];
+          FlutterStatusbarcolor.setNavigationBarWhiteForeground(false);
+          break;
+        case Brightness.dark:
+          _shimmerBaseColor = Colors.grey[800];
+          _shimmerHighlightColor = Colors.grey[600];
+          FlutterStatusbarcolor.setNavigationBarWhiteForeground(true);
+          break;
+      }
     }
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
