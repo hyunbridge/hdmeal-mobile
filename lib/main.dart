@@ -57,6 +57,7 @@ class App extends StatelessWidget {
     };
 
     return MaterialApp(
+      title: "흥덕고 급식",
       theme: themeNotifier.getTheme(),
       initialRoute: '/',
       routes: {
