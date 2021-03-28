@@ -10,6 +10,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:brotli/brotli.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:http/http.dart' as http;
 import 'package:connectivity/connectivity.dart';
 
@@ -23,8 +24,10 @@ class Client extends http.BaseClient {
   Client(this._inner);
 
   Future<http.StreamedResponse> send(http.BaseRequest request) {
-    request.headers['user-agent'] =
-        "HDMeal-Mobile (+https://github.com/hyunbridge/hdmeal-mobile)";
+    if (!kIsWeb) {
+      request.headers['user-agent'] =
+          "HDMeal-Mobile (+https://github.com/hyunbridge/hdmeal-mobile)";
+    }
     return _inner.send(request);
   }
 }
