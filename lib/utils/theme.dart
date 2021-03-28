@@ -17,24 +17,10 @@ final lightTheme = ThemeData(
   brightness: Brightness.light,
   primaryColor: Colors.white,
   primarySwatch: Colors.grey,
+  platform: TargetPlatform.android,
   pageTransitionsTheme: PageTransitionsTheme(
     builders: {
       TargetPlatform.android: SharedAxisPageTransitionsBuilder(
-        transitionType: SharedAxisTransitionType.scaled,
-      ),
-      TargetPlatform.fuchsia: SharedAxisPageTransitionsBuilder(
-        transitionType: SharedAxisTransitionType.scaled,
-      ),
-      TargetPlatform.iOS: SharedAxisPageTransitionsBuilder(
-        transitionType: SharedAxisTransitionType.scaled,
-      ),
-      TargetPlatform.linux: SharedAxisPageTransitionsBuilder(
-        transitionType: SharedAxisTransitionType.scaled,
-      ),
-      TargetPlatform.macOS: SharedAxisPageTransitionsBuilder(
-        transitionType: SharedAxisTransitionType.scaled,
-      ),
-      TargetPlatform.windows: SharedAxisPageTransitionsBuilder(
         transitionType: SharedAxisTransitionType.scaled,
       ),
     },
@@ -48,30 +34,11 @@ final darkTheme = ThemeData(
   primarySwatch: Colors.grey,
   accentColor: Colors.grey[500],
   toggleableActiveColor: Colors.grey[500],
+  platform: TargetPlatform.android,
   // 다크 테마에서는 primarySwatch가 먹지 않음
   pageTransitionsTheme: PageTransitionsTheme(
     builders: {
       TargetPlatform.android: SharedAxisPageTransitionsBuilder(
-        transitionType: SharedAxisTransitionType.scaled,
-        fillColor: Colors.grey[900],
-      ),
-      TargetPlatform.fuchsia: SharedAxisPageTransitionsBuilder(
-        transitionType: SharedAxisTransitionType.scaled,
-        fillColor: Colors.grey[900],
-      ),
-      TargetPlatform.iOS: SharedAxisPageTransitionsBuilder(
-        transitionType: SharedAxisTransitionType.scaled,
-        fillColor: Colors.grey[900],
-      ),
-      TargetPlatform.linux: SharedAxisPageTransitionsBuilder(
-        transitionType: SharedAxisTransitionType.scaled,
-        fillColor: Colors.grey[900],
-      ),
-      TargetPlatform.macOS: SharedAxisPageTransitionsBuilder(
-        transitionType: SharedAxisTransitionType.scaled,
-        fillColor: Colors.grey[900],
-      ),
-      TargetPlatform.windows: SharedAxisPageTransitionsBuilder(
         transitionType: SharedAxisTransitionType.scaled,
         fillColor: Colors.grey[900],
       ),
@@ -86,30 +53,11 @@ final blackTheme = ThemeData(
   primarySwatch: Colors.grey,
   accentColor: Colors.grey[500],
   toggleableActiveColor: Colors.grey[500],
+  platform: TargetPlatform.android,
   // 다크 테마에서는 primarySwatch가 먹지 않음
   pageTransitionsTheme: PageTransitionsTheme(
     builders: {
       TargetPlatform.android: SharedAxisPageTransitionsBuilder(
-        transitionType: SharedAxisTransitionType.scaled,
-        fillColor: Colors.black,
-      ),
-      TargetPlatform.fuchsia: SharedAxisPageTransitionsBuilder(
-        transitionType: SharedAxisTransitionType.scaled,
-        fillColor: Colors.black,
-      ),
-      TargetPlatform.iOS: SharedAxisPageTransitionsBuilder(
-        transitionType: SharedAxisTransitionType.scaled,
-        fillColor: Colors.black,
-      ),
-      TargetPlatform.linux: SharedAxisPageTransitionsBuilder(
-        transitionType: SharedAxisTransitionType.scaled,
-        fillColor: Colors.black,
-      ),
-      TargetPlatform.macOS: SharedAxisPageTransitionsBuilder(
-        transitionType: SharedAxisTransitionType.scaled,
-        fillColor: Colors.black,
-      ),
-      TargetPlatform.windows: SharedAxisPageTransitionsBuilder(
         transitionType: SharedAxisTransitionType.scaled,
         fillColor: Colors.black,
       ),
