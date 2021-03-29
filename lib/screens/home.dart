@@ -13,16 +13,15 @@ import 'package:async/async.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:share/share.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:url_launcher/url_launcher.dart' as urlLauncher;
 
 import 'package:firebase_analytics/firebase_analytics.dart';
 
 import 'package:hdmeal/utils/cache.dart';
 import 'package:hdmeal/utils/fetch.dart';
+import 'package:hdmeal/utils/launch.dart';
 import 'package:hdmeal/utils/preferences_manager.dart';
 import 'package:hdmeal/extensions/date_only_compare.dart';
 import 'package:hdmeal/widgets/change_grade_class.dart';
@@ -49,20 +48,6 @@ class _HomePageState extends State<HomePage> with RouteAware {
         analytics.setUserProperty(name: key, value: '$value');
       }
     });
-  }
-
-  void _launch(BuildContext context, String _url) {
-    try {
-      FlutterWebBrowser.openWebPage(
-        url: _url,
-        customTabsOptions: CustomTabsOptions(
-          toolbarColor: Theme.of(context).primaryColor,
-          navigationBarColor: Theme.of(context).primaryColor,
-        ),
-      );
-    } catch (_) {
-      urlLauncher.launch(_url);
-    }
   }
 
   Future fetchData() => _fetchDataMemoizer.runOnce(() async {
@@ -161,7 +146,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
                   ),
                   visualDensity: VisualDensity(vertical: -4),
                   onTap: () async {
-                    _launch(context,
+                    launch(context,
                         "https://www.google.com/search?q=${Uri.encodeComponent(element[0])}&tbm=isch");
                   },
                 ));
@@ -170,7 +155,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
                   title: Text(element[0]),
                   visualDensity: VisualDensity(vertical: -4),
                   onTap: () async {
-                    _launch(context,
+                    launch(context,
                         "https://www.google.com/search?q=${Uri.encodeComponent(element[0])}&tbm=isch");
                   },
                 ));
@@ -180,7 +165,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
                 title: Text(element[0]),
                 visualDensity: VisualDensity(vertical: -4),
                 onTap: () async {
-                  _launch(context,
+                  launch(context,
                       "https://www.google.com/search?q=${Uri.encodeComponent(element[0])}&tbm=isch");
                 },
               ));

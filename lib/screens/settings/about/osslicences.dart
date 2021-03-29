@@ -8,8 +8,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:async/async.dart';
-import 'package:url_launcher/url_launcher.dart';
 
+import 'package:hdmeal/utils/launch.dart';
 import 'package:hdmeal/oss_licenses.dart';
 
 class OSSLicencesPage extends StatefulWidget {
@@ -70,7 +70,7 @@ class _OSSLicencesPageState extends State<OSSLicencesPage> {
                 title: Text('홈페이지 가기'),
                 subtitle: Text(content["homepage"]),
                 onTap: () async {
-                  launch(content["homepage"]);
+                  launch(context, content["homepage"]);
                 }));
           }
         });

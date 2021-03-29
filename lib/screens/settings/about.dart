@@ -10,10 +10,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:async/async.dart';
-import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'package:package_info/package_info.dart';
 import 'package:url_launcher/url_launcher.dart' as urlLauncher;
 import 'package:in_app_update/in_app_update.dart';
+
+import 'package:hdmeal/utils/launch.dart';
 
 class AboutPage extends StatefulWidget {
   @override
@@ -34,20 +35,6 @@ class _AboutPageState extends State<AboutPage> with RouteAware {
 
   Future<AppUpdateInfo> _checkForUpdate() async {
     return await InAppUpdate.checkForUpdate();
-  }
-
-  void _launch(BuildContext context, String _url) {
-    try {
-      FlutterWebBrowser.openWebPage(
-        url: _url,
-        customTabsOptions: CustomTabsOptions(
-          toolbarColor: Theme.of(context).primaryColor,
-          navigationBarColor: Theme.of(context).primaryColor,
-        ),
-      );
-    } catch (_) {
-      urlLauncher.launch(_url);
-    }
   }
 
   double get _horizontalTitlePadding {
@@ -160,19 +147,19 @@ class _AboutPageState extends State<AboutPage> with RouteAware {
                       ListTile(
                         title: Text('홈페이지 방문하기'),
                         onTap: () async {
-                          _launch(context, "https://hdml.kr/");
+                          launch(context, "https://hdml.kr/");
                         },
                       ),
                       ListTile(
                         title: Text('웹 앱 열기'),
                         onTap: () async {
-                          _launch(context, "https://go.hdml.kr/webapp");
+                          launch(context, "https://go.hdml.kr/webapp");
                         },
                       ),
                       ListTile(
                         title: Text('소스 코드 보기'),
                         onTap: () async {
-                          _launch(context, "https://go.hdml.kr/github/android");
+                          launch(context, "https://go.hdml.kr/github/android");
                         },
                       ),
                       ListTile(
@@ -191,7 +178,7 @@ class _AboutPageState extends State<AboutPage> with RouteAware {
                       ListTile(
                           title: Text('개인정보 처리방침'),
                           onTap: () async {
-                            _launch(
+                            launch(
                                 context, "https://go.hdml.kr/privacy/android");
                           }),
                       ListTile(
