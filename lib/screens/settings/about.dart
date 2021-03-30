@@ -8,6 +8,7 @@
 
 import 'dart:async';
 
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:async/async.dart';
 import 'package:package_info/package_info.dart';
@@ -29,7 +30,9 @@ class _AboutPageState extends State<AboutPage> with RouteAware {
   final AsyncMemoizer _asyncMemoizer = AsyncMemoizer();
 
   Future asyncMethod() => _asyncMemoizer.runOnce(() async {
-        _packageInfo = await PackageInfo.fromPlatform();
+        if (!kIsWeb) {
+          _packageInfo = await PackageInfo.fromPlatform();
+        }
         return true;
       });
 
@@ -58,6 +61,58 @@ class _AboutPageState extends State<AboutPage> with RouteAware {
     }
 
     return kBasePadding;
+  }
+
+  List<Widget> _platformSpecificInfo() {
+    if (kIsWeb) {
+      return [
+        ListTile(
+          title: Text("흥덕고 급식 웹 클라이언트"),
+        ),
+      ];
+    } else {
+      return [
+        ListTile(
+          title: Text(
+              "버전 ${_packageInfo?.version}(Build ${_packageInfo?.buildNumber})"),
+        ),
+        FutureBuilder(
+            future: _checkForUpdate(),
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                print(snapshot.error);
+                return Center(
+                    child: Text('Error: ${snapshot.error}',
+                        textAlign: TextAlign.center));
+              }
+
+              if (snapshot.hasData) {
+                if (snapshot.data.updateAvailability ==
+                    UpdateAvailability.updateAvailable) {
+                  return ListTile(
+                    title: Text("업데이트가 있습니다."),
+                    onTap: () async {
+                      urlLauncher.launch(
+                          "market://details?id=" + _packageInfo.packageName);
+                    },
+                  );
+                } else {
+                  return ListTile(
+                    title: Text("최신 버전입니다."),
+                  );
+                }
+              } else {
+                return ListTile(
+                  title: Text("업데이트 확인 중..."),
+                  trailing: Transform.scale(
+                    scale: 0.5,
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+              }
+            }),
+      ];
+    }
   }
 
   @override
@@ -104,45 +159,7 @@ class _AboutPageState extends State<AboutPage> with RouteAware {
                   ),
                   SliverList(
                     delegate: SliverChildListDelegate([
-                      ListTile(
-                        title: Text(
-                            "버전 ${_packageInfo.version}(Build ${_packageInfo.buildNumber})"),
-                      ),
-                      FutureBuilder(
-                          future: _checkForUpdate(),
-                          builder: (context, snapshot) {
-                            if (snapshot.hasError) {
-                              print(snapshot.error);
-                              return Center(
-                                  child: Text('Error: ${snapshot.error}',
-                                      textAlign: TextAlign.center));
-                            }
-
-                            if (snapshot.hasData) {
-                              if (snapshot.data.updateAvailability ==
-                                  UpdateAvailability.updateAvailable) {
-                                return ListTile(
-                                  title: Text("업데이트가 있습니다."),
-                                  onTap: () async {
-                                    urlLauncher.launch("market://details?id=" +
-                                        _packageInfo.packageName);
-                                  },
-                                );
-                              } else {
-                                return ListTile(
-                                  title: Text("최신 버전입니다."),
-                                );
-                              }
-                            } else {
-                              return ListTile(
-                                title: Text("업데이트 확인 중..."),
-                                trailing: Transform.scale(
-                                  scale: 0.5,
-                                  child: CircularProgressIndicator(),
-                                ),
-                              );
-                            }
-                          }),
+                      ..._platformSpecificInfo(),
                       Divider(),
                       ListTile(
                         title: Text('홈페이지 방문하기'),
@@ -150,11 +167,23 @@ class _AboutPageState extends State<AboutPage> with RouteAware {
                           launch(context, "https://hdml.kr/");
                         },
                       ),
-                      ListTile(
-                        title: Text('웹 앱 열기'),
-                        onTap: () async {
-                          launch(context, "https://go.hdml.kr/webapp");
-                        },
+                      Visibility(
+                        child: ListTile(
+                          title: Text('웹 앱 열기'),
+                          onTap: () async {
+                            launch(context, "https://go.hdml.kr/webapp");
+                          },
+                        ),
+                        visible: !kIsWeb,
+                      ),
+                      Visibility(
+                        child: ListTile(
+                          title: Text('Google Play에서 앱 다운받기'),
+                          onTap: () async {
+                            launch(context, "https://get.hdml.kr/android");
+                          },
+                        ),
+                        visible: kIsWeb,
                       ),
                       ListTile(
                         title: Text('소스 코드 보기'),

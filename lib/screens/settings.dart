@@ -217,23 +217,11 @@ class _SettingsPageState extends State<SettingsPage> {
                 },
               ),
               Divider(),
-              Visibility(
-                child: ListTile(
-                  title: Text('앱 정보'),
-                  onTap: () async {
-                    Navigator.pushNamed(context, '/settings/about');
-                  },
-                ),
-                visible: !kIsWeb,
-              ),
-              Visibility(
-                child: ListTile(
-                  title: Text('오픈소스 라이선스'),
-                  onTap: () async {
-                    Navigator.pushNamed(context, '/settings/about/OSSLicences');
-                  },
-                ),
-                visible: kIsWeb,
+              ListTile(
+                title: Text('앱 정보'),
+                onTap: () async {
+                  Navigator.pushNamed(context, '/settings/about');
+                },
               ),
             ]),
           ),
