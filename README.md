@@ -1,6 +1,6 @@
-# HDMeal-Flutter
+# HDMeal-Mobile
 
-![Screenshot](https://user-images.githubusercontent.com/51025374/102707233-8bc34280-42dc-11eb-8a93-e0610ac931e2.png)
+![Screenshot](https://user-images.githubusercontent.com/51025374/113512024-c1471f80-959d-11eb-9752-3f916a198582.png)
 
 Flutter로 개발된 흥덕고 급식 클라이언트입니다. 일부 플랫폼에서 [기존 PWA 앱](https://github.com/hgyoseo/HDMeal-PWA)을 대체하여 사용합니다.
 
@@ -16,5 +16,5 @@ Flutter로 개발된 흥덕고 급식 클라이언트입니다. 일부 플랫폼
   - [ ] macOS
   - [ ] Linux
 * 기타
-  - [ ] Web
+  - [x] Web
   
