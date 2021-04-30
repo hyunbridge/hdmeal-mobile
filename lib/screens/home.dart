@@ -14,17 +14,16 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
-import 'package:share/share.dart';
 import 'package:shimmer/shimmer.dart';
 
 import 'package:firebase_analytics/firebase_analytics.dart';
 
 import 'package:hdmeal/utils/cache.dart';
 import 'package:hdmeal/utils/fetch.dart';
-import 'package:hdmeal/utils/launch.dart';
 import 'package:hdmeal/utils/preferences_manager.dart';
 import 'package:hdmeal/extensions/date_only_compare.dart';
 import 'package:hdmeal/widgets/change_grade_class.dart';
+import 'package:hdmeal/widgets/sections.dart';
 
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 final FirebaseAnalytics analytics = FirebaseAnalytics();
@@ -85,27 +84,6 @@ class _HomePageState extends State<HomePage> with RouteAware {
     int _todayIndex;
     PageController _controller;
     const List _weekday = ["", "월", "화", "수", "목", "금", "토", "일"];
-    const List _allergyString = [
-      "",
-      "난류",
-      "우유",
-      "메밀",
-      "땅콩",
-      "대두",
-      "밀",
-      "고등어",
-      "게",
-      "새우",
-      "돼지고기",
-      "복숭아",
-      "토마토",
-      "아황산류",
-      "호두",
-      "닭고기",
-      "쇠고기",
-      "오징어",
-      "조개류"
-    ];
     try {
       data.forEach((date, data) {
         // 날짜 처리
@@ -116,168 +94,45 @@ class _HomePageState extends State<HomePage> with RouteAware {
           _todayIndex = _pages.length;
           isToday = true;
         }
-        String _title =
+        final _title =
             "${_parsedDate.month}월 ${_parsedDate.day}일(${_weekday[_parsedDate.weekday]})";
-        // 식단 리스트 작성
-        final List _menuList = [];
-        final List _menuStringList = [];
-        final List _menu = data["Meal"][0];
-        if (data["Meal"][0] == null) {
-          _menuList.add(ListTile(
-            title: Text("식단정보가 없습니다."),
-            visualDensity: VisualDensity(vertical: -4),
-          ));
-        } else {
-          _menu.forEach((element) {
-            _menuStringList.add(element[0]);
-            if (_prefsManager.get('allergyInfo')) {
-              String _allergyInfo = "";
-              element[1].forEach((element) =>
-                  _allergyInfo = "$_allergyInfo, ${_allergyString[element]}");
-              _allergyInfo = _allergyInfo.replaceFirst(", ", "");
-              if (!(_allergyInfo == "")) {
-                _menuList.add(ListTile(
-                  title: Text(element[0]),
-                  subtitle: Text(
-                    _allergyInfo,
-                    style: TextStyle(
-                      fontSize: 12,
-                    ),
-                  ),
-                  visualDensity: VisualDensity(vertical: -4),
-                  onTap: () async {
-                    launch(context,
-                        "https://www.google.com/search?q=${Uri.encodeComponent(element[0])}&tbm=isch");
-                  },
-                ));
-              } else {
-                _menuList.add(ListTile(
-                  title: Text(element[0]),
-                  visualDensity: VisualDensity(vertical: -4),
-                  onTap: () async {
-                    launch(context,
-                        "https://www.google.com/search?q=${Uri.encodeComponent(element[0])}&tbm=isch");
-                  },
-                ));
-              }
-            } else {
-              _menuList.add(ListTile(
-                title: Text(element[0]),
-                visualDensity: VisualDensity(vertical: -4),
-                onTap: () async {
-                  launch(context,
-                      "https://www.google.com/search?q=${Uri.encodeComponent(element[0])}&tbm=isch");
-                },
-              ));
-            }
-          });
-        }
-        // 시간표 리스트 작성
-        final List _timetableList = [];
-        List _timetable = data["Timetable"]["${_prefsManager.get('userGrade')}"]
-            ["${_prefsManager.get('userClass')}"];
-        if (_timetable.length == 0) _timetable = ["시간표 정보가 없습니다."];
-        _timetable.forEach((element) {
-          _timetableList.add(ListTile(
-            title: Text(element),
-            visualDensity: VisualDensity(vertical: -4),
-          ));
-        });
-        // 학사일정 리스트 작성
-        final List _scheduleList = [];
-        final List _schedule = data["Schedule"] ??
-            [
-              ["학사일정이 없습니다.", []]
-            ];
-        _schedule.forEach((element) {
-          if (_prefsManager.get('showMyScheduleOnly')) {
-            if (element[1].length == 0 ||
-                element[1].contains(_prefsManager.get('userGrade'))) {
-              _scheduleList.add(ListTile(
-                title: Text(element[0]),
-                visualDensity: VisualDensity(vertical: -4),
-              ));
-            }
-          } else {
-            String _relatedGrade;
-            if (element[1].length == 0) {
-              _relatedGrade = '';
-            } else {
-              _relatedGrade = '(${element[1].join("학년, ")}학년)';
-            }
-            _scheduleList.add(ListTile(
-              title: Text(element[0] + _relatedGrade),
-              visualDensity: VisualDensity(vertical: -4),
-            ));
-          }
-        });
         // 섹션 내부 작성
-        List<Widget> _widgets = [];
-        Map _sections = {
-          "Meal": [
-            ListTile(
-              title: Text(
-                "급식",
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              trailing: Transform.translate(
-                offset: Offset(16, 0),
-                child: Visibility(
-                  child: IconButton(
-                      icon: const Icon(Icons.share),
-                      color: Theme.of(context).textTheme.bodyText1.color,
-                      onPressed: () {
-                        Share.share(
-                            "<${_parsedDate.month}월 ${_parsedDate.day}일(${_weekday[_parsedDate.weekday]})>\n${_menuStringList.join(",\n")}");
-                      }),
-                  visible: !kIsWeb,
-                ),
-              ),
-            ),
-            ..._menuList,
-          ],
-          "Timetable": [
-            ListTile(
-              title: Text(
-                "${_prefsManager.get('userGrade')}학년 ${_prefsManager.get('userClass')}반 시간표",
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              onTap: () async {
-                await showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return ChangeGradeClass(
-                      currentGrade: _prefsManager.get('userGrade'),
-                      currentClass: _prefsManager.get('userClass'),
-                      onChanged: (selectedGrade, selectedClass) => setState(() {
-                        _prefsManager.set('userGrade', selectedGrade);
-                        _prefsManager.set('userClass', selectedClass);
-                      }),
-                    );
-                  },
-                );
-              },
-            ),
-            ..._timetableList,
-          ],
-          "Schedule": [
-            ListTile(
-              title: Text(
-                "학사일정",
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            ..._scheduleList
-          ]
+        final _widgets = <Widget>[];
+        final _sections = {
+          "Meal": menuSection(
+            context: context,
+            date: _parsedDate,
+            menu: data["Meal"][0] ?? [],
+            showAllergyInfo: _prefsManager.get('allergyInfo'),
+          ),
+          "Timetable": timetableSection(
+            context: context,
+            userGrade: _prefsManager.get('userGrade'),
+            userClass: _prefsManager.get('userClass'),
+            timetable: data["Timetable"]["${_prefsManager.get('userGrade')}"]
+                ["${_prefsManager.get('userClass')}"],
+            onTap: () async {
+              await showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return ChangeGradeClass(
+                    currentGrade: _prefsManager.get('userGrade'),
+                    currentClass: _prefsManager.get('userClass'),
+                    onChanged: (selectedGrade, selectedClass) => setState(() {
+                      _prefsManager.set('userGrade', selectedGrade);
+                      _prefsManager.set('userClass', selectedClass);
+                    }),
+                  );
+                },
+              );
+            },
+          ),
+          "Schedule": scheduleSection(
+            context: context,
+            userGrade: _prefsManager.get('userGrade'),
+            schedule: data["Schedule"] ?? [],
+            showMyScheduleOnly: _prefsManager.get('showMyScheduleOnly'),
+          )
         };
         _prefsManager.get('sectionOrder').forEach((element) {
           _sections[element].forEach((element) => _widgets.add(element));
