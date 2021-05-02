@@ -10,7 +10,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'preferences.g.dart';
 
-@JsonSerializable(nullable: false)
+@JsonSerializable()
 class Prefs {
   bool allergyInfo;
   bool enableBlackTheme;
