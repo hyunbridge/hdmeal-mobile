@@ -38,6 +38,7 @@ dependencies:
   package_info: ^2.0.0
   path_provider: ^2.0.1
   provider: ^5.0.0
+  reorderables: ^0.4.1
   share: ^2.0.1
   shimmer: ^1.1.2
   universal_html: ^2.0.7

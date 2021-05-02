@@ -8,6 +8,8 @@
 
 import 'package:flutter/material.dart';
 
+import 'package:reorderables/reorderables.dart';
+
 import 'package:hdmeal/utils/preferences_manager.dart';
 
 class ChangeOrderPage extends StatefulWidget {
@@ -79,66 +81,31 @@ class _ChangeOrderPageState extends State<ChangeOrderPage> {
                   ),
                 )),
           ),
+          ReorderableSliverList(
+            delegate: ReorderableSliverChildListDelegate(_prefsManager
+                .get('sectionOrder')
+                .map<Widget>((e) => ListTile(
+                      title: Text(_sectionsKO[e]),
+                      trailing: Icon(Icons.menu),
+                    ))
+                .toList()),
+            onReorder: (oldIndex, newIndex) {
+              final List<String> _sectionOrder =
+                  _prefsManager.get('sectionOrder');
+              setState(() {
+                String section = _sectionOrder.removeAt(oldIndex);
+                _sectionOrder.insert(newIndex, section);
+              });
+              _prefsManager.set('sectionOrder', _sectionOrder);
+            },
+          ),
           SliverList(
             delegate: SliverChildListDelegate([
               Divider(),
               ListTile(
-                title: Text('끌어다 놓아 순서 변경'),
-                subtitle: Transform.translate(
-                  offset: Offset(0, 10),
-                  child: Text('아래 항목들을 길게 누르고 끌어다 놓아 화면 순서를 바꿀 수 있습니다.'),
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  TextButton(
-                    child: const Text('기본값으로 복원'),
-                    onPressed: () =>
-                        setState(() => _prefsManager.reset('sectionOrder')),
-                  ),
-                  const SizedBox(width: 8),
-                ],
-              ),
-              Divider(),
-              Container(
-                height: 200,
-                child: ReorderableListView(
-                  children: _prefsManager
-                      .get('sectionOrder')
-                      .map<Widget>((item) => ListTile(
-                            key: Key(item),
-                            title: Text("${_sectionsKO[item]}"),
-                            trailing: Icon(Icons.menu),
-                          ))
-                      .toList(),
-                  onReorder: (int start, int current) {
-                    final List<String> _sectionOrder =
-                        _prefsManager.get('sectionOrder');
-                    // dragging from top to bottom
-                    if (start < current) {
-                      int end = current - 1;
-                      String startItem = _sectionOrder[start];
-                      int i = 0;
-                      int local = start;
-                      do {
-                        _sectionOrder[local] = _sectionOrder[++local];
-                        i++;
-                      } while (i < end - start);
-                      _sectionOrder[end] = startItem;
-                    }
-                    // dragging from bottom to top
-                    else if (start > current) {
-                      String startItem = _sectionOrder[start];
-                      for (int i = start; i > current; i--) {
-                        _sectionOrder[i] = _sectionOrder[i - 1];
-                      }
-                      _sectionOrder[current] = startItem;
-                    }
-                    setState(
-                        () => _prefsManager.set('sectionOrder', _sectionOrder));
-                  },
-                ),
+                title: Text('기본값으로 복원'),
+                onTap: () =>
+                    setState(() => _prefsManager.reset('sectionOrder')),
               ),
             ]),
           ),
