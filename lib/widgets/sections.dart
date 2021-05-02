@@ -179,15 +179,15 @@ List<Widget> scheduleSection(
           ));
         }
       } else {
-        String _relatedGrade;
-        if (element[1].length == 0) {
-          _relatedGrade = '';
-        } else {
-          _relatedGrade = '(${element[1].join("학년, ")}학년)';
-        }
         section.add(ListTile(
-          title: Text(element[0] + _relatedGrade),
+          title: Text(element[0]),
           visualDensity: VisualDensity(vertical: -4),
+          subtitle: Text(
+            '${element[1].join("학년, ")}학년',
+            style: TextStyle(
+              fontSize: 12,
+            ),
+          ),
         ));
       }
     });
