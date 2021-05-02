@@ -114,6 +114,12 @@ class _SettingsPageState extends State<SettingsPage> {
                   Navigator.pushNamed(context, '/settings/theme');
                 },
               ),
+              ListTile(
+                title: Text('키워드 강조'),
+                onTap: () async {
+                  Navigator.pushNamed(context, '/settings/keywordHighlight');
+                },
+              ),
               SwitchListTile(
                 title: const Text('내 학년의 학사일정만 표시'),
                 value: _prefsManager.get('showMyScheduleOnly'),

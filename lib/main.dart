@@ -18,6 +18,7 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:hdmeal/screens/home.dart';
 import 'package:hdmeal/screens/settings.dart';
 import 'package:hdmeal/screens/settings/changeorder.dart';
+import 'package:hdmeal/screens/settings/keyword_highlight.dart';
 import 'package:hdmeal/screens/settings/theme.dart';
 import 'package:hdmeal/screens/settings/about.dart';
 import 'package:hdmeal/screens/settings/about/osslicences.dart';
@@ -64,6 +65,7 @@ class App extends StatelessWidget {
         '/': (context) => HomePage(),
         '/settings': (context) => SettingsPage(),
         '/settings/changeOrder': (context) => ChangeOrderPage(),
+        '/settings/keywordHighlight': (context) => KeywordHighlightPage(),
         '/settings/theme': (context) => ThemeSettingsPage(),
         '/settings/about': (context) => AboutPage(),
         '/settings/about/OSSLicences': (context) => OSSLicencesPage(),

@@ -43,7 +43,9 @@ class _HomePageState extends State<HomePage> with RouteAware {
 
   void asyncMethod() async {
     _prefsManager.serialize().forEach((key, value) {
-      if (key != "userGrade" && key != "userClass") {
+      if (key != "userGrade" &&
+          key != "userClass" &&
+          key != "highlightedKeywords") {
         analytics.setUserProperty(name: key, value: '$value');
       }
     });
@@ -104,6 +106,8 @@ class _HomePageState extends State<HomePage> with RouteAware {
             date: _parsedDate,
             menu: data["Meal"][0] ?? [],
             showAllergyInfo: _prefsManager.get('allergyInfo'),
+            enableKeywordHighlight: _prefsManager.get("enableKeywordHighlight"),
+            highlightedKeywords: _prefsManager.get("highlightedKeywords"),
           ),
           "Timetable": timetableSection(
             context: context,

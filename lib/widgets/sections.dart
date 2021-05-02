@@ -35,8 +35,25 @@ const _allergyString = [
   "조개류"
 ];
 
-List<Widget> menuSection(
-    {BuildContext context, DateTime date, List menu, bool showAllergyInfo}) {
+bool _checkKeyword(String text, List<String> keywords) {
+  var result = false;
+  for (final keyword in keywords) {
+    if (text.contains(keyword)) {
+      result = true;
+      break;
+    }
+  }
+  return result;
+}
+
+List<Widget> menuSection({
+  BuildContext context,
+  DateTime date,
+  List menu,
+  bool showAllergyInfo,
+  bool enableKeywordHighlight,
+  List<String> highlightedKeywords,
+}) {
   if (menu.length == 0) {
     return [
       ListTile(
@@ -54,11 +71,7 @@ List<Widget> menuSection(
       ),
     ];
   }
-
-  final shareText =
-      "<${date.month}월 ${date.day}일(${_weekday[date.weekday]})>\n${menu.map((e) => e[0]).join(",\n")}";
-
-  final section = <Widget>[
+  return [
     ListTile(
       title: Text(
         "급식",
@@ -72,46 +85,38 @@ List<Widget> menuSection(
         child: Visibility(
           child: IconButton(
               icon: const Icon(Icons.share),
+              color: Theme.of(context).textTheme.bodyText1.color,
               onPressed: () {
-                Share.share(shareText);
+                Share.share(
+                    "<${date.month}월 ${date.day}일(${_weekday[date.weekday]})>\n${menu.map((e) => e[0]).join(",\n")}");
               }),
           visible: !kIsWeb,
         ),
       ),
     ),
-  ];
-
-  menu.forEach((element) {
-    if (element[1].length == 0 || !showAllergyInfo) {
-      section.add(ListTile(
-        title: Text(element[0]),
-        visualDensity: VisualDensity(vertical: -4),
-        onTap: () async {
-          launch(context,
-              "https://www.google.com/search?q=${Uri.encodeComponent(element[0])}&tbm=isch");
-        },
-      ));
-    } else {
-      final String allergyInfo =
-          element[1].map((n) => _allergyString[n]).join(", ");
-      section.add(ListTile(
-        title: Text(element[0]),
-        subtitle: Text(
-          allergyInfo,
-          style: TextStyle(
-            fontSize: 12,
+    ...menu.map((e) => ListTile(
+          title: Text(
+            e[0],
+            style: enableKeywordHighlight &&
+                    _checkKeyword(e[0], highlightedKeywords)
+                ? TextStyle(fontWeight: FontWeight.bold)
+                : null,
           ),
-        ),
-        visualDensity: VisualDensity(vertical: -4),
-        onTap: () async {
-          launch(context,
-              "https://www.google.com/search?q=${Uri.encodeComponent(element[0])}&tbm=isch");
-        },
-      ));
-    }
-  });
-
-  return section;
+          subtitle: e[1].length > 0 && showAllergyInfo
+              ? Text(
+                  e[1].map((n) => _allergyString[n]).join(", "),
+                  style: TextStyle(
+                    fontSize: 12,
+                  ),
+                )
+              : null,
+          visualDensity: VisualDensity(vertical: -4),
+          onTap: () async {
+            launch(context,
+                "https://www.google.com/search?q=${Uri.encodeComponent(e[0])}&tbm=isch");
+          },
+        ))
+  ];
 }
 
 List<Widget> timetableSection(
