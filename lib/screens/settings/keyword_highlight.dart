@@ -104,7 +104,6 @@ class _KeywordHighlightPageState extends State<KeywordHighlightPage> {
           ),
           SliverList(
             delegate: SliverChildListDelegate([
-              Divider(),
               SwitchListTile(
                 title: Text('키워드 강조 사용'),
                 value: _prefsManager.get('enableKeywordHighlight'),
