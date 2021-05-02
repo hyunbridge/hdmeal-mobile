@@ -8,6 +8,7 @@
 
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -73,6 +74,13 @@ class App extends StatelessWidget {
       navigatorObservers: [
         routeObserver,
         FirebaseAnalyticsObserver(analytics: analytics),
+      ],
+      supportedLocales: [
+        const Locale('ko'),
+      ],
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
       ],
     );
   }

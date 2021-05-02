@@ -29,6 +29,8 @@ dependencies:
   firebase_crashlytics: ^1.0.0
   flutter:
     sdk: flutter
+  flutter_localizations:
+      sdk: flutter
   flutter_statusbarcolor: ^0.2.3
   flutter_web_browser: ^0.14.0
   http: ^0.13.1
