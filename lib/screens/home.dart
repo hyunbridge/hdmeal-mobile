@@ -177,7 +177,13 @@ class _HomePageState extends State<HomePage> with RouteAware {
                             },
                           );
                         } else {
-                          return SizedBox.shrink();
+                          return IconButton(
+                            icon: const Icon(Icons.device_thermostat),
+                            onPressed: () {
+                              Navigator.pushNamed(context, '/selfCheck');
+                            },
+                          );
+                          // return SizedBox.shrink();
                         }
                       },
                     ),

@@ -17,6 +17,8 @@ import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 import 'package:hdmeal/screens/home.dart';
+import 'package:hdmeal/screens/selfcheck.dart';
+import 'package:hdmeal/screens/selfcheck/settings.dart';
 import 'package:hdmeal/screens/settings.dart';
 import 'package:hdmeal/screens/settings/changeorder.dart';
 import 'package:hdmeal/screens/settings/keyword_highlight.dart';
@@ -64,6 +66,8 @@ class App extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => HomePage(),
+        '/selfCheck': (context) => SelfCheckPage(),
+        '/selfCheck/settings': (context) => SelfCheckSettingsPage(),
         '/settings': (context) => SettingsPage(),
         '/settings/changeOrder': (context) => ChangeOrderPage(),
         '/settings/keywordHighlight': (context) => KeywordHighlightPage(),
