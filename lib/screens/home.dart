@@ -271,6 +271,16 @@ class _HomePageState extends State<HomePage> with RouteAware {
     Color _shimmerBaseColor;
     Color _shimmerHighlightColor;
     final Random _random = new Random();
+    switch (Theme.of(context).brightness) {
+      case Brightness.light:
+        _shimmerBaseColor = Colors.grey[300];
+        _shimmerHighlightColor = Colors.grey[100];
+        break;
+      case Brightness.dark:
+        _shimmerBaseColor = Colors.grey[800];
+        _shimmerHighlightColor = Colors.grey[600];
+        break;
+    }
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       body: FutureBuilder(
@@ -300,6 +310,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
                       pinned: true,
                       snap: false,
                       stretch: true,
+                      backgroundColor: Theme.of(context).primaryColor,
                       flexibleSpace: new FlexibleSpaceBar(
                           titlePadding: EdgeInsets.only(left: 16.0, bottom: 13),
                           title: Shimmer.fromColors(
