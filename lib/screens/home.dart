@@ -273,10 +273,23 @@ class _HomePageState extends State<HomePage> with RouteAware {
     final Random _random = new Random();
     switch (Theme.of(context).brightness) {
       case Brightness.light:
+        SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
+          statusBarIconBrightness: Brightness.light,
+          statusBarColor: Colors.transparent,
+          systemNavigationBarColor: Colors.transparent,
+          systemNavigationBarIconBrightness: Brightness.dark,
+        ));
         _shimmerBaseColor = Colors.grey[300];
         _shimmerHighlightColor = Colors.grey[100];
         break;
       case Brightness.dark:
+        SystemChrome.setSystemUIOverlayStyle(
+            SystemUiOverlayStyle.light.copyWith(
+          statusBarIconBrightness: Brightness.dark,
+          statusBarColor: Colors.transparent,
+          systemNavigationBarColor: Colors.transparent,
+          systemNavigationBarIconBrightness: Brightness.light,
+        ));
         _shimmerBaseColor = Colors.grey[800];
         _shimmerHighlightColor = Colors.grey[600];
         break;
