@@ -103,80 +103,84 @@ class _KeywordHighlightPageState extends State<KeywordHighlightPage> {
                   style: TextStyle(fontWeight: FontWeight.bold),
                 )),
           ),
-          SliverList(
-            delegate: SliverChildListDelegate([
-              SwitchListTile(
-                title: Text('키워드 강조 사용'),
-                value: _prefsManager.get('enableKeywordHighlight'),
-                onChanged: (bool value) => setState(
-                    () => _prefsManager.set('enableKeywordHighlight', value)),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16),
-                child: TextField(
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    labelText: '키워드 추가하기',
-                    labelStyle: TextStyle(
-                      color: Theme.of(context).textTheme.bodyText1.color,
-                    ),
-                    suffixIcon: _textController.text.trim().length > 0
-                        ? IconButton(
-                            onPressed: _handleKeywordAdd,
-                            icon: Icon(Icons.add),
-                            color: Theme.of(context).textTheme.bodyText1.color,
-                          )
-                        : SizedBox.shrink(),
-                  ),
-                  controller: _textController,
-                  onChanged: (_) => setState(() {}),
-                  onSubmitted: (_) => _handleKeywordAdd(),
+          SliverSafeArea(
+            top: false,
+            sliver: SliverList(
+              delegate: SliverChildListDelegate([
+                SwitchListTile(
+                  title: Text('키워드 강조 사용'),
+                  value: _prefsManager.get('enableKeywordHighlight'),
+                  onChanged: (bool value) => setState(
+                      () => _prefsManager.set('enableKeywordHighlight', value)),
                 ),
-              ),
-              Divider(),
-              ListTile(
-                title: Text(
-                  '강조 키워드 목록',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      labelText: '키워드 추가하기',
+                      labelStyle: TextStyle(
+                        color: Theme.of(context).textTheme.bodyText1.color,
+                      ),
+                      suffixIcon: _textController.text.trim().length > 0
+                          ? IconButton(
+                              onPressed: _handleKeywordAdd,
+                              icon: Icon(Icons.add),
+                              color:
+                                  Theme.of(context).textTheme.bodyText1.color,
+                            )
+                          : SizedBox.shrink(),
+                    ),
+                    controller: _textController,
+                    onChanged: (_) => setState(() {}),
+                    onSubmitted: (_) => _handleKeywordAdd(),
                   ),
                 ),
-                subtitle: Text('좌우로 쓸어넘겨 삭제할 수 있습니다.'),
-              ),
-              ..._keywords.map((e) => Dismissible(
-                    key: Key(e),
-                    child: ListTile(
-                      title: Text(e),
-                      visualDensity: VisualDensity(vertical: -4),
+                Divider(),
+                ListTile(
+                  title: Text(
+                    '강조 키워드 목록',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
                     ),
-                    background: Container(color: Colors.red),
-                    onDismissed: (_) {
-                      setState(() {
-                        _keywords.remove(e);
-                      });
-                      _updatePrefs();
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text('키워드 "$e"을(를) 삭제했습니다.'),
-                        duration: const Duration(seconds: 3),
-                      ));
-                    },
-                  )),
-              Divider(),
-              ListTile(
-                title: Text('기본값으로 복원'),
-                onTap: () {
-                  setState(() {
-                    _prefsManager.reset('enableKeywordHighlight');
-                    _prefsManager.reset('highlightedKeywords');
-                    _keywords = _prefsManager.get("highlightedKeywords");
-                  });
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text('키워드 설정이 초기화되었습니다.'),
-                    duration: const Duration(seconds: 3),
-                  ));
-                },
-              ),
-            ]),
+                  ),
+                  subtitle: Text('좌우로 쓸어넘겨 삭제할 수 있습니다.'),
+                ),
+                ..._keywords.map((e) => Dismissible(
+                      key: Key(e),
+                      child: ListTile(
+                        title: Text(e),
+                        visualDensity: VisualDensity(vertical: -4),
+                      ),
+                      background: Container(color: Colors.red),
+                      onDismissed: (_) {
+                        setState(() {
+                          _keywords.remove(e);
+                        });
+                        _updatePrefs();
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text('키워드 "$e"을(를) 삭제했습니다.'),
+                          duration: const Duration(seconds: 3),
+                        ));
+                      },
+                    )),
+                Divider(),
+                ListTile(
+                  title: Text('기본값으로 복원'),
+                  onTap: () {
+                    setState(() {
+                      _prefsManager.reset('enableKeywordHighlight');
+                      _prefsManager.reset('highlightedKeywords');
+                      _keywords = _prefsManager.get("highlightedKeywords");
+                    });
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text('키워드 설정이 초기화되었습니다.'),
+                      duration: const Duration(seconds: 3),
+                    ));
+                  },
+                ),
+              ]),
+            ),
           ),
         ],
       ),

@@ -80,157 +80,160 @@ class _SettingsPageState extends State<SettingsPage> {
                   ),
                 )),
           ),
-          SliverList(
-            delegate: SliverChildListDelegate([
-              ListTile(
-                title: Text('학년/반 변경'),
-                subtitle: Text(
-                    '${_prefsManager.get('userGrade')}학년 ${_prefsManager.get('userClass')}반'),
-                onTap: () async {
-                  await showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return ChangeGradeClass(
-                        currentGrade: _prefsManager.get('userGrade'),
-                        currentClass: _prefsManager.get('userClass'),
-                        onChanged: (selectedGrade, selectedClass) =>
-                            setState(() {
-                          _prefsManager.set('userGrade', selectedGrade);
-                          _prefsManager.set('userClass', selectedClass);
-                        }),
-                      );
-                    },
-                  );
-                },
-              ),
-              ListTile(
-                title: Text('화면 순서 변경'),
-                onTap: () async {
-                  Navigator.pushNamed(context, '/settings/changeOrder');
-                },
-              ),
-              ListTile(
-                title: Text('테마 설정'),
-                onTap: () async {
-                  Navigator.pushNamed(context, '/settings/theme');
-                },
-              ),
-              ListTile(
-                title: Text('키워드 강조'),
-                onTap: () async {
-                  Navigator.pushNamed(context, '/settings/keywordHighlight');
-                },
-              ),
-              SwitchListTile(
-                title: const Text('내 학년의 학사일정만 표시'),
-                value: _prefsManager.get('showMyScheduleOnly'),
-                onChanged: (bool value) => setState(
-                    () => _prefsManager.set('showMyScheduleOnly', value)),
-              ),
-              Visibility(
-                child: SwitchListTile(
-                  title: const Text('데이터 세이버 사용'),
-                  value: _prefsManager.get('enableDataSaver'),
-                  onChanged: (bool value) {
-                    if (value == true) {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: new Text("데이터 세이버를 켤까요?"),
-                            content: new Text(
-                                "데이터 세이버는 모바일 데이터 환경에서 갱신을 자제하여 데이터를 절약합니다.\n"
-                                "그러나 1회 갱신에 5kb 가량의 매우 적은 데이터를 사용하므로 활성화하지 않기를 권장합니다."),
-                            actions: <Widget>[
-                              new TextButton(
-                                child: new Text("아니요"),
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                              ),
-                              new TextButton(
-                                child: new Text("네"),
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                  setState(() => _prefsManager.set(
-                                      'enableDataSaver', value));
-                                },
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    } else {
-                      setState(
-                          () => _prefsManager.set('enableDataSaver', value));
-                    }
+          SliverSafeArea(
+            top: false,
+            sliver: SliverList(
+              delegate: SliverChildListDelegate([
+                ListTile(
+                  title: Text('학년/반 변경'),
+                  subtitle: Text(
+                      '${_prefsManager.get('userGrade')}학년 ${_prefsManager.get('userClass')}반'),
+                  onTap: () async {
+                    await showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return ChangeGradeClass(
+                          currentGrade: _prefsManager.get('userGrade'),
+                          currentClass: _prefsManager.get('userClass'),
+                          onChanged: (selectedGrade, selectedClass) =>
+                              setState(() {
+                            _prefsManager.set('userGrade', selectedGrade);
+                            _prefsManager.set('userClass', selectedClass);
+                          }),
+                        );
+                      },
+                    );
                   },
                 ),
-                visible: !kIsWeb,
-              ),
-              SwitchListTile(
-                title: const Text('알러지 정보 표시'),
-                value: _prefsManager.get('allergyInfo'),
-                onChanged: (bool value) =>
-                    setState(() => _prefsManager.set('allergyInfo', value)),
-              ),
-              Divider(),
-              ListTile(
-                title: Text('캐시 비우기'),
-                onTap: () {
-                  Cache().clear();
-                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text('캐시를 비웠습니다.'),
-                    duration: const Duration(seconds: 3),
-                  ));
-                },
-              ),
-              ListTile(
-                title: Text('설정 초기화'),
-                onTap: () async {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: new Text("정말 초기화할까요?"),
-                        content: new Text("모든 설정이 기본값으로 돌아가며, 복구할 수 없습니다."),
-                        actions: <Widget>[
-                          new TextButton(
-                            child: new Text("아니요"),
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                          ),
-                          new TextButton(
-                            child: new Text("네"),
-                            onPressed: () async {
-                              setState(() => _prefsManager.resetAll());
-                              themeNotifier.handleChangeTheme();
-                              ScaffoldMessenger.of(context)
-                                  .hideCurrentSnackBar();
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(
-                                content: Text('설정을 초기화했습니다.'),
-                                duration: const Duration(seconds: 3),
-                              ));
-                              Navigator.pop(context);
-                            },
-                          ),
-                        ],
-                      );
+                ListTile(
+                  title: Text('화면 순서 변경'),
+                  onTap: () async {
+                    Navigator.pushNamed(context, '/settings/changeOrder');
+                  },
+                ),
+                ListTile(
+                  title: Text('테마 설정'),
+                  onTap: () async {
+                    Navigator.pushNamed(context, '/settings/theme');
+                  },
+                ),
+                ListTile(
+                  title: Text('키워드 강조'),
+                  onTap: () async {
+                    Navigator.pushNamed(context, '/settings/keywordHighlight');
+                  },
+                ),
+                SwitchListTile(
+                  title: const Text('내 학년의 학사일정만 표시'),
+                  value: _prefsManager.get('showMyScheduleOnly'),
+                  onChanged: (bool value) => setState(
+                      () => _prefsManager.set('showMyScheduleOnly', value)),
+                ),
+                Visibility(
+                  child: SwitchListTile(
+                    title: const Text('데이터 세이버 사용'),
+                    value: _prefsManager.get('enableDataSaver'),
+                    onChanged: (bool value) {
+                      if (value == true) {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: new Text("데이터 세이버를 켤까요?"),
+                              content: new Text(
+                                  "데이터 세이버는 모바일 데이터 환경에서 갱신을 자제하여 데이터를 절약합니다.\n"
+                                  "그러나 1회 갱신에 5kb 가량의 매우 적은 데이터를 사용하므로 활성화하지 않기를 권장합니다."),
+                              actions: <Widget>[
+                                new TextButton(
+                                  child: new Text("아니요"),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                                new TextButton(
+                                  child: new Text("네"),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                    setState(() => _prefsManager.set(
+                                        'enableDataSaver', value));
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      } else {
+                        setState(
+                            () => _prefsManager.set('enableDataSaver', value));
+                      }
                     },
-                  );
-                },
-              ),
-              Divider(),
-              ListTile(
-                title: Text('앱 정보'),
-                onTap: () async {
-                  Navigator.pushNamed(context, '/settings/about');
-                },
-              ),
-            ]),
+                  ),
+                  visible: !kIsWeb,
+                ),
+                SwitchListTile(
+                  title: const Text('알러지 정보 표시'),
+                  value: _prefsManager.get('allergyInfo'),
+                  onChanged: (bool value) =>
+                      setState(() => _prefsManager.set('allergyInfo', value)),
+                ),
+                Divider(),
+                ListTile(
+                  title: Text('캐시 비우기'),
+                  onTap: () {
+                    Cache().clear();
+                    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text('캐시를 비웠습니다.'),
+                      duration: const Duration(seconds: 3),
+                    ));
+                  },
+                ),
+                ListTile(
+                  title: Text('설정 초기화'),
+                  onTap: () async {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: new Text("정말 초기화할까요?"),
+                          content: new Text("모든 설정이 기본값으로 돌아가며, 복구할 수 없습니다."),
+                          actions: <Widget>[
+                            new TextButton(
+                              child: new Text("아니요"),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                            ),
+                            new TextButton(
+                              child: new Text("네"),
+                              onPressed: () async {
+                                setState(() => _prefsManager.resetAll());
+                                themeNotifier.handleChangeTheme();
+                                ScaffoldMessenger.of(context)
+                                    .hideCurrentSnackBar();
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                  content: Text('설정을 초기화했습니다.'),
+                                  duration: const Duration(seconds: 3),
+                                ));
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                ),
+                Divider(),
+                ListTile(
+                  title: Text('앱 정보'),
+                  onTap: () async {
+                    Navigator.pushNamed(context, '/settings/about');
+                  },
+                ),
+              ]),
+            ),
           ),
         ],
       ),

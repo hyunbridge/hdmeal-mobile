@@ -158,67 +158,71 @@ class _AboutPageState extends State<AboutPage> with RouteAware {
                           ),
                         )),
                   ),
-                  SliverList(
-                    delegate: SliverChildListDelegate([
-                      ..._platformSpecificInfo(),
-                      Divider(),
-                      ListTile(
-                        title: Text('홈페이지 방문하기'),
-                        onTap: () async {
-                          launch(context, "https://hdml.kr/");
-                        },
-                      ),
-                      Visibility(
-                        child: ListTile(
-                          title: Text('웹 앱 열기'),
+                  SliverSafeArea(
+                    top: false,
+                    sliver: SliverList(
+                      delegate: SliverChildListDelegate([
+                        ..._platformSpecificInfo(),
+                        Divider(),
+                        ListTile(
+                          title: Text('홈페이지 방문하기'),
                           onTap: () async {
-                            launch(context, "https://go.hdml.kr/webapp");
+                            launch(context, "https://hdml.kr/");
                           },
                         ),
-                        visible: !kIsWeb,
-                      ),
-                      Visibility(
-                        child: ListTile(
-                          title: Text('Google Play에서 앱 다운받기'),
-                          onTap: () async {
-                            launch(context, "https://get.hdml.kr/android");
-                          },
+                        Visibility(
+                          child: ListTile(
+                            title: Text('웹 앱 열기'),
+                            onTap: () async {
+                              launch(context, "https://go.hdml.kr/webapp");
+                            },
+                          ),
+                          visible: !kIsWeb,
                         ),
-                        visible: kIsWeb,
-                      ),
-                      ListTile(
-                        title: Text('소스 코드 보기'),
-                        onTap: () async {
-                          launch(context, "https://go.hdml.kr/github/android");
-                        },
-                      ),
-                      ListTile(
-                        title: Text('개발자에게 문의하기'),
-                        subtitle: Text("hekn2y4j@duck.com"),
-                        onTap: () async {
-                          urlLauncher.launch("mailto:hekn2y4j@duck.com");
-                        },
-                      ),
-                      Divider(),
-                      ListTile(
-                        title: Text('저작권'),
-                        subtitle:
-                            Text("Copyright 2020-${_now.year} Hyungyo Seo"),
-                      ),
-                      ListTile(
-                          title: Text('개인정보 처리방침'),
+                        Visibility(
+                          child: ListTile(
+                            title: Text('Google Play에서 앱 다운받기'),
+                            onTap: () async {
+                              launch(context, "https://get.hdml.kr/android");
+                            },
+                          ),
+                          visible: kIsWeb,
+                        ),
+                        ListTile(
+                          title: Text('소스 코드 보기'),
                           onTap: () async {
                             launch(
-                                context, "https://go.hdml.kr/privacy/android");
-                          }),
-                      ListTile(
-                        title: Text('오픈소스 라이선스'),
-                        onTap: () async {
-                          Navigator.pushNamed(
-                              context, '/settings/about/OSSLicences');
-                        },
-                      ),
-                    ]),
+                                context, "https://go.hdml.kr/github/android");
+                          },
+                        ),
+                        ListTile(
+                          title: Text('개발자에게 문의하기'),
+                          subtitle: Text("hekn2y4j@duck.com"),
+                          onTap: () async {
+                            urlLauncher.launch("mailto:hekn2y4j@duck.com");
+                          },
+                        ),
+                        Divider(),
+                        ListTile(
+                          title: Text('저작권'),
+                          subtitle:
+                              Text("Copyright 2020-${_now.year} Hyungyo Seo"),
+                        ),
+                        ListTile(
+                            title: Text('개인정보 처리방침'),
+                            onTap: () async {
+                              launch(context,
+                                  "https://go.hdml.kr/privacy/android");
+                            }),
+                        ListTile(
+                          title: Text('오픈소스 라이선스'),
+                          onTap: () async {
+                            Navigator.pushNamed(
+                                context, '/settings/about/OSSLicences');
+                          },
+                        ),
+                      ]),
+                    ),
                   ),
                 ],
               );

@@ -147,14 +147,17 @@ class _OSSLicencesPageState extends State<OSSLicencesPage> {
                           ),
                         )),
                   ),
-                  SliverList(
-                    delegate: SliverChildListDelegate([
-                      Divider(),
-                      ListTile(
-                          title:
-                              Text("흥덕고 급식 앱은 다양한 오픈 소스 프로젝트들을 활용하여 만들어졌습니다.")),
-                      ...snapshot.data
-                    ]),
+                  SliverSafeArea(
+                    top: false,
+                    sliver: SliverList(
+                      delegate: SliverChildListDelegate([
+                        Divider(),
+                        ListTile(
+                            title: Text(
+                                "흥덕고 급식 앱은 다양한 오픈 소스 프로젝트들을 활용하여 만들어졌습니다.")),
+                        ...snapshot.data
+                      ]),
+                    ),
                   ),
                 ],
               );

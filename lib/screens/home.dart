@@ -187,9 +187,12 @@ class _HomePageState extends State<HomePage> with RouteAware {
                       },
                     ),
                   ]),
-              SliverList(
-                delegate: SliverChildListDelegate(
-                  _widgets,
+              SliverSafeArea(
+                top: false,
+                sliver: SliverList(
+                  delegate: SliverChildListDelegate(
+                    _widgets,
+                  ),
                 ),
               ),
             ],
@@ -342,24 +345,27 @@ class _HomePageState extends State<HomePage> with RouteAware {
                           },
                         ),
                       ]),
-                  SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                      (BuildContext context, int index) {
-                        return Shimmer.fromColors(
-                            child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: Container(
-                                margin: const EdgeInsets.symmetric(
-                                    horizontal: 16, vertical: 8),
-                                height: 35,
-                                width: _random.nextDouble() * 250 + 150,
-                                color: Colors.white,
+                  SliverSafeArea(
+                    top: false,
+                    sliver: SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                        (BuildContext context, int index) {
+                          return Shimmer.fromColors(
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Container(
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 16, vertical: 8),
+                                  height: 35,
+                                  width: _random.nextDouble() * 250 + 150,
+                                  color: Colors.white,
+                                ),
                               ),
-                            ),
-                            baseColor: _shimmerBaseColor,
-                            highlightColor: _shimmerHighlightColor);
-                      },
-                      childCount: _random.nextInt(5) + 10,
+                              baseColor: _shimmerBaseColor,
+                              highlightColor: _shimmerHighlightColor);
+                        },
+                        childCount: _random.nextInt(5) + 10,
+                      ),
                     ),
                   ),
                 ],

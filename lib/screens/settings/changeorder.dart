@@ -100,15 +100,18 @@ class _ChangeOrderPageState extends State<ChangeOrderPage> {
               _prefsManager.set('sectionOrder', _sectionOrder);
             },
           ),
-          SliverList(
-            delegate: SliverChildListDelegate([
-              Divider(),
-              ListTile(
-                title: Text('기본값으로 복원'),
-                onTap: () =>
-                    setState(() => _prefsManager.reset('sectionOrder')),
-              ),
-            ]),
+          SliverSafeArea(
+            top: false,
+            sliver: SliverList(
+              delegate: SliverChildListDelegate([
+                Divider(),
+                ListTile(
+                  title: Text('기본값으로 복원'),
+                  onTap: () =>
+                      setState(() => _prefsManager.reset('sectionOrder')),
+                ),
+              ]),
+            ),
           ),
         ],
       ),
