@@ -9,6 +9,7 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 
 import 'package:hdmeal/utils/preferences_manager.dart';
 
@@ -74,6 +75,25 @@ class ThemeNotifier with ChangeNotifier {
 
   void setTheme(ThemeData themeData) async {
     _themeData = themeData;
+    switch (_themeData.brightness) {
+      case Brightness.light:
+        SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
+          statusBarIconBrightness: Brightness.light,
+          statusBarColor: Colors.transparent,
+          systemNavigationBarColor: Colors.transparent,
+          systemNavigationBarIconBrightness: Brightness.dark,
+        ));
+        break;
+      case Brightness.dark:
+        SystemChrome.setSystemUIOverlayStyle(
+            SystemUiOverlayStyle.light.copyWith(
+              statusBarIconBrightness: Brightness.dark,
+              statusBarColor: Colors.transparent,
+              systemNavigationBarColor: Colors.transparent,
+              systemNavigationBarIconBrightness: Brightness.light,
+            ));
+        break;
+    }
     notifyListeners();
   }
 
