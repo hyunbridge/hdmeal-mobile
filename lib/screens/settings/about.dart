@@ -146,6 +146,7 @@ class _AboutPageState extends State<AboutPage> with RouteAware {
                     pinned: true,
                     snap: false,
                     stretch: true,
+                    backgroundColor: Theme.of(context).primaryColor,
                     flexibleSpace: new FlexibleSpaceBar(
                         titlePadding: EdgeInsets.symmetric(
                             vertical: 14.0,

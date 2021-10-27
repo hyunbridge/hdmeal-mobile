@@ -10,10 +10,8 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:async/async.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:shimmer/shimmer.dart';
 
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -154,6 +152,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
                   pinned: true,
                   snap: false,
                   stretch: true,
+                  backgroundColor: Theme.of(context).primaryColor,
                   flexibleSpace: new FlexibleSpaceBar(
                       titlePadding: EdgeInsets.only(left: 16.0, bottom: 13),
                       title: Text(
@@ -177,13 +176,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
                             },
                           );
                         } else {
-                          return IconButton(
-                            icon: const Icon(Icons.device_thermostat),
-                            onPressed: () {
-                              Navigator.pushNamed(context, '/selfCheck');
-                            },
-                          );
-                          // return SizedBox.shrink();
+                          return SizedBox.shrink();
                         }
                       },
                     ),
@@ -278,23 +271,6 @@ class _HomePageState extends State<HomePage> with RouteAware {
     Color _shimmerBaseColor;
     Color _shimmerHighlightColor;
     final Random _random = new Random();
-    if (!kIsWeb) {
-      FlutterStatusbarcolor.setStatusBarColor(Colors.transparent);
-      FlutterStatusbarcolor.setNavigationBarColor(
-          Theme.of(context).primaryColor);
-      switch (Theme.of(context).brightness) {
-        case Brightness.light:
-          _shimmerBaseColor = Colors.grey[300];
-          _shimmerHighlightColor = Colors.grey[100];
-          FlutterStatusbarcolor.setNavigationBarWhiteForeground(false);
-          break;
-        case Brightness.dark:
-          _shimmerBaseColor = Colors.grey[800];
-          _shimmerHighlightColor = Colors.grey[600];
-          FlutterStatusbarcolor.setNavigationBarWhiteForeground(true);
-          break;
-      }
-    }
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       body: FutureBuilder(

@@ -135,6 +135,7 @@ class _OSSLicencesPageState extends State<OSSLicencesPage> {
                     pinned: true,
                     snap: false,
                     stretch: true,
+                    backgroundColor: Theme.of(context).primaryColor,
                     flexibleSpace: new FlexibleSpaceBar(
                         titlePadding: EdgeInsets.symmetric(
                             vertical: 14.0,
