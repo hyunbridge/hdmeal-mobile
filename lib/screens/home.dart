@@ -79,7 +79,18 @@ class _HomePageState extends State<HomePage> with RouteAware {
         return _data;
       });
 
+  List<Widget> warp(bool condition, List<Widget> widgets) {
+    return condition
+        ? <Widget>[
+            Wrap(
+              children: widgets,
+            )
+          ]
+        : widgets;
+  }
+
   makePages(data) {
+    final isLargeScreen = MediaQuery.of(context).size.width >= 600;
     List<Widget> _pages = [];
     int _todayIndex;
     PageController _controller;
@@ -99,48 +110,57 @@ class _HomePageState extends State<HomePage> with RouteAware {
         // 섹션 내부 작성
         final _widgets = <Widget>[];
         final _sections = {
-          "Meal": menuSection(
-            context: context,
-            date: _parsedDate,
-            menu: data["Meal"][0] ?? [],
-            showAllergyInfo: _prefsManager.get('allergyInfo'),
-            enableKeywordHighlight: _prefsManager.get("enableKeywordHighlight"),
-            highlightedKeywords: _prefsManager.get("highlightedKeywords"),
-          ),
-          "Timetable": timetableSection(
-            context: context,
-            userGrade: _prefsManager.get('userGrade'),
-            userClass: _prefsManager.get('userClass'),
-            timetable: data["Timetable"]["${_prefsManager.get('userGrade')}"]
-                ["${_prefsManager.get('userClass')}"],
-            onTap: () async {
-              await showDialog(
+          "Meal": warp(
+              isLargeScreen,
+              menuSection(
                 context: context,
-                builder: (BuildContext context) {
-                  return ChangeGradeClass(
-                    currentGrade: _prefsManager.get('userGrade'),
-                    currentClass: _prefsManager.get('userClass'),
-                    onChanged: (selectedGrade, selectedClass) => setState(() {
-                      _prefsManager.set('userGrade', selectedGrade);
-                      _prefsManager.set('userClass', selectedClass);
-                    }),
+                date: _parsedDate,
+                menu: data["Meal"][0] ?? [],
+                showAllergyInfo: _prefsManager.get('allergyInfo'),
+                enableKeywordHighlight:
+                    _prefsManager.get("enableKeywordHighlight"),
+                highlightedKeywords: _prefsManager.get("highlightedKeywords"),
+              )),
+          "Timetable": warp(
+              isLargeScreen,
+              timetableSection(
+                context: context,
+                userGrade: _prefsManager.get('userGrade'),
+                userClass: _prefsManager.get('userClass'),
+                timetable: data["Timetable"]
+                        ["${_prefsManager.get('userGrade')}"]
+                    ["${_prefsManager.get('userClass')}"],
+                onTap: () async {
+                  await showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return ChangeGradeClass(
+                        currentGrade: _prefsManager.get('userGrade'),
+                        currentClass: _prefsManager.get('userClass'),
+                        onChanged: (selectedGrade, selectedClass) =>
+                            setState(() {
+                          _prefsManager.set('userGrade', selectedGrade);
+                          _prefsManager.set('userClass', selectedClass);
+                        }),
+                      );
+                    },
                   );
                 },
-              );
-            },
-          ),
-          "Schedule": scheduleSection(
-            context: context,
-            userGrade: _prefsManager.get('userGrade'),
-            schedule: data["Schedule"] ?? [],
-            showMyScheduleOnly: _prefsManager.get('showMyScheduleOnly'),
-          )
+              )),
+          "Schedule": warp(
+              isLargeScreen,
+              scheduleSection(
+                context: context,
+                userGrade: _prefsManager.get('userGrade'),
+                schedule: data["Schedule"] ?? [],
+                showMyScheduleOnly: _prefsManager.get('showMyScheduleOnly'),
+              ))
         };
         _prefsManager.get('sectionOrder').forEach((element) {
           _sections[element].forEach((element) => _widgets.add(element));
-          _widgets.add(Divider());
+          !isLargeScreen ? _widgets.add(Divider()) : null;
         });
-        _widgets.removeLast();
+        !isLargeScreen ? _widgets.removeLast() : null;
         _pages.add(
           CustomScrollView(
             physics: const BouncingScrollPhysics(
@@ -188,13 +208,15 @@ class _HomePageState extends State<HomePage> with RouteAware {
                     ),
                   ]),
               SliverSafeArea(
-                top: false,
-                sliver: SliverList(
-                  delegate: SliverChildListDelegate(
-                    _widgets,
-                  ),
-                ),
-              ),
+                  top: false,
+                  sliver: isLargeScreen
+                      ? SliverGrid.count(
+                          children: _widgets,
+                          crossAxisCount: 3,
+                        )
+                      : SliverList(
+                          delegate: SliverChildListDelegate(_widgets),
+                        )),
             ],
           ),
         );
