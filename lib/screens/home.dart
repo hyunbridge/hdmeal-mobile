@@ -319,6 +319,24 @@ class _HomePageState extends State<HomePage> with RouteAware {
         _shimmerHighlightColor = Colors.grey[600];
         break;
     }
+    final isLargeScreen = MediaQuery.of(context).size.width >= 600;
+    final shimmerBuilder = SliverChildBuilderDelegate(
+      (BuildContext context, int index) {
+        return Shimmer.fromColors(
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Container(
+                margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                height: 35,
+                width: _random.nextDouble() * 250 + 150,
+                color: Colors.white,
+              ),
+            ),
+            baseColor: _shimmerBaseColor,
+            highlightColor: _shimmerHighlightColor);
+      },
+      childCount: _random.nextInt(5) + 10,
+    );
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       body: FutureBuilder(
@@ -368,28 +386,19 @@ class _HomePageState extends State<HomePage> with RouteAware {
                         ),
                       ]),
                   SliverSafeArea(
-                    top: false,
-                    sliver: SliverList(
-                      delegate: SliverChildBuilderDelegate(
-                        (BuildContext context, int index) {
-                          return Shimmer.fromColors(
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Container(
-                                  margin: const EdgeInsets.symmetric(
-                                      horizontal: 16, vertical: 8),
-                                  height: 35,
-                                  width: _random.nextDouble() * 250 + 150,
-                                  color: Colors.white,
-                                ),
+                      top: false,
+                      sliver: isLargeScreen
+                          ? SliverGrid(
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                mainAxisExtent: 51,
+                                crossAxisCount: 3,
                               ),
-                              baseColor: _shimmerBaseColor,
-                              highlightColor: _shimmerHighlightColor);
-                        },
-                        childCount: _random.nextInt(5) + 10,
-                      ),
-                    ),
-                  ),
+                              delegate: shimmerBuilder,
+                            )
+                          : SliverList(
+                              delegate: shimmerBuilder,
+                            )),
                 ],
               );
             }
