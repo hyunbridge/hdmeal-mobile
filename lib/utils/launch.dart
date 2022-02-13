@@ -19,8 +19,10 @@ void launch(BuildContext context, String _url) {
     FlutterWebBrowser.openWebPage(
       url: _url,
       customTabsOptions: CustomTabsOptions(
-        toolbarColor: Theme.of(context).primaryColor,
-        navigationBarColor: Theme.of(context).primaryColor,
+        defaultColorSchemeParams: CustomTabsColorSchemeParams(
+          toolbarColor: Theme.of(context).primaryColor,
+          navigationBarColor: Theme.of(context).primaryColor,
+        ),
       ),
     );
   } catch (_) {

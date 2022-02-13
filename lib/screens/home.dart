@@ -24,7 +24,7 @@ import 'package:hdmeal/widgets/change_grade_class.dart';
 import 'package:hdmeal/widgets/sections.dart';
 
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
-final FirebaseAnalytics analytics = FirebaseAnalytics();
+final FirebaseAnalytics analytics = FirebaseAnalytics.instance;
 
 class HomePage extends StatefulWidget {
   @override
