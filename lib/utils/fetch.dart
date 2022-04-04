@@ -9,7 +9,6 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:brotli/brotli.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:http/http.dart' as http;
 import 'package:connectivity/connectivity.dart';
@@ -58,11 +57,9 @@ class FetchData {
         }
       }
       final response = await Client(http.Client())
-          .get(Uri.parse("https://api.hdml.kr/api/v4/app/br/"));
-      final decompressed =
-          brotli.decodeToString(response.bodyBytes, encoding: utf8);
-      Cache().write(decompressed);
-      return json.decode(decompressed);
+          .get(Uri.parse("https://static.hdml.kr/app/v4/"));
+      Cache().write(response.body);
+      return json.decode(response.body);
     } catch (_) {
       String _cache = await Cache().read();
       if (_cache != null) {
