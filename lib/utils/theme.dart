@@ -67,7 +67,7 @@ final blackTheme = ThemeData(
 );
 
 class ThemeNotifier with ChangeNotifier {
-  ThemeData _themeData;
+  ThemeData? _themeData;
 
   ThemeNotifier([this._themeData]);
 
@@ -75,7 +75,7 @@ class ThemeNotifier with ChangeNotifier {
 
   void setTheme(ThemeData themeData) async {
     _themeData = themeData;
-    switch (_themeData.brightness) {
+    switch (_themeData?.brightness) {
       case Brightness.light:
         SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
           statusBarIconBrightness: Brightness.light,
@@ -107,7 +107,7 @@ class ThemeNotifier with ChangeNotifier {
     final bool _enableBlackTheme = _prefsManager.get('enableBlackTheme');
     switch (_theme) {
       case 'System':
-        if (SchedulerBinding.instance.window.platformBrightness ==
+        if (SchedulerBinding.instance?.window.platformBrightness ==
             Brightness.dark) {
           if (_enableBlackTheme == true) {
             return blackTheme;
@@ -117,14 +117,12 @@ class ThemeNotifier with ChangeNotifier {
         } else {
           return lightTheme;
         }
-        break;
       case 'Dark':
         if (_enableBlackTheme == true) {
           return blackTheme;
         } else {
           return darkTheme;
         }
-        break;
     }
     return lightTheme;
   }

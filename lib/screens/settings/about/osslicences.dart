@@ -18,7 +18,7 @@ class OSSLicencesPage extends StatefulWidget {
 }
 
 class _OSSLicencesPageState extends State<OSSLicencesPage> {
-  ScrollController _scrollController;
+  late ScrollController _scrollController;
 
   final AsyncMemoizer _asyncMemoizer = AsyncMemoizer();
 
@@ -30,7 +30,7 @@ class _OSSLicencesPageState extends State<OSSLicencesPage> {
             ListTile(
                 title: Text("$name (버전 ${content["version"]})",
                     style: TextStyle(
-                      fontSize: Theme.of(context).textTheme.headline6.fontSize,
+                      fontSize: Theme.of(context).textTheme.headline6?.fontSize,
                       fontWeight: FontWeight.bold,
                     ))),
           ]);
@@ -120,10 +120,6 @@ class _OSSLicencesPageState extends State<OSSLicencesPage> {
             }
 
             if (snapshot.hasData) {
-              if (snapshot.data == null) {
-                return Center(
-                    child: Text('데이터를 불러올 수 없음', textAlign: TextAlign.center));
-              }
               return CustomScrollView(
                 controller: _scrollController,
                 physics: const BouncingScrollPhysics(
@@ -155,7 +151,7 @@ class _OSSLicencesPageState extends State<OSSLicencesPage> {
                         ListTile(
                             title: Text(
                                 "흥덕고 급식 앱은 다양한 오픈 소스 프로젝트들을 활용하여 만들어졌습니다.")),
-                        ...snapshot.data
+                        ...snapshot.data as List<Widget>
                       ]),
                     ),
                   ),

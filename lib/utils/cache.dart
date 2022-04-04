@@ -13,7 +13,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:universal_html/html.dart' as Web;
 
 class Cache {
-  Future<String> read() async {
+  Future<String?> read() async {
     if (kIsWeb) {
       final Web.Storage _localStorage = Web.window.localStorage;
       return _localStorage["cache"];
@@ -34,7 +34,7 @@ class Cache {
         final int _timestamp = _localStorage["cache_last_updated"] as int;
         return DateTime.fromMicrosecondsSinceEpoch(_timestamp);
       } catch (_) {
-        return null;
+        return DateTime.fromMicrosecondsSinceEpoch(0);
       }
     } else {
       Native.Directory _cacheDir = await getTemporaryDirectory();
@@ -43,7 +43,7 @@ class Cache {
             Native.FileStat.statSync("${_cacheDir.path}/cache.json");
         return stat.modified;
       } on Native.FileSystemException {
-        return null;
+        return DateTime.fromMicrosecondsSinceEpoch(0);
       }
     }
   }

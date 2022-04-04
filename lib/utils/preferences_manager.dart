@@ -18,7 +18,7 @@ import 'package:hdmeal/models/preferences.dart';
 class PrefsManager {
   static final PrefsManager _prefsManager = PrefsManager._internal();
   final Map<String, dynamic> _default = Prefs.defaultValue().toJson();
-  Prefs _prefs;
+  late Prefs _prefs;
 
   factory PrefsManager() {
     return _prefsManager;
@@ -26,13 +26,13 @@ class PrefsManager {
 
   PrefsManager._internal();
 
-  Future<Map<String, dynamic>> _read() async {
+  Future<Map<String, dynamic>?> _read() async {
     if (kIsWeb) {
       final Web.Storage _localStorage = Web.window.localStorage;
-      try {
-        String _prefsString = _localStorage["preferences"];
+      String? _prefsString = _localStorage["preferences"];
+      if (_prefsString != null) {
         return json.decode(_prefsString);
-      } catch (_) {
+      } else {
         return null;
       }
     } else {

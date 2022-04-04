@@ -16,8 +16,8 @@ class KeywordHighlightPage extends StatefulWidget {
 }
 
 class _KeywordHighlightPageState extends State<KeywordHighlightPage> {
-  ScrollController _scrollController;
-  List<String> _keywords;
+  late ScrollController _scrollController;
+  late List<String> _keywords;
 
   final PrefsManager _prefsManager = PrefsManager();
   final TextEditingController _textController = new TextEditingController();
@@ -120,14 +120,14 @@ class _KeywordHighlightPageState extends State<KeywordHighlightPage> {
                       border: InputBorder.none,
                       labelText: '키워드 추가하기',
                       labelStyle: TextStyle(
-                        color: Theme.of(context).textTheme.bodyText1.color,
+                        color: Theme.of(context).textTheme.bodyText1?.color,
                       ),
                       suffixIcon: _textController.text.trim().length > 0
                           ? IconButton(
                               onPressed: _handleKeywordAdd,
                               icon: Icon(Icons.add),
                               color:
-                                  Theme.of(context).textTheme.bodyText1.color,
+                                  Theme.of(context).textTheme.bodyText1?.color,
                             )
                           : SizedBox.shrink(),
                     ),

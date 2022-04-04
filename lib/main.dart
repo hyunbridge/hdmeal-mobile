@@ -27,12 +27,10 @@ import 'package:hdmeal/screens/settings/about/osslicences.dart';
 import 'package:hdmeal/utils/preferences_manager.dart';
 import 'package:hdmeal/utils/theme.dart';
 
-FirebaseAnalytics analytics;
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  analytics = FirebaseAnalytics.instance;
+  FirebaseAnalytics analytics = FirebaseAnalytics.instance;
   if (!kIsWeb) {
     FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
   }
@@ -54,8 +52,8 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeNotifier = Provider.of<ThemeNotifier>(context);
 
-    final window = WidgetsBinding.instance.window;
-    window.onPlatformBrightnessChanged = () {
+    final window = WidgetsBinding.instance?.window;
+    window?.onPlatformBrightnessChanged = () {
       themeNotifier.handleChangeTheme();
     };
 

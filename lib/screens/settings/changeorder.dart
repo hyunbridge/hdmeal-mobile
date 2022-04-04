@@ -18,7 +18,7 @@ class ChangeOrderPage extends StatefulWidget {
 }
 
 class _ChangeOrderPageState extends State<ChangeOrderPage> {
-  ScrollController _scrollController;
+  late ScrollController _scrollController;
 
   Map _sectionsKO = {
     "Meal": "급식",

@@ -50,7 +50,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
   }
 
   Future fetchData() => _fetchDataMemoizer.runOnce(() async {
-        Map _data = await _fetch.fetch();
+        Map? _data = await _fetch.fetch();
         if (_data == null) {
           showDialog(
             barrierDismissible: false,
@@ -92,8 +92,8 @@ class _HomePageState extends State<HomePage> with RouteAware {
   makePages(data) {
     final isLargeScreen = MediaQuery.of(context).size.width >= 600;
     List<Widget> _pages = [];
-    int _todayIndex;
-    PageController _controller;
+    int? _todayIndex;
+    late PageController _controller;
     const List _weekday = ["", "월", "화", "수", "목", "금", "토", "일"];
     try {
       data.forEach((date, data) {
@@ -157,7 +157,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
               ))
         };
         _prefsManager.get('sectionOrder').forEach((element) {
-          _sections[element].forEach((element) => _widgets.add(element));
+          _sections[element]?.forEach((element) => _widgets.add(element));
           !isLargeScreen ? _widgets.add(Divider()) : null;
         });
         !isLargeScreen ? _widgets.removeLast() : null;
@@ -189,7 +189,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
                             icon: const Icon(Icons.calendar_today),
                             onPressed: () {
                               _controller.animateToPage(
-                                _todayIndex,
+                                _todayIndex ?? 3,
                                 duration: Duration(milliseconds: 300),
                                 curve: Curves.easeOut,
                               );
@@ -231,7 +231,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
                   backgroundColor: Colors.redAccent,
                 ))));
       }
-      _controller = PageController(initialPage: _todayIndex);
+      _controller = PageController(initialPage: _todayIndex ?? 3);
       return PageView(
         children: _pages,
         controller: _controller,
@@ -268,7 +268,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    routeObserver.subscribe(this, ModalRoute.of(context));
+    routeObserver.subscribe(this, ModalRoute.of(context) as PageRoute);
   }
 
   @override
@@ -304,8 +304,8 @@ class _HomePageState extends State<HomePage> with RouteAware {
           systemNavigationBarColor: Colors.transparent,
           systemNavigationBarIconBrightness: Brightness.dark,
         ));
-        _shimmerBaseColor = Colors.grey[300];
-        _shimmerHighlightColor = Colors.grey[100];
+        _shimmerBaseColor = Colors.grey[300]!;
+        _shimmerHighlightColor = Colors.grey[100]!;
         break;
       case Brightness.dark:
         SystemChrome.setSystemUIOverlayStyle(
@@ -315,8 +315,8 @@ class _HomePageState extends State<HomePage> with RouteAware {
           systemNavigationBarColor: Colors.transparent,
           systemNavigationBarIconBrightness: Brightness.light,
         ));
-        _shimmerBaseColor = Colors.grey[800];
-        _shimmerHighlightColor = Colors.grey[600];
+        _shimmerBaseColor = Colors.grey[800]!;
+        _shimmerHighlightColor = Colors.grey[600]!;
         break;
     }
     final isLargeScreen = MediaQuery.of(context).size.width >= 600;

@@ -33,10 +33,10 @@ class Client extends http.BaseClient {
 
 class FetchData {
   bool cacheUsed = false;
-  String reason;
+  late String reason;
   final PrefsManager _prefsManager = PrefsManager();
 
-  Future<Map> fetch() async {
+  Future<Map?> fetch() async {
     try {
       ConnectivityResult connectivityResult =
           await (Connectivity().checkConnectivity());
@@ -45,7 +45,7 @@ class FetchData {
         DateTime _now = DateTime.now();
         DateTime _cacheUpdatedTime = await Cache().getUpdatedTime();
         if (_now.isSameDate(_cacheUpdatedTime)) {
-          String _cache = await Cache().read();
+          String? _cache = await Cache().read();
           if (_cache != null) {
             cacheUsed = true;
             reason = "데이터 세이버가 켜져 있어";
@@ -61,7 +61,7 @@ class FetchData {
       Cache().write(response.body);
       return json.decode(response.body);
     } catch (_) {
-      String _cache = await Cache().read();
+      String? _cache = await Cache().read();
       if (_cache != null) {
         cacheUsed = true;
         reason = "서버에 연결할 수 없어";
@@ -72,8 +72,8 @@ class FetchData {
     }
   }
 
-  Future<Map> fetchFromCache() async {
-    String _cache = await Cache().read();
+  Future<Map?> fetchFromCache() async {
+    String? _cache = await Cache().read();
     if (_cache != null) {
       return json.decode(_cache);
     } else {

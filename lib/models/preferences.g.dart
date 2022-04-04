@@ -6,20 +6,22 @@ part of 'preferences.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Prefs _$PrefsFromJson(Map<String, dynamic> json) {
-  return Prefs(
-    json['allergyInfo'] as bool,
-    json['enableBlackTheme'] as bool,
-    json['enableDataSaver'] as bool,
-    json['enableKeywordHighlight'] as bool,
-    (json['highlightedKeywords'] as List)?.map((e) => e as String)?.toList(),
-    (json['sectionOrder'] as List)?.map((e) => e as String)?.toList(),
-    json['showMyScheduleOnly'] as bool,
-    json['theme'] as String,
-    json['userClass'] as int,
-    json['userGrade'] as int,
-  );
-}
+Prefs _$PrefsFromJson(Map<String, dynamic> json) => Prefs(
+      json['allergyInfo'] as bool?,
+      json['enableBlackTheme'] as bool?,
+      json['enableDataSaver'] as bool?,
+      json['enableKeywordHighlight'] as bool?,
+      (json['highlightedKeywords'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      (json['sectionOrder'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      json['showMyScheduleOnly'] as bool?,
+      json['theme'] as String?,
+      json['userClass'] as int?,
+      json['userGrade'] as int?,
+    );
 
 Map<String, dynamic> _$PrefsToJson(Prefs instance) => <String, dynamic>{
       'allergyInfo': instance.allergyInfo,

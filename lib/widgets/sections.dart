@@ -47,12 +47,12 @@ bool _checkKeyword(String text, List<String> keywords) {
 }
 
 List<Widget> menuSection({
-  BuildContext context,
-  DateTime date,
-  List menu,
-  bool showAllergyInfo,
-  bool enableKeywordHighlight,
-  List<String> highlightedKeywords,
+  required BuildContext context,
+  required DateTime date,
+  required List menu,
+  required bool showAllergyInfo,
+  required bool enableKeywordHighlight,
+  required List<String> highlightedKeywords,
 }) {
   if (menu.length == 0) {
     return [
@@ -85,7 +85,7 @@ List<Widget> menuSection({
         child: Visibility(
           child: IconButton(
               icon: const Icon(Icons.share),
-              color: Theme.of(context).textTheme.bodyText1.color,
+              color: Theme.of(context).textTheme.bodyText1?.color,
               onPressed: () {
                 Share.share(
                     "<${date.month}월 ${date.day}일(${_weekday[date.weekday]})>\n${menu.map((e) => e[0]).join(",\n")}");
@@ -120,11 +120,11 @@ List<Widget> menuSection({
 }
 
 List<Widget> timetableSection(
-    {BuildContext context,
-    int userGrade,
-    int userClass,
-    List timetable,
-    void Function() onTap}) {
+    {required BuildContext context,
+    required int userGrade,
+    required int userClass,
+    required List timetable,
+    required void Function() onTap}) {
   if (timetable.length == 0) {
     timetable.add("시간표 정보가 없습니다.");
   }
@@ -148,10 +148,10 @@ List<Widget> timetableSection(
 }
 
 List<Widget> scheduleSection(
-    {BuildContext context,
-    int userGrade,
-    List schedule,
-    bool showMyScheduleOnly}) {
+    {required BuildContext context,
+    required int userGrade,
+    required List schedule,
+    required bool showMyScheduleOnly}) {
   final section = <Widget>[
     ListTile(
       title: Text(

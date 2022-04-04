@@ -11,7 +11,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:async/async.dart';
-import 'package:package_info/package_info.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart' as urlLauncher;
 import 'package:in_app_update/in_app_update.dart';
 
@@ -23,8 +23,9 @@ class AboutPage extends StatefulWidget {
 }
 
 class _AboutPageState extends State<AboutPage> with RouteAware {
-  PackageInfo _packageInfo;
-  ScrollController _scrollController;
+  late PackageInfo _packageInfo;
+  late ScrollController _scrollController;
+  late AppUpdateInfo _updateInfo;
 
   final DateTime _now = DateTime.now();
   final AsyncMemoizer _asyncMemoizer = AsyncMemoizer();
@@ -36,8 +37,12 @@ class _AboutPageState extends State<AboutPage> with RouteAware {
         return true;
       });
 
-  Future<AppUpdateInfo> _checkForUpdate() async {
-    return await InAppUpdate.checkForUpdate();
+  Future<void> _checkForUpdate() async {
+    InAppUpdate.checkForUpdate().then((info) {
+      setState(() {
+        _updateInfo = info;
+      });
+    });
   }
 
   double get _horizontalTitlePadding {
@@ -74,7 +79,7 @@ class _AboutPageState extends State<AboutPage> with RouteAware {
       return [
         ListTile(
           title: Text(
-              "버전 ${_packageInfo?.version}(Build ${_packageInfo?.buildNumber})"),
+              "버전 ${_packageInfo.version}(Build ${_packageInfo.buildNumber})"),
         ),
         FutureBuilder(
             future: _checkForUpdate(),
@@ -87,7 +92,7 @@ class _AboutPageState extends State<AboutPage> with RouteAware {
               }
 
               if (snapshot.hasData) {
-                if (snapshot.data.updateAvailability ==
+                if (_updateInfo.updateAvailability ==
                     UpdateAvailability.updateAvailable) {
                   return ListTile(
                     title: Text("업데이트가 있습니다."),
@@ -134,7 +139,7 @@ class _AboutPageState extends State<AboutPage> with RouteAware {
                       textAlign: TextAlign.center));
             }
 
-            if (snapshot.hasData && snapshot.data) {
+            if (snapshot.hasData) {
               return CustomScrollView(
                 controller: _scrollController,
                 physics: const BouncingScrollPhysics(

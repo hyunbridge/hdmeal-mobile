@@ -18,7 +18,7 @@ class ThemeSettingsPage extends StatefulWidget {
 }
 
 class _ThemeSettingsState extends State<ThemeSettingsPage> {
-  ScrollController _scrollController;
+  late ScrollController _scrollController;
 
   final PrefsManager _prefsManager = PrefsManager();
 
@@ -85,7 +85,7 @@ class _ThemeSettingsState extends State<ThemeSettingsPage> {
                   title: const Text('시스템 설정 따르기'),
                   value: 'System',
                   groupValue: _prefsManager.get('theme') as String,
-                  onChanged: (String value) async {
+                  onChanged: (String? value) async {
                     setState(() => _prefsManager.set('theme', value));
                     themeNotifier.handleChangeTheme();
                   },
@@ -94,7 +94,7 @@ class _ThemeSettingsState extends State<ThemeSettingsPage> {
                   title: const Text('항상 밝게'),
                   value: 'Light',
                   groupValue: _prefsManager.get('theme') as String,
-                  onChanged: (String value) async {
+                  onChanged: (String? value) async {
                     setState(() => _prefsManager.set('theme', value));
                     themeNotifier.handleChangeTheme();
                   },
@@ -103,7 +103,7 @@ class _ThemeSettingsState extends State<ThemeSettingsPage> {
                   title: const Text('항상 어둡게'),
                   value: 'Dark',
                   groupValue: _prefsManager.get('theme') as String,
-                  onChanged: (String value) async {
+                  onChanged: (String? value) async {
                     setState(() => _prefsManager.set('theme', value));
                     themeNotifier.handleChangeTheme();
                   },

@@ -12,16 +12,16 @@ part 'preferences.g.dart';
 
 @JsonSerializable()
 class Prefs {
-  bool allergyInfo;
-  bool enableBlackTheme;
-  bool enableDataSaver;
-  bool enableKeywordHighlight;
-  List<String> highlightedKeywords;
-  List<String> sectionOrder;
-  bool showMyScheduleOnly;
-  String theme;
-  int userClass;
-  int userGrade;
+  bool? allergyInfo;
+  bool? enableBlackTheme;
+  bool? enableDataSaver;
+  bool? enableKeywordHighlight;
+  List<String>? highlightedKeywords;
+  List<String>? sectionOrder;
+  bool? showMyScheduleOnly;
+  String? theme;
+  int? userClass;
+  int? userGrade;
 
   Prefs(
     this.allergyInfo,

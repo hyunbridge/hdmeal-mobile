@@ -21,7 +21,7 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  ScrollController _scrollController;
+  late ScrollController _scrollController;
 
   final PrefsManager _prefsManager = PrefsManager();
 
