@@ -30,7 +30,6 @@ import 'package:hdmeal/utils/theme.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  FirebaseAnalytics analytics = FirebaseAnalytics.instance;
   if (!kIsWeb) {
     FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
   }
@@ -48,6 +47,8 @@ void main() async {
 }
 
 class App extends StatelessWidget {
+  static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+
   @override
   Widget build(BuildContext context) {
     final themeNotifier = Provider.of<ThemeNotifier>(context);

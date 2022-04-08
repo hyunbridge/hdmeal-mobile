@@ -33,7 +33,7 @@ class Client extends http.BaseClient {
 
 class FetchData {
   bool cacheUsed = false;
-  late String reason;
+  String? reason;
   final PrefsManager _prefsManager = PrefsManager();
 
   Future<Map?> fetch() async {

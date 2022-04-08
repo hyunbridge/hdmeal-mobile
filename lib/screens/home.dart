@@ -158,9 +158,13 @@ class _HomePageState extends State<HomePage> with RouteAware {
         };
         _prefsManager.get('sectionOrder').forEach((element) {
           _sections[element]?.forEach((element) => _widgets.add(element));
-          !isLargeScreen ? _widgets.add(Divider()) : null;
+          if (!isLargeScreen) {
+            _widgets.add(Divider());
+          }
         });
-        !isLargeScreen ? _widgets.removeLast() : null;
+        if (!isLargeScreen) {
+          _widgets.removeLast();
+        }
         _pages.add(
           CustomScrollView(
             physics: const BouncingScrollPhysics(
