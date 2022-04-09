@@ -75,12 +75,17 @@ class ThemeNotifier with ChangeNotifier {
 
   void setTheme(ThemeData themeData) async {
     _themeData = themeData;
-    switch (_themeData!.brightness) {
+    setSystemUIOverlayStyle(themeData);
+    notifyListeners();
+  }
+
+  void setSystemUIOverlayStyle(ThemeData themeData) async {
+    switch (themeData.brightness) {
       case Brightness.light:
         SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
           statusBarIconBrightness: Brightness.light,
           statusBarColor: Colors.transparent,
-          systemNavigationBarColor: Colors.transparent,
+          systemNavigationBarColor: themeData.primaryColor.withOpacity(0.95),
           systemNavigationBarIconBrightness: Brightness.dark,
         ));
         break;
@@ -89,12 +94,11 @@ class ThemeNotifier with ChangeNotifier {
             SystemUiOverlayStyle.light.copyWith(
           statusBarIconBrightness: Brightness.dark,
           statusBarColor: Colors.transparent,
-          systemNavigationBarColor: Colors.transparent,
+          systemNavigationBarColor: themeData.primaryColor.withOpacity(0.95),
           systemNavigationBarIconBrightness: Brightness.light,
         ));
         break;
     }
-    notifyListeners();
   }
 
   void handleChangeTheme() {

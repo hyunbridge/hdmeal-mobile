@@ -10,6 +10,7 @@ import 'dart:ui';
 
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
@@ -57,6 +58,14 @@ class App extends StatelessWidget {
     window?.onPlatformBrightnessChanged = () {
       themeNotifier.handleChangeTheme();
     };
+
+    SystemChannels.lifecycle.setMessageHandler((msg) async {
+      debugPrint('SystemChannels> $msg');
+      if (msg == AppLifecycleState.resumed.toString()) {
+        themeNotifier.setSystemUIOverlayStyle(themeNotifier.getTheme());
+      }
+      return "";
+    });
 
     return MaterialApp(
       title: "흥덕고 급식",

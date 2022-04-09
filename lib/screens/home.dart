@@ -19,6 +19,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:hdmeal/utils/cache.dart';
 import 'package:hdmeal/utils/fetch.dart';
 import 'package:hdmeal/utils/preferences_manager.dart';
+import 'package:hdmeal/utils/theme.dart';
 import 'package:hdmeal/extensions/date_only_compare.dart';
 import 'package:hdmeal/widgets/change_grade_class.dart';
 import 'package:hdmeal/widgets/sections.dart';
@@ -300,25 +301,13 @@ class _HomePageState extends State<HomePage> with RouteAware {
     Color _shimmerBaseColor;
     Color _shimmerHighlightColor;
     final Random _random = new Random();
+    ThemeNotifier().setSystemUIOverlayStyle(Theme.of(context));
     switch (Theme.of(context).brightness) {
       case Brightness.light:
-        SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
-          statusBarIconBrightness: Brightness.light,
-          statusBarColor: Colors.transparent,
-          systemNavigationBarColor: Colors.transparent,
-          systemNavigationBarIconBrightness: Brightness.dark,
-        ));
         _shimmerBaseColor = Colors.grey[300]!;
         _shimmerHighlightColor = Colors.grey[100]!;
         break;
       case Brightness.dark:
-        SystemChrome.setSystemUIOverlayStyle(
-            SystemUiOverlayStyle.light.copyWith(
-          statusBarIconBrightness: Brightness.dark,
-          statusBarColor: Colors.transparent,
-          systemNavigationBarColor: Colors.transparent,
-          systemNavigationBarIconBrightness: Brightness.light,
-        ));
         _shimmerBaseColor = Colors.grey[800]!;
         _shimmerHighlightColor = Colors.grey[600]!;
         break;
