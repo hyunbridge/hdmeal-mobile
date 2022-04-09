@@ -25,7 +25,6 @@ class AboutPage extends StatefulWidget {
 class _AboutPageState extends State<AboutPage> with RouteAware {
   late PackageInfo _packageInfo;
   late ScrollController _scrollController;
-  late AppUpdateInfo _updateInfo;
 
   final DateTime _now = DateTime.now();
   final AsyncMemoizer _asyncMemoizer = AsyncMemoizer();
@@ -37,12 +36,8 @@ class _AboutPageState extends State<AboutPage> with RouteAware {
         return true;
       });
 
-  Future<void> _checkForUpdate() async {
-    InAppUpdate.checkForUpdate().then((info) {
-      setState(() {
-        _updateInfo = info;
-      });
-    });
+  Future<AppUpdateInfo> _checkForUpdate() async {
+    return await InAppUpdate.checkForUpdate();
   }
 
   double get _horizontalTitlePadding {
@@ -92,6 +87,7 @@ class _AboutPageState extends State<AboutPage> with RouteAware {
               }
 
               if (snapshot.hasData) {
+                AppUpdateInfo _updateInfo = snapshot.data as AppUpdateInfo;
                 if (_updateInfo.updateAvailability ==
                     UpdateAvailability.updateAvailable) {
                   return ListTile(
