@@ -664,20 +664,6 @@ final ossLicenses = <String, dynamic>{
     "isSdk": false,
     "isDirectDependency": false
   },
-  "in_app_update": {
-    "name": "in_app_update",
-    "description": "Enables In App Updates on Android using the official Android APIs.",
-    "homepage": "https://ffuf.de",
-    "repository": "https://github.com/feilfeilundfeil/flutter_in_app_update",
-    "authors": [
-      "jonas.bark@ffuf.de"
-    ],
-    "version": "3.0.0",
-    "license": "in_app_update\n\nMIT License\n\nCopyright (c) 2020 Victor Choueiri\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.",
-    "isMarkdown": false,
-    "isSdk": false,
-    "isDirectDependency": true
-  },
   "infinite_listview": {
     "name": "infinite_listview",
     "description": "ListView with items that can be scrolled infinitely in both directions.",
@@ -821,6 +807,18 @@ final ossLicenses = <String, dynamic>{
     "isMarkdown": false,
     "isSdk": false,
     "isDirectDependency": false
+  },
+  "new_version": {
+    "name": "new_version",
+    "description": "Check if your user has the most recent version of your Flutter app.",
+    "homepage": "https://github.com/timtraversy/new_version",
+    "repository": null,
+    "authors": [],
+    "version": "0.3.0",
+    "license": "Copyright 2018, Tim Traversy\n\nRedistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:\n\n1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.\n\n2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.\n\n3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.\n\nTHIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS \"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.",
+    "isMarkdown": false,
+    "isSdk": false,
+    "isDirectDependency": true
   },
   "numberpicker": {
     "name": "numberpicker",
