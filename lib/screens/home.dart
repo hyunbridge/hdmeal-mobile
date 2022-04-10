@@ -10,9 +10,12 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:async/async.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:new_version/new_version.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:url_launcher/url_launcher.dart' as urlLauncher;
 
 import 'package:firebase_analytics/firebase_analytics.dart';
 
@@ -39,6 +42,26 @@ class _HomePageState extends State<HomePage> with RouteAware {
 
   final AsyncMemoizer _fetchDataMemoizer = AsyncMemoizer();
   final AsyncMemoizer _timeErrorSnackBarMemoizer = AsyncMemoizer();
+
+  final newVersion = NewVersion();
+
+  checkForUpdates(NewVersion newVersion) async {
+    final status = await newVersion.getVersionStatus();
+    if (status != null) {
+      if (status.canUpdate) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('업데이트가 있습니다. (버전 ${status.storeVersion})'),
+          action: SnackBarAction(
+            label: '업데이트',
+            onPressed: () {
+              urlLauncher.launch(status.appStoreLink);
+            },
+          ),
+          duration: const Duration(seconds: 5),
+        ));
+      }
+    }
+  }
 
   void asyncMethod() async {
     _prefsManager.serialize().forEach((key, value) {
@@ -288,6 +311,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
     setState(() {
       asyncMethod();
     });
+    if (!kIsWeb) checkForUpdates(newVersion);
   }
 
   @override
