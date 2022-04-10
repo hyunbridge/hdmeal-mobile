@@ -32,9 +32,7 @@ class _AboutPageState extends State<AboutPage> with RouteAware {
   final newVersion = NewVersion();
 
   Future asyncMethod() => _asyncMemoizer.runOnce(() async {
-        if (!kIsWeb) {
-          _packageInfo = await PackageInfo.fromPlatform();
-        }
+        _packageInfo = await PackageInfo.fromPlatform();
         return true;
       });
 
@@ -74,10 +72,6 @@ class _AboutPageState extends State<AboutPage> with RouteAware {
       ];
     } else {
       return [
-        ListTile(
-          title: Text(
-              "버전 ${_packageInfo.version}(Build ${_packageInfo.buildNumber})"),
-        ),
         FutureBuilder(
             future: _checkForUpdate(),
             builder: (context, snapshot) {
@@ -106,7 +100,8 @@ class _AboutPageState extends State<AboutPage> with RouteAware {
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialog(
-                              title: new Text("릴리즈 노트 (버전 ${_status.storeVersion})"),
+                              title: new Text(
+                                  "릴리즈 노트 (버전 ${_status.storeVersion})"),
                               content: new Text(_status.releaseNotes!),
                               actions: <Widget>[
                                 new TextButton(
@@ -184,6 +179,10 @@ class _AboutPageState extends State<AboutPage> with RouteAware {
                     top: false,
                     sliver: SliverList(
                       delegate: SliverChildListDelegate([
+                        ListTile(
+                          title: Text(
+                              "버전 ${_packageInfo.version}(Build ${_packageInfo.buildNumber})"),
+                        ),
                         ..._platformSpecificInfo(),
                         Divider(),
                         ListTile(
