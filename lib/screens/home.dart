@@ -13,7 +13,6 @@ import 'package:async/async.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:new_version/new_version.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:url_launcher/url_launcher.dart' as urlLauncher;
 
@@ -23,6 +22,7 @@ import 'package:hdmeal/utils/cache.dart';
 import 'package:hdmeal/utils/fetch.dart';
 import 'package:hdmeal/utils/preferences_manager.dart';
 import 'package:hdmeal/utils/theme.dart';
+import 'package:hdmeal/utils/update_checker.dart';
 import 'package:hdmeal/extensions/date_only_compare.dart';
 import 'package:hdmeal/widgets/change_grade_class.dart';
 import 'package:hdmeal/widgets/sections.dart';
@@ -43,18 +43,17 @@ class _HomePageState extends State<HomePage> with RouteAware {
   final AsyncMemoizer _fetchDataMemoizer = AsyncMemoizer();
   final AsyncMemoizer _timeErrorSnackBarMemoizer = AsyncMemoizer();
 
-  final newVersion = NewVersion();
-
-  checkForUpdates(NewVersion newVersion) async {
-    final status = await newVersion.getVersionStatus();
+  checkForUpdates() async {
+    final status = await checkForUpdate();
     if (status != null) {
-      if (status.canUpdate) {
+      if (status.isUpdateAvailable) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('업데이트가 있습니다. (버전 ${status.storeVersion})'),
+          content: Text('업데이트가 있습니다. (버전 ${status.latestVersion})'),
           action: SnackBarAction(
             label: '업데이트',
             onPressed: () {
-              urlLauncher.launch(status.appStoreLink);
+              urlLauncher.launch(
+                  "https://play.google.com/store/apps/details?id=kr.hdml.app");
             },
           ),
           duration: const Duration(seconds: 5),
@@ -311,7 +310,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
     setState(() {
       asyncMethod();
     });
-    if (!kIsWeb) checkForUpdates(newVersion);
+    if (!kIsWeb) checkForUpdates();
   }
 
   @override

@@ -11,11 +11,11 @@ import 'dart:async';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:async/async.dart';
-import 'package:new_version/new_version.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart' as urlLauncher;
 
 import 'package:hdmeal/utils/launch.dart';
+import 'package:hdmeal/utils/update_checker.dart';
 
 class AboutPage extends StatefulWidget {
   @override
@@ -29,16 +29,10 @@ class _AboutPageState extends State<AboutPage> with RouteAware {
   final DateTime _now = DateTime.now();
   final AsyncMemoizer _asyncMemoizer = AsyncMemoizer();
 
-  final newVersion = NewVersion();
-
   Future asyncMethod() => _asyncMemoizer.runOnce(() async {
         _packageInfo = await PackageInfo.fromPlatform();
         return true;
       });
-
-  Future<VersionStatus?> _checkForUpdate() async {
-    return await newVersion.getVersionStatus();
-  }
 
   double get _horizontalTitlePadding {
     const kBasePadding = 16.0;
@@ -73,7 +67,7 @@ class _AboutPageState extends State<AboutPage> with RouteAware {
     } else {
       return [
         FutureBuilder(
-            future: _checkForUpdate(),
+            future: checkForUpdate(),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
                 debugPrint(snapshot.error.toString());
@@ -84,38 +78,17 @@ class _AboutPageState extends State<AboutPage> with RouteAware {
 
               if (snapshot.hasData) {
                 VersionStatus _status = snapshot.data as VersionStatus;
-                if (_status.canUpdate) {
+                if (_status.isUpdateAvailable) {
                   return ListTile(
-                    title: Text("업데이트가 있습니다. (버전 ${_status.storeVersion})"),
+                    title: Text("업데이트가 있습니다. (버전 ${_status.latestVersion})"),
                     onTap: () async {
-                      urlLauncher.launch(_status.appStoreLink);
+                      urlLauncher.launch(
+                          "https://play.google.com/store/apps/details?id=kr.hdml.app");
                     },
                   );
                 } else {
                   return ListTile(
                     title: Text("최신 버전입니다."),
-                    onTap: () async {
-                      if (_status.releaseNotes != null) {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: new Text(
-                                  "릴리즈 노트 (버전 ${_status.storeVersion})"),
-                              content: new Text(_status.releaseNotes!),
-                              actions: <Widget>[
-                                new TextButton(
-                                  child: new Text("닫기"),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                ),
-                              ],
-                            );
-                          },
-                        );
-                      }
-                    },
                   );
                 }
               } else {
