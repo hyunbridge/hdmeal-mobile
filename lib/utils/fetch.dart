@@ -57,7 +57,7 @@ class FetchData {
         }
       }
       final response = await Client(http.Client())
-          .get(Uri.parse("https://static.hdml.kr/app/v4/"));
+          .get(Uri.parse("https://hdapi.vercel.app/app/v4/"));
       Cache().write(response.body);
       return json.decode(response.body);
     } catch (_) {
