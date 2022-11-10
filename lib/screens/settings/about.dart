@@ -161,14 +161,14 @@ class _AboutPageState extends State<AboutPage> with RouteAware {
                         ListTile(
                           title: Text('홈페이지 방문하기'),
                           onTap: () async {
-                            launch(context, "https://hdml.kr/");
+                            launch(context, "https://hdm.vercel.app/");
                           },
                         ),
                         Visibility(
                           child: ListTile(
                             title: Text('웹 앱 열기'),
                             onTap: () async {
-                              launch(context, "https://go.hdml.kr/webapp");
+                              launch(context, "https://hdm.pages.dev/");
                             },
                           ),
                           visible: !kIsWeb,
@@ -177,7 +177,8 @@ class _AboutPageState extends State<AboutPage> with RouteAware {
                           child: ListTile(
                             title: Text('Google Play에서 앱 다운받기'),
                             onTap: () async {
-                              launch(context, "https://get.hdml.kr/android");
+                              launch(
+                                  context, "https://play.google.com/store/apps/details?id=kr.hdml.app");
                             },
                           ),
                           visible: kIsWeb,
@@ -185,15 +186,14 @@ class _AboutPageState extends State<AboutPage> with RouteAware {
                         ListTile(
                           title: Text('소스 코드 보기'),
                           onTap: () async {
-                            launch(
-                                context, "https://go.hdml.kr/github/android");
+                            launch(context,
+                                "https://hdm.vercel.app/go/mobile/github");
                           },
                         ),
                         ListTile(
                           title: Text('개발자에게 문의하기'),
-                          subtitle: Text("hekn2y4j@duck.com"),
                           onTap: () async {
-                            urlLauncher.launch("mailto:hekn2y4j@duck.com");
+                            launch(context, "https://hdm.vercel.app/go/contact");
                           },
                         ),
                         Divider(),
@@ -206,7 +206,7 @@ class _AboutPageState extends State<AboutPage> with RouteAware {
                             title: Text('개인정보 처리방침'),
                             onTap: () async {
                               launch(context,
-                                  "https://go.hdml.kr/privacy/android");
+                                  "https://hdm.vercel.app/go/mobile/privacy");
                             }),
                         ListTile(
                           title: Text('오픈소스 라이선스'),
