@@ -45,20 +45,18 @@ class _HomePageState extends State<HomePage> with RouteAware {
 
   checkForUpdates() async {
     final status = await checkForUpdate();
-    if (status != null) {
-      if (status.isUpdateAvailable) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('업데이트가 있습니다. (버전 ${status.latestVersion})'),
-          action: SnackBarAction(
-            label: '업데이트',
-            onPressed: () {
-              urlLauncher.launch(
-                  "https://play.google.com/store/apps/details?id=kr.hdml.app");
-            },
-          ),
-          duration: const Duration(seconds: 5),
-        ));
-      }
+    if (status.isUpdateAvailable) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('업데이트가 있습니다. (버전 ${status.latestVersion})'),
+        action: SnackBarAction(
+          label: '업데이트',
+          onPressed: () {
+            urlLauncher.launch(
+                "https://play.google.com/store/apps/details?id=kr.hdml.app");
+          },
+        ),
+        duration: const Duration(seconds: 5),
+      ));
     }
   }
 

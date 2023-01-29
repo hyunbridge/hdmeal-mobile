@@ -111,7 +111,7 @@ class ThemeNotifier with ChangeNotifier {
     final bool _enableBlackTheme = _prefsManager.get('enableBlackTheme');
     switch (_theme) {
       case 'System':
-        if (SchedulerBinding.instance?.window.platformBrightness ==
+        if (SchedulerBinding.instance.window.platformBrightness ==
             Brightness.dark) {
           if (_enableBlackTheme == true) {
             return blackTheme;
