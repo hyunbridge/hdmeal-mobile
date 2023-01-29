@@ -24,23 +24,23 @@ class _OSSLicencesPageState extends State<OSSLicencesPage> {
 
   Future asyncMethod() => _asyncMemoizer.runOnce(() async {
         List<Widget> _ossList = [];
-        ossLicenses.forEach((name, content) {
+        ossLicenses.forEach((Package package) {
           _ossList.addAll([
             Divider(),
             ListTile(
-                title: Text("$name (버전 ${content["version"]})",
+                title: Text("${package.name} (버전 ${package.version})",
                     style: TextStyle(
                       fontSize: Theme.of(context).textTheme.headline6?.fontSize,
                       fontWeight: FontWeight.bold,
                     ))),
           ]);
-          if (content["authors"].length > 0) {
-            String _authors = "${content["authors"]}";
+          if (package.authors.length > 0) {
+            String _authors = "${package.authors}";
             _ossList.add(ListTile(
                 title: Text("제작자"),
                 subtitle: Text(_authors.substring(1, _authors.length - 1))));
           }
-          if (content["license"] != "") {
+          if (package.license != "") {
             _ossList.add(ListTile(
               title: Text('라이선스 보기'),
               onTap: () async {
@@ -48,9 +48,9 @@ class _OSSLicencesPageState extends State<OSSLicencesPage> {
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
-                      title: new Text("$name의 라이선스"),
+                      title: new Text("${package.name}의 라이선스"),
                       content: SingleChildScrollView(
-                          child: new Text("${content["license"]}")),
+                          child: new Text("${package.license}")),
                       actions: <Widget>[
                         new TextButton(
                           child: new Text("닫기"),
@@ -65,12 +65,12 @@ class _OSSLicencesPageState extends State<OSSLicencesPage> {
               },
             ));
           }
-          if (content["homepage"] != null) {
+          if (package.homepage != null) {
             _ossList.add(ListTile(
                 title: Text('홈페이지 가기'),
-                subtitle: Text(content["homepage"]),
+                subtitle: Text(package.homepage!),
                 onTap: () async {
-                  launch(context, content["homepage"]);
+                  launch(context, package.homepage!);
                 }));
           }
         });
