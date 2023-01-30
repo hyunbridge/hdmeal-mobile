@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <!--
+  <head>
+    <!--
   If you are serving your web app in a path other than the root, change the
   href value below to reflect the base path you are serving from.
 
@@ -11,26 +11,26 @@
   For more details:
   * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
 -->
-  <base href="/" />
+    <base href="/" />
 
-  <meta charset="UTF-8" />
-  <meta content="IE=Edge" http-equiv="X-UA-Compatible" />
-  <meta
-          name="description"
-          content="흥덕고등학교의 식단/시간표/학사일정 정보를 제공하는 앱입니다."
-  />
+    <meta charset="UTF-8" />
+    <meta content="IE=Edge" http-equiv="X-UA-Compatible" />
+    <meta
+      name="description"
+      content="흥덕고등학교의 식단/시간표/학사일정 정보를 제공하는 앱입니다."
+    />
 
-  <!-- iOS meta tags & icons -->
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-  <meta name="apple-mobile-web-app-title" content="mobile" />
-  <link rel="apple-touch-icon" href="icons/Icon-192.png" />
+    <!-- iOS meta tags & icons -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="mobile" />
+    <link rel="apple-touch-icon" href="icons/Icon-192.png" />
 
-  <title>흥덕고 급식</title>
-  <link rel="manifest" href="manifest.json" />
-  <link rel="icon" href="favicon.png" />
+    <title>흥덕고 급식</title>
+    <link rel="manifest" href="manifest.json" />
+    <link rel="icon" href="favicon.png" />
 
-  <style>
+    <style>
       body {
         background: white;
       }
@@ -40,39 +40,11 @@
         }
       }
     </style>
-</head>
-<body>
-<script
-        src="https://unpkg.com/firebase@8.6.1/firebase-app.js"
-        integrity="sha256-GYPbqbyQ5jO8HEaJLEM8a8MaT2eqTjo1Z8cRgngHv1I="
-        crossorigin="anonymous"
-></script>
-<script
-        src="https://unpkg.com/firebase@8.6.1/firebase-analytics.js"
-        integrity="sha256-XWQM8gzG2Ow2xLjAdiPPpUXkHTJoe1nQROnGEiwPn3c="
-        crossorigin="anonymous"
-></script>
-
-<!-- Firebase Configuration -->
-<script>
-      // Your web app's Firebase configuration
-      var firebaseConfig = {
-        apiKey: "AIzaSyC1ss01hhV4ePn7Rx5N-Ua6tVEfYHLOhxg",
-        authDomain: "hdmeal-rynwyt.firebaseapp.com",
-        databaseURL: "https://hdmeal-rynwyt.firebaseio.com",
-        projectId: "hdmeal-rynwyt",
-        storageBucket: "hdmeal-rynwyt.appspot.com",
-        messagingSenderId: "182911581162",
-        appId: "1:182911581162:web:fd187d4debf006a7125093",
-      };
-      // Initialize Firebase
-      firebase.initializeApp(firebaseConfig);
-    </script>
-
-<!-- This script installs service_worker.js to provide PWA functionality to
+  </head>
+    <!-- This script installs service_worker.js to provide PWA functionality to
    application. For more information, see:
    https://developers.google.com/web/fundamentals/primers/service-workers -->
-<script>
+    <script>
       var serviceWorkerVersion = null;
       var scriptLoaded = false;
       function loadMainDartJs() {
@@ -136,5 +108,5 @@
         loadMainDartJs();
       }
     </script>
-</body>
+  </body>
 </html>
