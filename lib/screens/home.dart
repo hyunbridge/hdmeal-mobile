@@ -236,8 +236,8 @@ class _HomePageState extends State<HomePage> with RouteAware {
                             onPressed: () {
                               _controller.animateToPage(
                                 _todayIndex ?? 3,
-                                duration: Duration(milliseconds: 300),
-                                curve: Curves.easeOut,
+                                duration: Duration(milliseconds: 1500),
+                                curve: Curves.elasticInOut,
                               );
                             },
                           );
