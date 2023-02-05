@@ -114,6 +114,14 @@ class _HomePageState extends State<HomePage> with RouteAware {
         : widgets;
   }
 
+  void animateToPage(PageController controller, int relativeIndex) {
+    controller.animateToPage(
+      controller.page!.round() + relativeIndex,
+      duration: Duration(milliseconds: 750),
+      curve: Curves.easeOutCirc,
+    );
+  }
+
   makePages(data) {
     final isLargeScreen = MediaQuery.of(context).size.width >= 600;
     List<Widget> _pages = [];
@@ -270,11 +278,22 @@ class _HomePageState extends State<HomePage> with RouteAware {
                 ))));
       }
       _controller = PageController(initialPage: _todayIndex ?? 3);
-      return PageView(
-        children: _pages,
-        controller: _controller,
-        physics: const BouncingScrollPhysics(
-            parent: AlwaysScrollableScrollPhysics()),
+      return CallbackShortcuts(
+        bindings: {
+          const SingleActivator(LogicalKeyboardKey.arrowLeft): () =>
+              animateToPage(_controller, -1),
+          const SingleActivator(LogicalKeyboardKey.arrowRight): () =>
+              animateToPage(_controller, 1),
+        },
+        child: Focus(
+          autofocus: true,
+          child: PageView(
+            children: _pages,
+            controller: _controller,
+            physics: const BouncingScrollPhysics(
+                parent: AlwaysScrollableScrollPhysics()),
+          ),
+        ),
       );
     } catch (e) {
       print(e);
