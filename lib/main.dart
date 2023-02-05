@@ -12,6 +12,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:provider/provider.dart';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -41,6 +42,8 @@ void main() async {
   await PrefsManager().init();
 
   final ThemeData theme = ThemeNotifier().determineTheme();
+
+  usePathUrlStrategy();
 
   runApp(
     ChangeNotifierProvider<ThemeNotifier>(
