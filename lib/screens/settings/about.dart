@@ -138,15 +138,23 @@ class _AboutPageState extends State<AboutPage> with RouteAware {
                     stretch: true,
                     backgroundColor: Theme.of(context).primaryColor,
                     flexibleSpace: new FlexibleSpaceBar(
-                        titlePadding: EdgeInsets.symmetric(
-                            vertical: 14.0,
-                            horizontal: _horizontalTitlePadding),
-                        title: Text(
-                          "흥덕고 급식",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
+                      titlePadding: EdgeInsets.symmetric(
+                          vertical: 14.0, horizontal: _horizontalTitlePadding),
+                      title: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Text(
+                            "흥덕고 급식",
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        )),
+                        ],
+                      ),
+                    ),
                   ),
                   SliverSafeArea(
                     top: false,

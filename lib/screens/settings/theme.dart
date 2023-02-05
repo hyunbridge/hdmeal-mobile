@@ -68,14 +68,23 @@ class _ThemeSettingsState extends State<ThemeSettingsPage> {
             stretch: true,
             backgroundColor: Theme.of(context).primaryColor,
             flexibleSpace: new FlexibleSpaceBar(
-                titlePadding: EdgeInsets.symmetric(
-                    vertical: 14.0, horizontal: _horizontalTitlePadding),
-                title: Text(
-                  "테마 설정",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
+              titlePadding: EdgeInsets.symmetric(
+                  vertical: 14.0, horizontal: _horizontalTitlePadding),
+              title: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Text(
+                    "테마 설정",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                )),
+                ],
+              ),
+            ),
           ),
           SliverSafeArea(
             top: false,

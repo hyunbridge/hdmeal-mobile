@@ -18,7 +18,6 @@ final lightTheme = ThemeData(
   brightness: Brightness.light,
   primaryColor: Colors.white,
   primarySwatch: Colors.grey,
-  platform: TargetPlatform.android,
   pageTransitionsTheme: PageTransitionsTheme(
     builders: {
       TargetPlatform.android: SharedAxisPageTransitionsBuilder(
@@ -35,7 +34,6 @@ final darkTheme = ThemeData(
   primarySwatch: Colors.grey,
   accentColor: Colors.grey[500],
   toggleableActiveColor: Colors.grey[500],
-  platform: TargetPlatform.android,
   // 다크 테마에서는 primarySwatch가 먹지 않음
   pageTransitionsTheme: PageTransitionsTheme(
     builders: {
@@ -54,7 +52,6 @@ final blackTheme = ThemeData(
   primarySwatch: Colors.grey,
   accentColor: Colors.grey[500],
   toggleableActiveColor: Colors.grey[500],
-  platform: TargetPlatform.android,
   // 다크 테마에서는 primarySwatch가 먹지 않음
   pageTransitionsTheme: PageTransitionsTheme(
     builders: {

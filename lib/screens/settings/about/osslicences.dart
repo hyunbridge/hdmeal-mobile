@@ -133,15 +133,23 @@ class _OSSLicencesPageState extends State<OSSLicencesPage> {
                     stretch: true,
                     backgroundColor: Theme.of(context).primaryColor,
                     flexibleSpace: new FlexibleSpaceBar(
-                        titlePadding: EdgeInsets.symmetric(
-                            vertical: 14.0,
-                            horizontal: _horizontalTitlePadding),
-                        title: Text(
-                          "오픈소스 라이선스",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
+                      titlePadding: EdgeInsets.symmetric(
+                          vertical: 14.0, horizontal: _horizontalTitlePadding),
+                      title: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Text(
+                            "오픈소스 라이선스",
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        )),
+                        ],
+                      ),
+                    ),
                   ),
                   SliverSafeArea(
                     top: false,

@@ -203,13 +203,22 @@ class _HomePageState extends State<HomePage> with RouteAware {
                   stretch: true,
                   backgroundColor: Theme.of(context).primaryColor,
                   flexibleSpace: new FlexibleSpaceBar(
-                      titlePadding: EdgeInsets.only(left: 16.0, bottom: 13),
-                      title: Text(
-                        _title,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                    titlePadding: EdgeInsets.only(left: 16.0, bottom: 13),
+                    title: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Text(
+                          _title,
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      )),
+                      ],
+                    ),
+                  ),
                   actions: <Widget>[
                     Builder(
                       builder: (BuildContext context) {
@@ -386,15 +395,27 @@ class _HomePageState extends State<HomePage> with RouteAware {
                       stretch: true,
                       backgroundColor: Theme.of(context).primaryColor,
                       flexibleSpace: new FlexibleSpaceBar(
-                          titlePadding: EdgeInsets.only(left: 16.0, bottom: 13),
-                          title: Shimmer.fromColors(
-                              child: Container(
-                                width: 140,
-                                height: 30,
-                                color: Colors.white,
-                              ),
-                              baseColor: _shimmerBaseColor,
-                              highlightColor: _shimmerHighlightColor)),
+                        titlePadding: EdgeInsets.only(left: 16.0, bottom: 13),
+                        title: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Row(
+                              children: [
+                                Shimmer.fromColors(
+                                    child: Container(
+                                      width: 140,
+                                      height: 30,
+                                      color: Colors.white,
+                                    ),
+                                    baseColor: _shimmerBaseColor,
+                                    highlightColor: _shimmerHighlightColor),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
                       actions: <Widget>[
                         IconButton(
                           icon: const Icon(Icons.settings),
