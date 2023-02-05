@@ -84,9 +84,9 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: SpoqaHanSansNeo
+    - family: SUIT
       fonts:
-      - asset: fonts/SpoqaHanSansNeo-Regular.woff
+      - asset: fonts/SUIT-Regular.otf
         weight: 400
-      - asset: fonts/SpoqaHanSansNeo-Bold.woff
+      - asset: fonts/SUIT-Bold.otf
         weight: 700

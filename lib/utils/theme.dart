@@ -12,15 +12,17 @@ import 'package:flutter/services.dart';
 
 import 'package:hdmeal/utils/preferences_manager.dart';
 
+const fontFamily = "SUIT";
+
 final lightTheme = ThemeData(
-  fontFamily: "SpoqaHanSansNeo",
+  fontFamily: fontFamily,
   brightness: Brightness.light,
   primaryColor: Colors.white,
   primarySwatch: Colors.grey,
 );
 
 final darkTheme = ThemeData(
-  fontFamily: "SpoqaHanSansNeo",
+  fontFamily: fontFamily,
   brightness: Brightness.dark,
   primaryColor: Colors.grey[900],
   primarySwatch: Colors.grey,
@@ -29,7 +31,7 @@ final darkTheme = ThemeData(
 );
 
 final blackTheme = ThemeData(
-  fontFamily: "SpoqaHanSansNeo",
+  fontFamily: fontFamily,
   brightness: Brightness.dark,
   primaryColor: Colors.black,
   primarySwatch: Colors.grey,
