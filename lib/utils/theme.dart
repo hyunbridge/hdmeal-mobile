@@ -6,7 +6,6 @@
 // ╚═╝  ╚═╝╚═════╝ ╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝
 // Copyright Hyungyo Seo
 
-import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
@@ -18,13 +17,6 @@ final lightTheme = ThemeData(
   brightness: Brightness.light,
   primaryColor: Colors.white,
   primarySwatch: Colors.grey,
-  pageTransitionsTheme: PageTransitionsTheme(
-    builders: {
-      TargetPlatform.android: SharedAxisPageTransitionsBuilder(
-        transitionType: SharedAxisTransitionType.scaled,
-      ),
-    },
-  ),
 );
 
 final darkTheme = ThemeData(
@@ -34,15 +26,6 @@ final darkTheme = ThemeData(
   primarySwatch: Colors.grey,
   accentColor: Colors.grey[500],
   toggleableActiveColor: Colors.grey[500],
-  // 다크 테마에서는 primarySwatch가 먹지 않음
-  pageTransitionsTheme: PageTransitionsTheme(
-    builders: {
-      TargetPlatform.android: SharedAxisPageTransitionsBuilder(
-        transitionType: SharedAxisTransitionType.scaled,
-        fillColor: Colors.grey[900],
-      ),
-    },
-  ),
 );
 
 final blackTheme = ThemeData(
@@ -52,15 +35,6 @@ final blackTheme = ThemeData(
   primarySwatch: Colors.grey,
   accentColor: Colors.grey[500],
   toggleableActiveColor: Colors.grey[500],
-  // 다크 테마에서는 primarySwatch가 먹지 않음
-  pageTransitionsTheme: PageTransitionsTheme(
-    builders: {
-      TargetPlatform.android: SharedAxisPageTransitionsBuilder(
-        transitionType: SharedAxisTransitionType.scaled,
-        fillColor: Colors.black,
-      ),
-    },
-  ),
 );
 
 class ThemeNotifier with ChangeNotifier {
