@@ -85,7 +85,7 @@ List<Widget> menuSection({
         child: Visibility(
           child: IconButton(
               icon: const Icon(Icons.share),
-              color: Theme.of(context).textTheme.bodyText1?.color,
+              color: Theme.of(context).textTheme.bodyLarge?.color,
               onPressed: () {
                 Share.share(
                     "<${date.month}월 ${date.day}일(${_weekday[date.weekday]})>\n${menu.map((e) => e[0]).join(",\n")}");

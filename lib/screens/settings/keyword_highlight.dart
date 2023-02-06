@@ -131,14 +131,14 @@ class _KeywordHighlightPageState extends State<KeywordHighlightPage> {
                       border: InputBorder.none,
                       labelText: '키워드 추가하기',
                       labelStyle: TextStyle(
-                        color: Theme.of(context).textTheme.bodyText1?.color,
+                        color: Theme.of(context).textTheme.bodyLarge?.color,
                       ),
                       suffixIcon: _textController.text.trim().length > 0
                           ? IconButton(
                               onPressed: _handleKeywordAdd,
                               icon: Icon(Icons.add),
                               color:
-                                  Theme.of(context).textTheme.bodyText1?.color,
+                                  Theme.of(context).textTheme.bodyLarge?.color,
                             )
                           : SizedBox.shrink(),
                     ),
