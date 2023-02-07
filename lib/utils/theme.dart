@@ -28,12 +28,12 @@ final darkTheme = ThemeData(
   colorSchemeSeed: Colors.blue,
 );
 
-final blackTheme = ThemeData(
-  useMaterial3: true,
-  fontFamily: fontFamily,
-  brightness: Brightness.dark,
-  primaryColor: Colors.black,
-  colorSchemeSeed: Colors.blue
+final blackTheme = darkTheme.copyWith(
+  scaffoldBackgroundColor: Colors.black,
+  colorScheme: darkTheme.colorScheme.copyWith(
+    background: Colors.black,
+    surface: Colors.black,
+  ),
 );
 
 class ThemeNotifier with ChangeNotifier {
