@@ -190,14 +190,11 @@ class _HomePageState extends State<HomePage> with RouteAware {
               ))
         };
         _prefsManager.get('sectionOrder').forEach((element) {
-          _sections[element]?.forEach((element) => _widgets.add(element));
           if (!isLargeScreen) {
-            _widgets.add(Divider());
+            _widgets.add(Divider(color: Colors.transparent));
           }
+          _sections[element]?.forEach((element) => _widgets.add(element));
         });
-        if (!isLargeScreen) {
-          _widgets.removeLast();
-        }
         _pages.add(
           CustomScrollView(
             physics: const BouncingScrollPhysics(
@@ -221,7 +218,8 @@ class _HomePageState extends State<HomePage> with RouteAware {
                           textAlign: TextAlign.left,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            color: Theme.of(context).textTheme.titleLarge!.color,
+                            color:
+                                Theme.of(context).textTheme.titleLarge!.color,
                           ),
                         ),
                       ],
