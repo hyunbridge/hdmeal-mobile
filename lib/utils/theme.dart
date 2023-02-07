@@ -15,28 +15,25 @@ import 'package:hdmeal/utils/preferences_manager.dart';
 const fontFamily = "SUIT";
 
 final lightTheme = ThemeData(
+  useMaterial3: true,
   fontFamily: fontFamily,
   brightness: Brightness.light,
-  primaryColor: Colors.white,
-  primarySwatch: Colors.grey,
+  colorSchemeSeed: Colors.blue,
 );
 
 final darkTheme = ThemeData(
+  useMaterial3: true,
   fontFamily: fontFamily,
   brightness: Brightness.dark,
-  primaryColor: Colors.grey[900],
-  primarySwatch: Colors.grey,
-  accentColor: Colors.grey[500],
-  toggleableActiveColor: Colors.grey[500],
+  colorSchemeSeed: Colors.blue,
 );
 
 final blackTheme = ThemeData(
+  useMaterial3: true,
   fontFamily: fontFamily,
   brightness: Brightness.dark,
   primaryColor: Colors.black,
-  primarySwatch: Colors.grey,
-  accentColor: Colors.grey[500],
-  toggleableActiveColor: Colors.grey[500],
+  colorSchemeSeed: Colors.blue
 );
 
 class ThemeNotifier with ChangeNotifier {

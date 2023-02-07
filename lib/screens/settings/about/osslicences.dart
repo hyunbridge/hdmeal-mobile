@@ -108,7 +108,6 @@ class _OSSLicencesPageState extends State<OSSLicencesPage> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).primaryColor,
       body: FutureBuilder(
           future: asyncMethod(),
           builder: (context, snapshot) {
@@ -125,13 +124,11 @@ class _OSSLicencesPageState extends State<OSSLicencesPage> {
                 physics: const BouncingScrollPhysics(
                     parent: AlwaysScrollableScrollPhysics()),
                 slivers: <Widget>[
-                  SliverAppBar(
-                    expandedHeight: 150,
+                  SliverAppBar.large(
                     floating: false,
                     pinned: true,
                     snap: false,
                     stretch: true,
-                    backgroundColor: Theme.of(context).primaryColor,
                     flexibleSpace: new FlexibleSpaceBar(
                       titlePadding: EdgeInsets.symmetric(
                           vertical: 14.0, horizontal: _horizontalTitlePadding),
@@ -145,6 +142,7 @@ class _OSSLicencesPageState extends State<OSSLicencesPage> {
                             textAlign: TextAlign.left,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
+                              color: Theme.of(context).textTheme.titleLarge!.color,
                             ),
                           ),
                         ],

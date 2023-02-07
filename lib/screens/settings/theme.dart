@@ -54,19 +54,16 @@ class _ThemeSettingsState extends State<ThemeSettingsPage> {
   Widget build(BuildContext context) {
     final themeNotifier = Provider.of<ThemeNotifier>(context);
     return Scaffold(
-      backgroundColor: Theme.of(context).primaryColor,
       body: CustomScrollView(
         controller: _scrollController,
         physics: const BouncingScrollPhysics(
             parent: AlwaysScrollableScrollPhysics()),
         slivers: <Widget>[
-          SliverAppBar(
-            expandedHeight: 150,
+          SliverAppBar.large(
             floating: false,
             pinned: true,
             snap: false,
             stretch: true,
-            backgroundColor: Theme.of(context).primaryColor,
             flexibleSpace: new FlexibleSpaceBar(
               titlePadding: EdgeInsets.symmetric(
                   vertical: 14.0, horizontal: _horizontalTitlePadding),
@@ -80,6 +77,7 @@ class _ThemeSettingsState extends State<ThemeSettingsPage> {
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
+                      color: Theme.of(context).textTheme.titleLarge!.color,
                     ),
                   ),
                 ],

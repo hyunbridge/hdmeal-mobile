@@ -203,13 +203,12 @@ class _HomePageState extends State<HomePage> with RouteAware {
             physics: const BouncingScrollPhysics(
                 parent: AlwaysScrollableScrollPhysics()),
             slivers: <Widget>[
-              SliverAppBar(
-                  expandedHeight: 150.0,
+              SliverAppBar.large(
                   floating: false,
                   pinned: true,
                   snap: false,
                   stretch: true,
-                  backgroundColor: Theme.of(context).primaryColor,
+                  backgroundColor: Theme.of(context).colorScheme.background,
                   flexibleSpace: new FlexibleSpaceBar(
                     titlePadding: EdgeInsets.only(left: 16.0, bottom: 13),
                     title: Column(
@@ -222,6 +221,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
                           textAlign: TextAlign.left,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
+                            color: Theme.of(context).textTheme.titleLarge!.color,
                           ),
                         ),
                       ],
@@ -274,7 +274,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
             () => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   content: const Text("기기의 시계가 어긋나 있습니다."),
                   duration: const Duration(seconds: 10),
-                  backgroundColor: Colors.redAccent,
+                  backgroundColor: Theme.of(context).colorScheme.onError,
                 ))));
       }
       _controller = PageController(initialPage: _todayIndex ?? 3);
@@ -384,7 +384,6 @@ class _HomePageState extends State<HomePage> with RouteAware {
       childCount: _random.nextInt(5) + 10,
     );
     return Scaffold(
-      backgroundColor: Theme.of(context).primaryColor,
       body: FutureBuilder(
           future: fetchData(),
           builder: (context, snapshot) {
@@ -406,13 +405,12 @@ class _HomePageState extends State<HomePage> with RouteAware {
                 physics: const BouncingScrollPhysics(
                     parent: AlwaysScrollableScrollPhysics()),
                 slivers: <Widget>[
-                  SliverAppBar(
-                      expandedHeight: 150.0,
+                  SliverAppBar.large(
                       floating: false,
                       pinned: true,
                       snap: false,
                       stretch: true,
-                      backgroundColor: Theme.of(context).primaryColor,
+                      backgroundColor: Theme.of(context).colorScheme.background,
                       flexibleSpace: new FlexibleSpaceBar(
                         titlePadding: EdgeInsets.only(left: 16.0, bottom: 13),
                         title: Column(
