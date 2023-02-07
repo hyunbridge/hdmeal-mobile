@@ -55,7 +55,8 @@ class ThemeNotifier with ChangeNotifier {
         SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
           statusBarIconBrightness: Brightness.light,
           statusBarColor: Colors.transparent,
-          systemNavigationBarColor: themeData.primaryColor.withOpacity(0.95),
+          systemNavigationBarColor:
+              themeData.colorScheme.background.withOpacity(0.95),
           systemNavigationBarIconBrightness: Brightness.dark,
         ));
         break;
@@ -64,7 +65,8 @@ class ThemeNotifier with ChangeNotifier {
             SystemUiOverlayStyle.light.copyWith(
           statusBarIconBrightness: Brightness.dark,
           statusBarColor: Colors.transparent,
-          systemNavigationBarColor: themeData.primaryColor.withOpacity(0.95),
+          systemNavigationBarColor:
+              themeData.colorScheme.background.withOpacity(0.95),
           systemNavigationBarIconBrightness: Brightness.light,
         ));
         break;
