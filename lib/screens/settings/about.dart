@@ -113,123 +113,134 @@ class _AboutPageState extends State<AboutPage> with RouteAware {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder(
-          future: asyncMethod(),
-          builder: (context, snapshot) {
-            if (snapshot.hasError) {
-              print(snapshot.error);
-              return Center(
-                  child: Text('Error: ${snapshot.error}',
-                      textAlign: TextAlign.center));
-            }
+      body: Center(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: 600),
+          child: FutureBuilder(
+              future: asyncMethod(),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  print(snapshot.error);
+                  return Center(
+                      child: Text('Error: ${snapshot.error}',
+                          textAlign: TextAlign.center));
+                }
 
-            if (snapshot.hasData) {
-              return CustomScrollView(
-                controller: _scrollController,
-                physics: const BouncingScrollPhysics(
-                    parent: AlwaysScrollableScrollPhysics()),
-                slivers: <Widget>[
-                  SliverAppBar.large(
-                    floating: false,
-                    pinned: true,
-                    snap: false,
-                    stretch: true,
-                    flexibleSpace: new FlexibleSpaceBar(
-                      titlePadding: EdgeInsets.symmetric(
-                          vertical: 14.0, horizontal: _horizontalTitlePadding),
-                      title: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          Text(
-                            "흥덕고 급식",
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(context).textTheme.titleLarge!.color,
-                            ),
+                if (snapshot.hasData) {
+                  return CustomScrollView(
+                    controller: _scrollController,
+                    physics: const BouncingScrollPhysics(
+                        parent: AlwaysScrollableScrollPhysics()),
+                    slivers: <Widget>[
+                      SliverAppBar.large(
+                        floating: false,
+                        pinned: true,
+                        snap: false,
+                        stretch: true,
+                        flexibleSpace: new FlexibleSpaceBar(
+                          titlePadding: EdgeInsets.symmetric(
+                              vertical: 14.0,
+                              horizontal: _horizontalTitlePadding),
+                          title: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              Text(
+                                "흥덕고 급식",
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .titleLarge!
+                                      .color,
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ),
-                  SliverSafeArea(
-                    top: false,
-                    sliver: SliverList(
-                      delegate: SliverChildListDelegate([
-                        ListTile(
-                          title: Text(
-                              "버전 ${_packageInfo.version}(Build ${_packageInfo.buildNumber})"),
+                      SliverSafeArea(
+                        top: false,
+                        sliver: SliverList(
+                          delegate: SliverChildListDelegate([
+                            ListTile(
+                              title: Text(
+                                  "버전 ${_packageInfo.version}(Build ${_packageInfo.buildNumber})"),
+                            ),
+                            ..._platformSpecificInfo(),
+                            Divider(),
+                            ListTile(
+                              title: Text('홈페이지 방문하기'),
+                              onTap: () async {
+                                launch(context, "https://hdmeal.hgseo.net/");
+                              },
+                            ),
+                            Visibility(
+                              child: ListTile(
+                                title: Text('웹 앱 열기'),
+                                onTap: () async {
+                                  launch(
+                                      context, "https://hdmeal.hgseo.net/app");
+                                },
+                              ),
+                              visible: !kIsWeb,
+                            ),
+                            Visibility(
+                              child: ListTile(
+                                title: Text('Google Play에서 앱 다운받기'),
+                                onTap: () async {
+                                  launch(context,
+                                      "https://hdmeal.hgseo.net/android");
+                                },
+                              ),
+                              visible: kIsWeb,
+                            ),
+                            ListTile(
+                              title: Text('소스 코드 보기'),
+                              onTap: () async {
+                                launch(context,
+                                    "https://hdmeal.hgseo.net/gh/mobile");
+                              },
+                            ),
+                            ListTile(
+                              title: Text('개발자에게 문의하기'),
+                              onTap: () async {
+                                urlLauncher
+                                    .launch("mailto:hekn2y4j@duck.com");
+                              },
+                            ),
+                            Divider(),
+                            ListTile(
+                              title: Text('저작권'),
+                              subtitle: Text(
+                                  "Copyright 2020-${_now.year} Hyungyo Seo"),
+                            ),
+                            ListTile(
+                                title: Text('개인정보 처리방침'),
+                                onTap: () async {
+                                  launch(context,
+                                      "https://hdmeal.hgseo.net/privacy/mobile");
+                                }),
+                            ListTile(
+                              title: Text('오픈소스 라이선스'),
+                              onTap: () async {
+                                Navigator.pushNamed(
+                                    context, '/settings/about/OSSLicences');
+                              },
+                            ),
+                          ]),
                         ),
-                        ..._platformSpecificInfo(),
-                        Divider(),
-                        ListTile(
-                          title: Text('홈페이지 방문하기'),
-                          onTap: () async {
-                            launch(context, "https://hdmeal.hgseo.net/");
-                          },
-                        ),
-                        Visibility(
-                          child: ListTile(
-                            title: Text('웹 앱 열기'),
-                            onTap: () async {
-                              launch(context, "https://hdmeal.hgseo.net/app");
-                            },
-                          ),
-                          visible: !kIsWeb,
-                        ),
-                        Visibility(
-                          child: ListTile(
-                            title: Text('Google Play에서 앱 다운받기'),
-                            onTap: () async {
-                              launch(
-                                  context, "https://hdmeal.hgseo.net/android");
-                            },
-                          ),
-                          visible: kIsWeb,
-                        ),
-                        ListTile(
-                          title: Text('소스 코드 보기'),
-                          onTap: () async {
-                            launch(context,
-                                "https://hdmeal.hgseo.net/gh/mobile");
-                          },
-                        ),
-                        ListTile(
-                          title: Text('개발자에게 문의하기'),
-                          onTap: () async {
-                            urlLauncher.launch("mailto:hekn2y4j@duck.com");
-                          },
-                        ),
-                        Divider(),
-                        ListTile(
-                          title: Text('저작권'),
-                          subtitle:
-                              Text("Copyright 2020-${_now.year} Hyungyo Seo"),
-                        ),
-                        ListTile(
-                            title: Text('개인정보 처리방침'),
-                            onTap: () async {
-                              launch(context,
-                                  "https://hdmeal.hgseo.net/privacy/mobile");
-                            }),
-                        ListTile(
-                          title: Text('오픈소스 라이선스'),
-                          onTap: () async {
-                            Navigator.pushNamed(
-                                context, '/settings/about/OSSLicences');
-                          },
-                        ),
-                      ]),
-                    ),
-                  ),
-                ],
-              );
-            } else {
-              return Center(child: CircularProgressIndicator());
-            }
-          }),
+                      ),
+                    ],
+                  );
+                } else {
+                  return Center(child: CircularProgressIndicator());
+                }
+              }),
+        ),
+      ),
     );
   }
 }

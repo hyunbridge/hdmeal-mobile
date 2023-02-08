@@ -59,68 +59,73 @@ class _ChangeOrderPageState extends State<ChangeOrderPage> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
-        controller: _scrollController,
-        physics: const BouncingScrollPhysics(
-            parent: AlwaysScrollableScrollPhysics()),
-        slivers: <Widget>[
-          SliverAppBar.large(
-            floating: false,
-            pinned: true,
-            snap: false,
-            stretch: true,
-            flexibleSpace: new FlexibleSpaceBar(
-              titlePadding: EdgeInsets.symmetric(
-                  vertical: 14.0, horizontal: _horizontalTitlePadding),
-              title: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Text(
-                    "화면 순서 변경",
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).textTheme.titleLarge!.color,
-                    ),
+      body: Center(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: 600),
+          child: CustomScrollView(
+            controller: _scrollController,
+            physics: const BouncingScrollPhysics(
+                parent: AlwaysScrollableScrollPhysics()),
+            slivers: <Widget>[
+              SliverAppBar.large(
+                floating: false,
+                pinned: true,
+                snap: false,
+                stretch: true,
+                flexibleSpace: new FlexibleSpaceBar(
+                  titlePadding: EdgeInsets.symmetric(
+                      vertical: 14.0, horizontal: _horizontalTitlePadding),
+                  title: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Text(
+                        "화면 순서 변경",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).textTheme.titleLarge!.color,
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ),
-          ),
-          ReorderableSliverList(
-            delegate: ReorderableSliverChildListDelegate(_prefsManager
-                .get('sectionOrder')
-                .map<Widget>((e) => ListTile(
-                      title: Text(_sectionsKO[e]),
-                      trailing: Icon(Icons.menu),
-                    ))
-                .toList()),
-            onReorder: (oldIndex, newIndex) {
-              final List<String> _sectionOrder =
-                  _prefsManager.get('sectionOrder');
-              setState(() {
-                String section = _sectionOrder.removeAt(oldIndex);
-                _sectionOrder.insert(newIndex, section);
-              });
-              _prefsManager.set('sectionOrder', _sectionOrder);
-            },
-          ),
-          SliverSafeArea(
-            top: false,
-            sliver: SliverList(
-              delegate: SliverChildListDelegate([
-                Divider(),
-                ListTile(
-                  title: Text('기본값으로 복원'),
-                  onTap: () =>
-                      setState(() => _prefsManager.reset('sectionOrder')),
                 ),
-              ]),
-            ),
+              ),
+              ReorderableSliverList(
+                delegate: ReorderableSliverChildListDelegate(_prefsManager
+                    .get('sectionOrder')
+                    .map<Widget>((e) => ListTile(
+                          title: Text(_sectionsKO[e]),
+                          trailing: Icon(Icons.menu),
+                        ))
+                    .toList()),
+                onReorder: (oldIndex, newIndex) {
+                  final List<String> _sectionOrder =
+                      _prefsManager.get('sectionOrder');
+                  setState(() {
+                    String section = _sectionOrder.removeAt(oldIndex);
+                    _sectionOrder.insert(newIndex, section);
+                  });
+                  _prefsManager.set('sectionOrder', _sectionOrder);
+                },
+              ),
+              SliverSafeArea(
+                top: false,
+                sliver: SliverList(
+                  delegate: SliverChildListDelegate([
+                    Divider(),
+                    ListTile(
+                      title: Text('기본값으로 복원'),
+                      onTap: () =>
+                          setState(() => _prefsManager.reset('sectionOrder')),
+                    ),
+                  ]),
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
