@@ -54,7 +54,7 @@ class _ChangeGradeClassState extends State<ChangeGradeClass> {
           Stack(
             children: [
               Transform.translate(
-                offset: const Offset(50, 45),
+                offset: const Offset(50, 42.5),
                 child: Text(
                   '학년',
                   style: _selectedTextStyle,
@@ -78,7 +78,7 @@ class _ChangeGradeClassState extends State<ChangeGradeClass> {
           Stack(
             children: [
               Transform.translate(
-                offset: const Offset(50, 45),
+                offset: const Offset(50, 42.5),
                 child: Text(
                   '반',
                   style: _selectedTextStyle,
