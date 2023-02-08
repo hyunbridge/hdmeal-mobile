@@ -26,6 +26,6 @@ void launch(BuildContext context, String _url) {
       ),
     );
   } catch (_) {
-    urlLauncher.launch(_url);
+    urlLauncher.launchUrl(Uri.parse(_url));
   }
 }

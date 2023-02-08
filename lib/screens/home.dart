@@ -52,8 +52,8 @@ class _HomePageState extends State<HomePage> with RouteAware {
           action: SnackBarAction(
             label: '업데이트',
             onPressed: () {
-              urlLauncher.launch(
-                  "https://play.google.com/store/apps/details?id=kr.hdml.app");
+              urlLauncher.launchUrl(Uri.parse(
+                  "https://play.google.com/store/apps/details?id=kr.hdml.app"));
             },
           ),
           duration: const Duration(seconds: 5),

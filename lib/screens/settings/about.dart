@@ -82,8 +82,8 @@ class _AboutPageState extends State<AboutPage> with RouteAware {
                   return ListTile(
                     title: Text("업데이트가 있습니다. (버전 ${_status.latestVersion})"),
                     onTap: () async {
-                      urlLauncher.launch(
-                          "https://play.google.com/store/apps/details?id=kr.hdml.app");
+                      urlLauncher.launchUrl(Uri.parse(
+                          "https://play.google.com/store/apps/details?id=kr.hdml.app"));
                     },
                   );
                 } else {
@@ -207,8 +207,8 @@ class _AboutPageState extends State<AboutPage> with RouteAware {
                             ListTile(
                               title: Text('개발자에게 문의하기'),
                               onTap: () async {
-                                urlLauncher
-                                    .launch("mailto:hekn2y4j@duck.com");
+                                urlLauncher.launchUrl(Uri.parse(
+                                    "mailto:hekn2y4j@duck.com"));
                               },
                             ),
                             Divider(),
