@@ -41,7 +41,7 @@ class FetchData {
       ConnectivityResult connectivityResult =
           await (Connectivity().checkConnectivity());
       if (connectivityResult == ConnectivityResult.mobile &&
-          _prefsManager.get('enableDataSaver') == true) {
+          _prefsManager.prefs.enableDataSaver == true) {
         DateTime _now = DateTime.now();
         DateTime _cacheUpdatedTime = await Cache().getUpdatedTime();
         if (_now.isSameDate(_cacheUpdatedTime)) {

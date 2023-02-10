@@ -97,14 +97,14 @@ class _SettingsPageState extends State<SettingsPage> {
                     ListTile(
                       title: Text('학년/반 변경'),
                       subtitle: Text(
-                          '${_prefsManager.get('userGrade')}학년 ${_prefsManager.get('userClass')}반'),
+                          '${_prefsManager.prefs.userGrade}학년 ${_prefsManager.prefs.userClass}반'),
                       onTap: () async {
                         await showDialog(
                           context: context,
                           builder: (BuildContext context) {
                             return ChangeGradeClass(
-                              currentGrade: _prefsManager.get('userGrade'),
-                              currentClass: _prefsManager.get('userClass'),
+                              currentGrade: _prefsManager.prefs.userGrade,
+                              currentClass: _prefsManager.prefs.userClass,
                               onChanged: (selectedGrade, selectedClass) =>
                                   setState(() {
                                 _prefsManager.set('userGrade', selectedGrade);
@@ -136,14 +136,14 @@ class _SettingsPageState extends State<SettingsPage> {
                     ),
                     SwitchListTile(
                       title: const Text('내 학년의 학사일정만 표시'),
-                      value: _prefsManager.get('showMyScheduleOnly'),
+                      value: _prefsManager.prefs.showMyScheduleOnly,
                       onChanged: (bool value) => setState(
                           () => _prefsManager.set('showMyScheduleOnly', value)),
                     ),
                     Visibility(
                       child: SwitchListTile(
                         title: const Text('데이터 세이버 사용'),
-                        value: _prefsManager.get('enableDataSaver'),
+                        value: _prefsManager.prefs.enableDataSaver,
                         onChanged: (bool value) {
                           if (value == true) {
                             showDialog(
@@ -183,7 +183,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     ),
                     SwitchListTile(
                       title: const Text('알러지 정보 표시'),
-                      value: _prefsManager.get('allergyInfo'),
+                      value: _prefsManager.prefs.allergyInfo,
                       onChanged: (bool value) => setState(
                           () => _prefsManager.set('allergyInfo', value)),
                     ),

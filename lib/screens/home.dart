@@ -149,27 +149,26 @@ class _HomePageState extends State<HomePage> with RouteAware {
                 context: context,
                 date: _parsedDate,
                 menu: data["Meal"][0] ?? [],
-                showAllergyInfo: _prefsManager.get('allergyInfo'),
+                showAllergyInfo: _prefsManager.prefs.allergyInfo,
                 enableKeywordHighlight:
-                    _prefsManager.get("enableKeywordHighlight"),
-                highlightedKeywords: _prefsManager.get("highlightedKeywords"),
+                    _prefsManager.prefs.enableKeywordHighlight,
+                highlightedKeywords: _prefsManager.prefs.highlightedKeywords,
               )),
           "Timetable": warp(
               isLargeScreen,
               timetableSection(
                 context: context,
-                userGrade: _prefsManager.get('userGrade'),
-                userClass: _prefsManager.get('userClass'),
-                timetable: data["Timetable"]
-                        ["${_prefsManager.get('userGrade')}"]
-                    ["${_prefsManager.get('userClass')}"],
+                userGrade: _prefsManager.prefs.userGrade,
+                userClass: _prefsManager.prefs.userClass,
+                timetable: data["Timetable"]["${_prefsManager.prefs.userGrade}"]
+                    ["${_prefsManager.prefs.userClass}"],
                 onTap: () async {
                   await showDialog(
                     context: context,
                     builder: (BuildContext context) {
                       return ChangeGradeClass(
-                        currentGrade: _prefsManager.get('userGrade'),
-                        currentClass: _prefsManager.get('userClass'),
+                        currentGrade: _prefsManager.prefs.userGrade,
+                        currentClass: _prefsManager.prefs.userClass,
                         onChanged: (selectedGrade, selectedClass) =>
                             setState(() {
                           _prefsManager.set('userGrade', selectedGrade);
@@ -184,12 +183,12 @@ class _HomePageState extends State<HomePage> with RouteAware {
               isLargeScreen,
               scheduleSection(
                 context: context,
-                userGrade: _prefsManager.get('userGrade'),
+                userGrade: _prefsManager.prefs.userGrade,
                 schedule: data["Schedule"] ?? [],
-                showMyScheduleOnly: _prefsManager.get('showMyScheduleOnly'),
+                showMyScheduleOnly: _prefsManager.prefs.showMyScheduleOnly,
               ))
         };
-        _prefsManager.get('sectionOrder').forEach((element) {
+        _prefsManager.prefs.sectionOrder.forEach((element) {
           if (!isLargeScreen) {
             _widgets.add(Divider(color: Colors.transparent));
           }

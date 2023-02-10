@@ -12,35 +12,23 @@ part 'preferences.g.dart';
 
 @JsonSerializable()
 class Prefs {
-  bool? allergyInfo;
-  bool? enableBlackTheme;
-  bool? enableDataSaver;
-  bool? enableKeywordHighlight;
-  List<String>? highlightedKeywords;
-  List<String>? sectionOrder;
-  bool? showMyScheduleOnly;
-  String? theme;
-  int? userClass;
-  int? userGrade;
+  bool allergyInfo;
+  bool enableBlackTheme;
+  bool enableDataSaver;
+  bool enableKeywordHighlight;
+  List<String> highlightedKeywords;
+  List<String> sectionOrder;
+  bool showMyScheduleOnly;
+  String theme;
+  int userClass;
+  int userGrade;
 
-  Prefs(
-    this.allergyInfo,
-    this.enableBlackTheme,
-    this.enableDataSaver,
-    this.enableKeywordHighlight,
-    this.highlightedKeywords,
-    this.sectionOrder,
-    this.showMyScheduleOnly,
-    this.theme,
-    this.userClass,
-    this.userGrade,
-  );
-  Prefs.defaultValue() {
-    allergyInfo = true;
-    enableBlackTheme = false;
-    enableDataSaver = false;
-    enableKeywordHighlight = true;
-    highlightedKeywords = [
+  Prefs({
+    this.allergyInfo = true,
+    this.enableBlackTheme = false,
+    this.enableDataSaver = false,
+    this.enableKeywordHighlight = true,
+    this.highlightedKeywords = const [
       "까스",
       "깐풍기",
       "꼬치",
@@ -110,13 +98,13 @@ class Prefs {
       "햄",
       "햄버거",
       "훈제"
-    ];
-    sectionOrder = ["Meal", "Timetable", "Schedule"];
-    showMyScheduleOnly = true;
-    theme = 'System';
-    userClass = 1;
-    userGrade = 1;
-  }
+    ],
+    this.sectionOrder = const ["Meal", "Timetable", "Schedule"],
+    this.showMyScheduleOnly = true,
+    this.theme = 'System',
+    this.userClass = 1,
+    this.userGrade = 1,
+  });
 
   factory Prefs.fromJson(Map<String, dynamic> json) => _$PrefsFromJson(json);
 

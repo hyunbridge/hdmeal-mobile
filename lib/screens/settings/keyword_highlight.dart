@@ -20,6 +20,7 @@ class _KeywordHighlightPageState extends State<KeywordHighlightPage> {
   late List<String> _keywords;
 
   final PrefsManager _prefsManager = PrefsManager();
+
   final TextEditingController _textController = new TextEditingController();
 
   double get _horizontalTitlePadding {
@@ -46,7 +47,7 @@ class _KeywordHighlightPageState extends State<KeywordHighlightPage> {
   }
 
   void _updatePrefs() {
-    final keywords = List.from(_keywords);
+    final keywords = List<String>.from(_keywords);
     keywords.sort();
     _prefsManager.set("highlightedKeywords", keywords);
   }
@@ -77,7 +78,7 @@ class _KeywordHighlightPageState extends State<KeywordHighlightPage> {
   void initState() {
     super.initState();
     _scrollController = ScrollController()..addListener(() => setState(() {}));
-    _keywords = _prefsManager.get("highlightedKeywords");
+    _keywords = List.from(_prefsManager.prefs.highlightedKeywords);
   }
 
   Widget build(BuildContext context) {
@@ -121,7 +122,7 @@ class _KeywordHighlightPageState extends State<KeywordHighlightPage> {
                   delegate: SliverChildListDelegate([
                     SwitchListTile(
                       title: Text('키워드 강조 사용'),
-                      value: _prefsManager.get('enableKeywordHighlight'),
+                      value: _prefsManager.prefs.enableKeywordHighlight,
                       onChanged: (bool value) => setState(() =>
                           _prefsManager.set('enableKeywordHighlight', value)),
                     ),
@@ -185,7 +186,8 @@ class _KeywordHighlightPageState extends State<KeywordHighlightPage> {
                         setState(() {
                           _prefsManager.reset('enableKeywordHighlight');
                           _prefsManager.reset('highlightedKeywords');
-                          _keywords = _prefsManager.get("highlightedKeywords");
+                          _keywords = List.from(
+                              _prefsManager.prefs.highlightedKeywords);
                         });
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                           content: Text('키워드 설정이 초기화되었습니다.'),

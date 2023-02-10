@@ -93,16 +93,16 @@ class _ChangeOrderPageState extends State<ChangeOrderPage> {
                 ),
               ),
               ReorderableSliverList(
-                delegate: ReorderableSliverChildListDelegate(_prefsManager
-                    .get('sectionOrder')
-                    .map<Widget>((e) => ListTile(
-                          title: Text(_sectionsKO[e]),
-                          trailing: Icon(Icons.menu),
-                        ))
-                    .toList()),
+                delegate: ReorderableSliverChildListDelegate(
+                    _prefsManager.prefs.sectionOrder
+                        .map<Widget>((e) => ListTile(
+                              title: Text(_sectionsKO[e]),
+                              trailing: Icon(Icons.menu),
+                            ))
+                        .toList()),
                 onReorder: (oldIndex, newIndex) {
-                  final List<String> _sectionOrder =
-                      _prefsManager.get('sectionOrder');
+                  final _sectionOrder =
+                      List<String>.from(_prefsManager.prefs.sectionOrder);
                   setState(() {
                     String section = _sectionOrder.removeAt(oldIndex);
                     _sectionOrder.insert(newIndex, section);

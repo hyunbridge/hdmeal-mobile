@@ -94,7 +94,7 @@ class _ThemeSettingsState extends State<ThemeSettingsPage> {
                     RadioListTile(
                       title: const Text('시스템 설정 따르기'),
                       value: 'System',
-                      groupValue: _prefsManager.get('theme') as String,
+                      groupValue: _prefsManager.prefs.theme,
                       onChanged: (String? value) async {
                         setState(() => _prefsManager.set('theme', value));
                         themeNotifier.handleChangeTheme();
@@ -103,7 +103,7 @@ class _ThemeSettingsState extends State<ThemeSettingsPage> {
                     RadioListTile(
                       title: const Text('항상 밝게'),
                       value: 'Light',
-                      groupValue: _prefsManager.get('theme') as String,
+                      groupValue: _prefsManager.prefs.theme,
                       onChanged: (String? value) async {
                         setState(() => _prefsManager.set('theme', value));
                         themeNotifier.handleChangeTheme();
@@ -112,7 +112,7 @@ class _ThemeSettingsState extends State<ThemeSettingsPage> {
                     RadioListTile(
                       title: const Text('항상 어둡게'),
                       value: 'Dark',
-                      groupValue: _prefsManager.get('theme') as String,
+                      groupValue: _prefsManager.prefs.theme,
                       onChanged: (String? value) async {
                         setState(() => _prefsManager.set('theme', value));
                         themeNotifier.handleChangeTheme();
@@ -121,7 +121,7 @@ class _ThemeSettingsState extends State<ThemeSettingsPage> {
                     Divider(),
                     SwitchListTile(
                       title: const Text('다크 테마 대신 블랙 테마 사용'),
-                      value: _prefsManager.get('enableBlackTheme'),
+                      value: _prefsManager.prefs.enableBlackTheme,
                       onChanged: (bool value) async {
                         setState(
                             () => _prefsManager.set('enableBlackTheme', value));

@@ -79,8 +79,9 @@ class ThemeNotifier with ChangeNotifier {
 
   ThemeData determineTheme() {
     final _prefsManager = PrefsManager();
-    final String _theme = _prefsManager.get('theme');
-    final bool _enableBlackTheme = _prefsManager.get('enableBlackTheme');
+    final _prefs = _prefsManager.prefs;
+    final String _theme = _prefs.theme;
+    final bool _enableBlackTheme = _prefs.enableBlackTheme;
     switch (_theme) {
       case 'System':
         if (SchedulerBinding.instance.window.platformBrightness ==

@@ -17,7 +17,7 @@ import 'package:hdmeal/models/preferences.dart';
 
 class PrefsManager {
   static final PrefsManager _prefsManager = PrefsManager._internal();
-  final Map<String, dynamic> _default = Prefs.defaultValue().toJson();
+  final Prefs _default = Prefs();
   late Prefs _prefs;
 
   factory PrefsManager() {
@@ -26,12 +26,12 @@ class PrefsManager {
 
   PrefsManager._internal();
 
-  Future<Map<String, dynamic>?> _read() async {
+  Future<Prefs?> _read() async {
     if (kIsWeb) {
       final Web.Storage _localStorage = Web.window.localStorage;
       String? _prefsString = _localStorage["preferences"];
       if (_prefsString != null) {
-        return json.decode(_prefsString);
+        return Prefs.fromJson(json.decode(_prefsString));
       } else {
         return null;
       }
@@ -41,7 +41,7 @@ class PrefsManager {
         Native.File _prefsFile =
             new Native.File("${_prefsDir.path}/preferences.json");
         String _prefsString = _prefsFile.readAsStringSync();
-        return json.decode(_prefsString);
+        return Prefs.fromJson(json.decode(_prefsString));
       } catch (_) {
         return null;
       }
@@ -77,24 +77,29 @@ class PrefsManager {
   }
 
   Future<void> init() async =>
-      _prefs = Prefs.fromJson(await _read() ?? _default);
+      _prefs = await _read() ?? _default;
 
-  dynamic get(String key) {
-    final _prefsMap = _prefs.toJson();
-    return _prefsMap[key] ?? _default[key];
+  Prefs get prefs => _prefs;
+
+  set prefs(Prefs newValue) {
+    _prefs = newValue;
+    this._write();
   }
 
   void set(String key, dynamic value) {
     final _prefsMap = _prefs.toJson();
     _prefsMap[key] = value;
-    _prefs = Prefs.fromJson(_prefsMap);
-    this._write();
+    prefs = Prefs.fromJson(_prefsMap);
   }
 
-  void reset(String key) => this.set(key, _default[key]);
+  void reset(String key) {
+    final _prefsMap = _prefs.toJson();
+    _prefsMap[key] = _default.toJson()[key];
+    prefs = Prefs.fromJson(_prefsMap);
+  }
 
   void resetAll() {
-    _prefs = Prefs.fromJson(_default);
+    _prefs = _default;
     this._delete();
   }
 
