@@ -8,7 +8,7 @@ const ossLicenses = <Package>[
     description: 'Logic that is shared between the front_end and analyzer packages.',
     repository: 'https://github.com/dart-lang/sdk/tree/main/pkg/_fe_analyzer_shared',
     authors: [],
-    version: '52.0.0',
+    version: '53.0.0',
     license: '''Copyright 2019, the Dart project authors.
 
 Redistribution and use in source and binary forms, with or without
@@ -46,7 +46,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.''',
     homepage: 'https://firebase.google.com/docs/firestore',
     repository: 'https://github.com/firebase/flutterfire/tree/master/packages/_flutterfire_internals',
     authors: [],
-    version: '1.0.12',
+    version: '1.0.13',
     license: '''Copyright 2017, the Chromium project authors. All rights reserved.
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are
@@ -82,7 +82,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.''',
     description: 'This package provides a library that performs static analysis of Dart code.',
     repository: 'https://github.com/dart-lang/sdk/tree/main/pkg/analyzer',
     authors: [],
-    version: '5.4.0',
+    version: '5.5.0',
     license: '''Copyright 2013, the Dart project authors.
 
 Redistribution and use in source and binary forms, with or without
@@ -186,7 +186,7 @@ THE SOFTWARE.''',
     description: 'Library for defining parsers for parsing raw command-line arguments into a set of options and values using GNU and POSIX style options.',
     repository: 'https://github.com/dart-lang/args',
     authors: [],
-    version: '2.3.2',
+    version: '2.4.0',
     license: '''Copyright 2013, the Dart project authors. 
 
 Redistribution and use in source and binary forms, with or without
@@ -1098,146 +1098,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.''',
     isDirectDependency: false,
   ),
   Package(
-    name: 'connectivity',
-    description: 'Flutter plugin for discovering the state of the network (WiFi & mobile/cellular) connectivity on Android and iOS.',
-    homepage: 'https://github.com/flutter/plugins/tree/master/packages/connectivity/connectivity',
-    authors: [],
-    version: '3.0.6',
-    license: '''Copyright 2013 The Flutter Authors. All rights reserved.
-
-Redistribution and use in source and binary forms, with or without modification,
-are permitted provided that the following conditions are met:
-
-    * Redistributions of source code must retain the above copyright
-      notice, this list of conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above
-      copyright notice, this list of conditions and the following
-      disclaimer in the documentation and/or other materials provided
-      with the distribution.
-    * Neither the name of Google Inc. nor the names of its
-      contributors may be used to endorse or promote products derived
-      from this software without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
-ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
-ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.''',
-    isMarkdown: false,
-    isSdk: false,
-    isDirectDependency: true,
-  ),
-  Package(
-    name: 'connectivity_for_web',
-    description: 'An implementation for the web platform of the Flutter `connectivity` plugin. This uses the NetworkInformation Web API, with a fallback to Navigator.onLine.',
-    repository: 'https://github.com/flutter/plugins/tree/master/packages/connectivity/connectivity_for_web',
-    authors: [],
-    version: '0.4.0+1',
-    license: '''Copyright 2013 The Flutter Authors. All rights reserved.
-
-Redistribution and use in source and binary forms, with or without modification,
-are permitted provided that the following conditions are met:
-
-    * Redistributions of source code must retain the above copyright
-      notice, this list of conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above
-      copyright notice, this list of conditions and the following
-      disclaimer in the documentation and/or other materials provided
-      with the distribution.
-    * Neither the name of Google Inc. nor the names of its
-      contributors may be used to endorse or promote products derived
-      from this software without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
-ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
-ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.''',
-    isMarkdown: false,
-    isSdk: false,
-    isDirectDependency: false,
-  ),
-  Package(
-    name: 'connectivity_macos',
-    description: 'macOS implementation of the connectivity plugin.',
-    repository: 'https://github.com/flutter/plugins/tree/master/packages/connectivity/connectivity_macos',
-    authors: [],
-    version: '0.2.1+2',
-    license: '''Copyright 2013 The Flutter Authors. All rights reserved.
-
-Redistribution and use in source and binary forms, with or without modification,
-are permitted provided that the following conditions are met:
-
-    * Redistributions of source code must retain the above copyright
-      notice, this list of conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above
-      copyright notice, this list of conditions and the following
-      disclaimer in the documentation and/or other materials provided
-      with the distribution.
-    * Neither the name of Google Inc. nor the names of its
-      contributors may be used to endorse or promote products derived
-      from this software without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
-ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
-ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.''',
-    isMarkdown: false,
-    isSdk: false,
-    isDirectDependency: false,
-  ),
-  Package(
-    name: 'connectivity_platform_interface',
-    description: 'A common platform interface for the connectivity plugin.',
-    homepage: 'https://github.com/flutter/plugins/tree/master/packages/connectivity/connectivity_platform_interface',
-    authors: [],
-    version: '2.0.1',
-    license: '''Copyright 2020 The Chromium Authors. All rights reserved.
-
-Redistribution and use in source and binary forms, with or without modification,
-are permitted provided that the following conditions are met:
-
-    * Redistributions of source code must retain the above copyright
-      notice, this list of conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above
-      copyright notice, this list of conditions and the following
-      disclaimer in the documentation and/or other materials provided
-      with the distribution.
-    * Neither the name of Google Inc. nor the names of its
-      contributors may be used to endorse or promote products derived
-      from this software without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
-ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
-ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.''',
-    isMarkdown: false,
-    isSdk: false,
-    isDirectDependency: false,
-  ),
-  Package(
     name: 'convert',
     description: 'Utilities for converting between data representations. Provides a number of Sink, Codec, Decoder, and Encoder types.',
     repository: 'https://github.com/dart-lang/convert',
@@ -1707,7 +1567,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.''',
     homepage: 'https://firebase.google.com/docs/analytics',
     repository: 'https://github.com/firebase/flutterfire/tree/master/packages/firebase_analytics/firebase_analytics',
     authors: [],
-    version: '10.1.0',
+    version: '10.1.1',
     license: '''Copyright 2017, the Chromium project authors. All rights reserved.
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are
@@ -1744,7 +1604,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.''',
     homepage: 'https://github.com/firebase/flutterfire/tree/master/packages/firebase_analytics/firebase_analytics_platform_interface',
     repository: 'https://github.com/firebase/flutterfire/tree/master/packages/firebase_analytics/firebase_analytics_platform_interface',
     authors: [],
-    version: '3.3.17',
+    version: '3.3.18',
     license: '''Copyright 2017, the Chromium project authors. All rights reserved.
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are
@@ -1781,7 +1641,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.''',
     homepage: 'https://github.com/firebase/flutterfire/tree/master/packages/firebase_analytics/firebase_analytics_web',
     repository: 'https://github.com/firebase/flutterfire/tree/master/packages/firebase_analytics/firebase_analytics_web',
     authors: [],
-    version: '0.5.1+8',
+    version: '0.5.1+9',
     license: '''Copyright 2017, the Chromium project authors. All rights reserved.
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are
@@ -1818,7 +1678,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.''',
     homepage: 'https://firebase.flutter.dev/docs/core/usage/',
     repository: 'https://github.com/firebase/flutterfire/tree/master/packages/firebase_core/firebase_core',
     authors: [],
-    version: '2.4.1',
+    version: '2.5.0',
     license: '''// Copyright 2017 The Chromium Authors. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -1856,7 +1716,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.''',
     homepage: 'https://github.com/firebase/flutterfire/tree/master/packages/firebase_core/firebase_core_platform_interface',
     repository: 'https://github.com/firebase/flutterfire/tree/master/packages/firebase_core/firebase_core_platform_interface',
     authors: [],
-    version: '4.5.2',
+    version: '4.5.3',
     license: '''// Copyright 2017 The Chromium Authors. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -1894,7 +1754,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.''',
     homepage: 'https://github.com/firebase/flutterfire/tree/master/packages/firebase_core/firebase_core_web',
     repository: 'https://github.com/firebase/flutterfire/tree/master/packages/firebase_core/firebase_core_web',
     authors: [],
-    version: '2.1.0',
+    version: '2.1.1',
     license: '''// Copyright 2020 The Chromium Authors. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -1932,7 +1792,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.''',
     homepage: 'https://firebase.google.com/docs/crashlytics',
     repository: 'https://github.com/firebase/flutterfire/tree/master/packages/firebase_crashlytics/firebase_crashlytics',
     authors: [],
-    version: '3.0.11',
+    version: '3.0.12',
     license: '''// Copyright 2019 The Chromium Authors. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -1970,7 +1830,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.''',
     homepage: 'https://github.com/firebase/flutterfire/tree/master/packages/firebase_crashlytics/firebase_crashlytics_platform_interface',
     repository: 'https://github.com/firebase/flutterfire/tree/master/packages/firebase_crashlytics/firebase_crashlytics_platform_interface',
     authors: [],
-    version: '3.3.11',
+    version: '3.3.12',
     license: '''Copyright 2020, the Chromium project authors. All rights reserved.
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are
@@ -2006,7 +1866,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.''',
     description: 'Library for 32- and 64-bit signed fixed-width integers with consistent behavior between native and JS runtimes.',
     repository: 'https://github.com/dart-lang/fixnum',
     authors: [],
-    version: '1.0.1',
+    version: '1.1.0',
     license: '''Copyright 2014, the Dart project authors.
 
 Redistribution and use in source and binary forms, with or without
@@ -2043,7 +1903,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.''',
     description: 'A framework for writing Flutter applications',
     homepage: 'https://flutter.dev',
     authors: [],
-    version: '3.7.0',
+    version: '3.7.3',
     license: '''Copyright 2014 The Flutter Authors. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
@@ -2573,7 +2433,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.''',
     description: 'Automatically generate code for converting to and from JSON by annotating Dart classes.',
     repository: 'https://github.com/google/json_serializable.dart/tree/master/json_serializable',
     authors: [],
-    version: '6.6.0',
+    version: '6.6.1',
     license: '''Copyright 2017, the Dart project authors. All rights reserved.
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are
@@ -3056,7 +2916,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.''',
     homepage: 'https://plus.fluttercommunity.dev/',
     repository: 'https://github.com/fluttercommunity/plus_plugins/tree/main/packages/',
     authors: [],
-    version: '3.0.2',
+    version: '3.0.3',
     license: '''// Copyright 2017 The Chromium Authors. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -3273,7 +3133,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.''',
     description: 'Linux implementation of the path_provider plugin',
     repository: 'https://github.com/flutter/plugins/tree/main/packages/path_provider/path_provider_linux',
     authors: [],
-    version: '2.1.7',
+    version: '2.1.8',
     license: '''Copyright 2013 The Flutter Authors. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
@@ -3906,9 +3766,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.''',
   Package(
     name: 'source_gen',
     description: 'Source code generation builders and utilities for the Dart build system',
-    repository: 'https://github.com/dart-lang/source_gen',
+    repository: 'https://github.com/dart-lang/source_gen/tree/master/source_gen',
     authors: [],
-    version: '1.2.6',
+    version: '1.2.7',
     license: '''Copyright 2015, the Dart project authors.
 
 Redistribution and use in source and binary forms, with or without
@@ -5021,7 +4881,7 @@ following license:
     description: 'Flutter plugin for launching a URL. Supports web, phone, SMS, and email schemes.',
     repository: 'https://github.com/flutter/plugins/tree/main/packages/url_launcher/url_launcher',
     authors: [],
-    version: '6.1.8',
+    version: '6.1.9',
     license: '''Copyright 2013 The Flutter Authors. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
@@ -5091,7 +4951,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.''',
     description: 'iOS implementation of the url_launcher plugin.',
     repository: 'https://github.com/flutter/plugins/tree/main/packages/url_launcher/url_launcher_ios',
     authors: [],
-    version: '6.0.18',
+    version: '6.1.0',
     license: '''Copyright 2013 The Flutter Authors. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
@@ -5674,7 +5534,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.''',
     description: 'A Dart package for reading XDG directory configuration information on Linux.',
     repository: 'https://github.com/flutter/packages/tree/main/packages/xdg_directories',
     authors: [],
-    version: '0.2.0+3',
+    version: '1.0.0',
     license: '''Copyright 2013 The Flutter Authors. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
