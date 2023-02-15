@@ -14,7 +14,6 @@ part 'preferences.g.dart';
 class Prefs {
   bool allergyInfo;
   bool enableBlackTheme;
-  bool enableDataSaver;
   bool enableKeywordHighlight;
   List<String> highlightedKeywords;
   List<String> sectionOrder;
@@ -26,7 +25,6 @@ class Prefs {
   Prefs({
     this.allergyInfo = true,
     this.enableBlackTheme = false,
-    this.enableDataSaver = false,
     this.enableKeywordHighlight = true,
     this.highlightedKeywords = const [
       "까스",

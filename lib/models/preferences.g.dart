@@ -9,7 +9,6 @@ part of 'preferences.dart';
 Prefs _$PrefsFromJson(Map<String, dynamic> json) => Prefs(
       allergyInfo: json['allergyInfo'] as bool? ?? true,
       enableBlackTheme: json['enableBlackTheme'] as bool? ?? false,
-      enableDataSaver: json['enableDataSaver'] as bool? ?? false,
       enableKeywordHighlight: json['enableKeywordHighlight'] as bool? ?? true,
       highlightedKeywords: (json['highlightedKeywords'] as List<dynamic>?)
               ?.map((e) => e as String)
@@ -98,7 +97,6 @@ Prefs _$PrefsFromJson(Map<String, dynamic> json) => Prefs(
 Map<String, dynamic> _$PrefsToJson(Prefs instance) => <String, dynamic>{
       'allergyInfo': instance.allergyInfo,
       'enableBlackTheme': instance.enableBlackTheme,
-      'enableDataSaver': instance.enableDataSaver,
       'enableKeywordHighlight': instance.enableKeywordHighlight,
       'highlightedKeywords': instance.highlightedKeywords,
       'sectionOrder': instance.sectionOrder,

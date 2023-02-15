@@ -95,7 +95,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
               );
             },
           );
-        } else if (_fetch.cacheUsed) {
+        } else if (_fetch.reason != null) {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text('${_fetch.reason} 기기에 저장된 캐시를 이용합니다.'),
             duration: const Duration(seconds: 3),
