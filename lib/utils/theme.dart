@@ -6,6 +6,7 @@
 // ╚═╝  ╚═╝╚═════╝ ╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝
 // Copyright Hyungyo Seo
 
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
@@ -50,6 +51,15 @@ class ThemeNotifier with ChangeNotifier {
   }
 
   void setSystemUIOverlayStyle(ThemeData themeData) async {
+    // Set theme-color meta tag as background color in web
+    // https://github.com/flutter/engine/blob/main/lib/web_ui/lib/src/engine/platform_dispatcher.dart
+    // TODO: Find a better way.
+    if (kIsWeb) {
+      SystemChrome.setApplicationSwitcherDescription(
+          ApplicationSwitcherDescription(
+              primaryColor: themeData.colorScheme.background.value));
+    }
+
     switch (themeData.brightness) {
       case Brightness.light:
         SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
