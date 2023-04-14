@@ -9,8 +9,8 @@
 import 'package:flutter/material.dart';
 import 'package:async/async.dart';
 
-import 'package:hdmeal/utils/launch.dart';
-import 'package:hdmeal/oss_licenses.dart';
+import '/utils/launch.dart';
+import '/oss_licenses.dart';
 
 class LicencesPage extends StatefulWidget {
   @override

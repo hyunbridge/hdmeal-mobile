@@ -20,15 +20,15 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'firebase_options.dart';
 
-import 'package:hdmeal/screens/home.dart';
-import 'package:hdmeal/screens/settings.dart';
-import 'package:hdmeal/screens/settings/changeorder.dart';
-import 'package:hdmeal/screens/settings/keyword_highlight.dart';
-import 'package:hdmeal/screens/settings/theme.dart';
-import 'package:hdmeal/screens/settings/about.dart';
-import 'package:hdmeal/screens/settings/about/licences.dart';
-import 'package:hdmeal/utils/preferences_manager.dart';
-import 'package:hdmeal/utils/theme.dart';
+import '/screens/home.dart';
+import '/screens/settings.dart';
+import '/screens/settings/changeorder.dart';
+import '/screens/settings/keyword_highlight.dart';
+import '/screens/settings/theme.dart';
+import '/screens/settings/about.dart';
+import '/screens/settings/about/licences.dart';
+import '/utils/preferences_manager.dart';
+import '/utils/theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -8,7 +8,7 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:hdmeal/utils/preferences_manager.dart';
+import '/utils/preferences_manager.dart';
 
 class KeywordHighlightPage extends StatefulWidget {
   @override

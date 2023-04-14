@@ -10,10 +10,10 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:hdmeal/utils/cache.dart';
-import 'package:hdmeal/utils/preferences_manager.dart';
-import 'package:hdmeal/utils/theme.dart';
-import 'package:hdmeal/widgets/change_grade_class.dart';
+import '/utils/cache.dart';
+import '/utils/preferences_manager.dart';
+import '/utils/theme.dart';
+import '/widgets/change_grade_class.dart';
 
 class SettingsPage extends StatefulWidget {
   @override

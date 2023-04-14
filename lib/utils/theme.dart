@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 
-import 'package:hdmeal/utils/preferences_manager.dart';
+import '/utils/preferences_manager.dart';
 
 const fontFamily = "SUIT";
 

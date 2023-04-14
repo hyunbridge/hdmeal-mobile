@@ -12,8 +12,8 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:http/http.dart' as http;
 
-import 'package:hdmeal/utils/cache.dart';
-import 'package:hdmeal/extensions/date_only_compare.dart';
+import '/utils/cache.dart';
+import '/extensions/date_only_compare.dart';
 
 class Client extends http.BaseClient {
   final http.Client _inner;

@@ -9,8 +9,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:hdmeal/utils/preferences_manager.dart';
-import 'package:hdmeal/utils/theme.dart';
+import '/utils/preferences_manager.dart';
+import '/utils/theme.dart';
 
 class ThemeSettingsPage extends StatefulWidget {
   @override

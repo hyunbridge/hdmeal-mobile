@@ -14,8 +14,8 @@ import 'package:async/async.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart' as urlLauncher;
 
-import 'package:hdmeal/utils/launch.dart';
-import 'package:hdmeal/utils/update_checker.dart';
+import '/utils/launch.dart';
+import '/utils/update_checker.dart';
 
 class AboutPage extends StatefulWidget {
   @override

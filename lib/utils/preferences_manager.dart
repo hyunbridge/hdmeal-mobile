@@ -13,7 +13,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:path_provider/path_provider.dart';
 import 'package:universal_html/html.dart' as Web;
 
-import 'package:hdmeal/models/preferences.dart';
+import '/models/preferences.dart';
 
 class PrefsManager {
   static final PrefsManager _prefsManager = PrefsManager._internal();

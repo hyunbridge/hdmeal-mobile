@@ -18,14 +18,14 @@ import 'package:url_launcher/url_launcher.dart' as urlLauncher;
 
 import 'package:firebase_analytics/firebase_analytics.dart';
 
-import 'package:hdmeal/utils/cache.dart';
-import 'package:hdmeal/utils/fetch.dart';
-import 'package:hdmeal/utils/preferences_manager.dart';
-import 'package:hdmeal/utils/theme.dart';
-import 'package:hdmeal/utils/update_checker.dart';
-import 'package:hdmeal/extensions/date_only_compare.dart';
-import 'package:hdmeal/widgets/change_grade_class.dart';
-import 'package:hdmeal/widgets/sections.dart';
+import '/utils/cache.dart';
+import '/utils/fetch.dart';
+import '/utils/preferences_manager.dart';
+import '/utils/theme.dart';
+import '/utils/update_checker.dart';
+import '/extensions/date_only_compare.dart';
+import '/widgets/change_grade_class.dart';
+import '/widgets/sections.dart';
 
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 final FirebaseAnalytics analytics = FirebaseAnalytics.instance;
