@@ -26,7 +26,7 @@ import 'package:hdmeal/screens/settings/changeorder.dart';
 import 'package:hdmeal/screens/settings/keyword_highlight.dart';
 import 'package:hdmeal/screens/settings/theme.dart';
 import 'package:hdmeal/screens/settings/about.dart';
-import 'package:hdmeal/screens/settings/about/osslicences.dart';
+import 'package:hdmeal/screens/settings/about/licences.dart';
 import 'package:hdmeal/utils/preferences_manager.dart';
 import 'package:hdmeal/utils/theme.dart';
 
@@ -84,7 +84,7 @@ class App extends StatelessWidget {
         '/settings/keywordHighlight': (context) => KeywordHighlightPage(),
         '/settings/theme': (context) => ThemeSettingsPage(),
         '/settings/about': (context) => AboutPage(),
-        '/settings/about/OSSLicences': (context) => OSSLicencesPage(),
+        '/settings/about/licences': (context) => LicencesPage(),
       },
       navigatorObservers: [
         routeObserver,

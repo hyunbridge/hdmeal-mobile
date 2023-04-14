@@ -12,12 +12,12 @@ import 'package:async/async.dart';
 import 'package:hdmeal/utils/launch.dart';
 import 'package:hdmeal/oss_licenses.dart';
 
-class OSSLicencesPage extends StatefulWidget {
+class LicencesPage extends StatefulWidget {
   @override
-  _OSSLicencesPageState createState() => _OSSLicencesPageState();
+  _LicencesPageState createState() => _LicencesPageState();
 }
 
-class _OSSLicencesPageState extends State<OSSLicencesPage> {
+class _LicencesPageState extends State<LicencesPage> {
   late ScrollController _scrollController;
 
   final AsyncMemoizer _asyncMemoizer = AsyncMemoizer();

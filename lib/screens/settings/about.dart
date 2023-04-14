@@ -207,8 +207,8 @@ class _AboutPageState extends State<AboutPage> with RouteAware {
                             ListTile(
                               title: Text('개발자에게 문의하기'),
                               onTap: () async {
-                                urlLauncher.launchUrl(Uri.parse(
-                                    "mailto:hekn2y4j@duck.com"));
+                                urlLauncher
+                                    .launchUrl(Uri.parse("mailto:hekn2y4j@duck.com"));
                               },
                             ),
                             Divider(),
@@ -227,7 +227,7 @@ class _AboutPageState extends State<AboutPage> with RouteAware {
                               title: Text('오픈소스 라이선스'),
                               onTap: () async {
                                 Navigator.pushNamed(
-                                    context, '/settings/about/OSSLicences');
+                                    context, '/settings/about/licences');
                               },
                             ),
                           ]),
