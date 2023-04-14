@@ -80,8 +80,8 @@ class App extends StatelessWidget {
       routes: {
         '/': (context) => HomePage(),
         '/settings': (context) => SettingsPage(),
-        '/settings/changeOrder': (context) => ChangeOrderPage(),
-        '/settings/keywordHighlight': (context) => KeywordHighlightPage(),
+        '/settings/change_order': (context) => ChangeOrderPage(),
+        '/settings/keyword_highlight': (context) => KeywordHighlightPage(),
         '/settings/theme': (context) => ThemeSettingsPage(),
         '/settings/about': (context) => AboutPage(),
         '/settings/about/licences': (context) => LicencesPage(),

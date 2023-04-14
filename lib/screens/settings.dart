@@ -118,7 +118,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     ListTile(
                       title: Text('화면 순서 변경'),
                       onTap: () async {
-                        Navigator.pushNamed(context, '/settings/changeOrder');
+                        Navigator.pushNamed(context, '/settings/change_order');
                       },
                     ),
                     ListTile(
@@ -131,7 +131,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       title: Text('키워드 강조'),
                       onTap: () async {
                         Navigator.pushNamed(
-                            context, '/settings/keywordHighlight');
+                            context, '/settings/keyword_highlight');
                       },
                     ),
                     SwitchListTile(
