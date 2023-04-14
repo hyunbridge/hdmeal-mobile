@@ -57,6 +57,7 @@ class ThemeNotifier with ChangeNotifier {
     if (kIsWeb) {
       SystemChrome.setApplicationSwitcherDescription(
           ApplicationSwitcherDescription(
+              label: "흥덕고 급식",
               primaryColor: themeData.colorScheme.background.value));
     }
 
