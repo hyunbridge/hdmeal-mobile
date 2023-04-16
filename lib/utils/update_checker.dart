@@ -51,10 +51,8 @@ class Client extends http.BaseClient {
 }
 
 Future<VersionStatus> checkForUpdate() async {
-  final timestamp = DateTime.now().microsecondsSinceEpoch;
-
-  final res = await Client(http.Client()).get(Uri.parse(
-      "https://gist.githubusercontent.com/hyunbridge/42d40ca9571600ef467aeb2876aaad0e/raw/hdmeal_mobile_version.json?t=$timestamp"));
+  final res = await Client(http.Client())
+      .get(Uri.parse("https://hdmeal-api.hgseo.net/app/version"));
   final latest = json.decode(res.body);
 
   final local = await PackageInfo.fromPlatform();

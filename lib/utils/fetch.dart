@@ -42,7 +42,7 @@ class FetchData {
         }
       }
       final response = await Client(http.Client())
-          .get(Uri.parse("https://hdmeal-api.hgseo.net/app/v4/"));
+          .get(Uri.parse("https://hdmeal-api.hgseo.net/app/v4"));
       Cache().write(response.body);
       return json.decode(response.body);
     } catch (_) {
