@@ -207,8 +207,8 @@ class _AboutPageState extends State<AboutPage> with RouteAware {
                             ListTile(
                               title: Text('개발자에게 문의하기'),
                               onTap: () async {
-                                urlLauncher
-                                    .launchUrl(Uri.parse("mailto:hekn2y4j@duck.com"));
+                                launch(context,
+                                    "https://contact.hgseo.net/");
                               },
                             ),
                             Divider(),
