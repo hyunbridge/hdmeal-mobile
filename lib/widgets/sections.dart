@@ -182,40 +182,37 @@ List<Widget> scheduleSection(
     ),
   ];
 
-  if (schedule.length == 0) {
-    section.add(ListTile(
-      title: Text("학사일정이 없습니다."),
-      visualDensity: VisualDensity(vertical: -4),
-    ));
-  } else {
-    try {
-      schedule.forEach((element) {
-        if (showMyScheduleOnly) {
-          if (element[1].length == 0 || element[1].contains(userGrade)) {
-            section.add(ListTile(
-              title: Text(element[0]),
-              visualDensity: VisualDensity(vertical: -4),
-            ));
-          }
-        } else {
+  try {
+    schedule.forEach((element) {
+      if (showMyScheduleOnly) {
+        if (element[1].length == 0 || element[1].contains(userGrade)) {
           section.add(ListTile(
             title: Text(element[0]),
             visualDensity: VisualDensity(vertical: -4),
-            subtitle: Text(
-              '${element[1].join("학년, ")}학년',
-              style: TextStyle(
-                fontSize: 12,
-              ),
-            ),
           ));
         }
-      });
-    } catch (_) {
-      section.add(ListTile(
-        title: Text("학사일정을 불러올 수 없습니다."),
-        visualDensity: VisualDensity(vertical: -4),
-      ));
+      } else {
+        section.add(ListTile(
+          title: Text(element[0]),
+          visualDensity: VisualDensity(vertical: -4),
+          subtitle: Text(
+            '${element[1].join("학년, ")}학년',
+            style: TextStyle(
+              fontSize: 12,
+            ),
+          ),
+        ));
+      }
+    });
+
+    if (section.length == 1) {
+      throw "학사일정이 없습니다.";
     }
+  } catch (_) {
+    section.add(ListTile(
+      title: Text(section.length == 1 ? "학사일정이 없습니다." : "학사일정을 불러올 수 없습니다."),
+      visualDensity: VisualDensity(vertical: -4),
+    ));
   }
 
   return section;
