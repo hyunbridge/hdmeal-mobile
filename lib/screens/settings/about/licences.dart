@@ -24,7 +24,7 @@ class _LicencesPageState extends State<LicencesPage> {
 
   Future asyncMethod() => _asyncMemoizer.runOnce(() async {
         List<Widget> _ossList = [];
-        ossLicenses.forEach((Package package) {
+        dependencies.forEach((Package package) {
           _ossList.addAll([
             Divider(),
             ListTile(
